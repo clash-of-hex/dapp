@@ -1,16 +1,13 @@
 import { Address, ProviderRpcClient, TvmException } from 'everscale-inpage-provider';
 import { EverscaleStandaloneClient, SimpleKeystore, SimpleAccountsStorage, WalletV3Account } from 'everscale-standalone-client';
 
-const routerAbi = require('../../../prog1/build/Router.abi.json');
-const cellAbi = require('../../../prog1/build/Cell.abi.json');
-// console.log('routerAbi', routerAbi)
-const phrase = "action inject penalty envelope rabbit element slim tornado dinner pizza off blood";
-const keyPair = {
-  secretKey: 'bb2903d025a330681e78f3bcb248d7d89b861f3e8a480eb74438ec0299319f7a',
-  publicKey: 'e85f61aaef0ea43afc14e08e6bd46c3b996974c495a881baccc58760f6349300'
-}
-const accountAddress = new Address('0:08beb8d49e0312a5ef466d81cc37fe94e8f4e575fce884236f1227235c38f933');
-const routerAddress =  new Address('0:0c87060ebe60a9711c91cb8052498eeb356be70c57892090fcbb90d969801473');
+const routerAbi = require('../../contracts/build/Router.abi.json');
+const cellAbi = require('../../contracts/build/Cell.abi.json');
+const Config = require("../../config.json");  
+
+const keyPair = Config.keyPair;
+const accountAddress = new Address(Config.account);
+const routerAddress =  new Address(Config.router);
 
 let keystore = new SimpleKeystore()
 keystore.addKeyPair(keyPair);
