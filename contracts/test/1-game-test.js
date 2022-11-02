@@ -8,7 +8,10 @@ const { expect, assert } = chai;
 
 const Config = require("../scripts/utilsConfig.js"); 
 
-let signer, owner, router, cell1, cell2;
+let signer, owner, router, cell1, cell2, cell3;
+let cellCoord1 = {  x: 2,  y: 1,  z: -3  } // user1 start
+let cellCoord2 = {  x: 2,  y: 2,  z: -4 } // user1 mark
+let cellCoord3 = {  x: 3,  y: 1,  z: -4 } // user2 start
 
 async function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -19,6 +22,8 @@ function arraysContainSame(a, b) {
   b = Array.isArray(b) ? b : [];
   return a.length === b.length && a.every(el => b.includes(el));
 }
+
+
 
 describe(`Test Router contract (BASE)`, async function() {
   //this.timeout(20000000);
@@ -67,65 +72,52 @@ describe(`Test Router contract (BASE)`, async function() {
     Config.saveConf(conf)
   });
   
-  it('Start new game', async () => {
-    let cellCoord = {
-      x: 0,
-      y: 0,
-      z: 0
-    }
+});
+
+describe(`Test Cell contract (BASE)`, async function() {
+  it('Start Cell1 User1', async () => {
     
     let res = await locklift.tracing.trace(router.methods.newGame({
         sendGasTo: owner.address.toString(),
-        baseCoord: cellCoord
+        baseCoord: cellCoord1
     }).send({
         from: owner.address.toString(),
         amount: toNano(2),
     }));
 
     let details
-    details = await router.methods._resolveCell({ coord: cellCoord }).call();
-    console.log('_resolveCell', details);
+    details = await router.methods._resolveCell({ coord: cellCoord1 }).call();
+    console.log('address cell1', details);
 
     cell1 = locklift.factory.getDeployedContract(
       "Cell",
       new Address(details.cellAddress.toString()),
     );
     details = await cell1.methods.getDetails({}).call();
-    console.log('getDetails cell1 1', details);
-    await sleep(2000);
-    details = await cell1.methods.getDetails({}).call();
-    console.log('getDetails cell1 2', details);
+    console.log('getDetails cell1', details);
 
     expect(details.level)
         .to.be.equal('0', 'Wrong level');
 
   });
 
-});
-
-describe(`Test Cell contract (BASE)`, async function() {
-  it('Mark Neighbor cell', async () => {
-    let cellCoord = {
-      x: 1,
-      y: 0,
-      z: -1
-    }
+  it('Mark Cell2 User1', async () => {
     
     let res = await locklift.tracing.trace(cell1.methods.markCell({
         sendGasTo: owner.address.toString(),
-        targetCoord: cellCoord,
+        targetCoord: cellCoord2,
         energy: 1000
     }).send({
         from: owner.address.toString(),
-        amount: toNano(3),
+        amount: toNano(2),
     }));
     
     let details
     details = await cell1.methods.getDetails({}).call();
-    console.log('getDetails cell1 3', details);
+    console.log('getDetails cell1', details);
 
-    details = await router.methods._resolveCell({ coord: cellCoord }).call();
-    console.log('_resolveCell', details);
+    details = await router.methods._resolveCell({ coord: cellCoord2 }).call();
+    console.log('address cell2', details);
 
     cell2 = locklift.factory.getDeployedContract(
       "Cell",
@@ -133,6 +125,96 @@ describe(`Test Cell contract (BASE)`, async function() {
     );
     details = await cell2.methods.getDetails({}).call();
     console.log('getDetails cell2', details);
+
+    expect(details.level)
+        .to.be.equal('0', 'Wrong level');
+
+  });
+
+  it('Upgrade Cell2 User1', async () => {
+    
+    let res = await locklift.tracing.trace(cell2.methods.upgradeCell({
+        sendGasTo: owner.address.toString(),
+    }).send({
+        from: owner.address.toString(),
+        amount: toNano(1),
+    }));
+    
+    let details
+    details = await cell2.methods.getDetails({}).call();
+    console.log('getDetails cell2', details);
+
+    expect(details.level)
+        .to.be.equal('1', 'Wrong level');
+
+  });
+
+  it('help Cell1 to Cell2 User1', async () => {
+    
+    let res = await locklift.tracing.trace(cell1.methods.helpCell({
+        sendGasTo: owner.address.toString(),
+        targetCoord: cellCoord2,
+        energy: 500
+    }).send({
+        from: owner.address.toString(),
+        amount: toNano(1),
+    }));
+    
+    let details
+    details = await cell1.methods.getDetails({}).call();
+    console.log('getDetails cell1', details);
+
+    details = await cell2.methods.getDetails({}).call();
+    console.log('getDetails cell2', details);
+
+    expect(details.level)
+        .to.be.equal('1', 'Wrong level');
+
+  });
+
+  it('Start new game User2', async () => {
+    
+    let res = await locklift.tracing.trace(router.methods.newGame({
+        sendGasTo: owner.address.toString(),
+        baseCoord: cellCoord3
+    }).send({
+        from: owner.address.toString(),
+        amount: toNano(2),
+    }));
+
+    let details
+    details = await router.methods._resolveCell({ coord: cellCoord3 }).call();
+    console.log('_resolveCell', details);
+
+    cell3 = locklift.factory.getDeployedContract(
+      "Cell",
+      new Address(details.cellAddress.toString()),
+    );
+    details = await cell3.methods.getDetails({}).call();
+    console.log('getDetails cell3', details);
+
+    expect(details.level)
+        .to.be.equal('0', 'Wrong level');
+
+  });
+
+  it('attk Cell3 to Cell1 User2', async () => {
+    
+    let res = await locklift.tracing.trace(cell3.methods.attkCell({
+        sendGasTo: owner.address.toString(),
+        targetCoord: cellCoord1,
+        energy: 1000
+    }).send({
+        from: owner.address.toString(),
+        amount: toNano(1),
+    }));
+    
+    let details
+    details = await cell1.methods.getDetails({}).call();
+    console.log('getDetails cell1', details);
+
+    details = await cell3.methods.getDetails({}).call();
+    console.log('getDetails cell3', details);
 
     expect(details.level)
         .to.be.equal('0', 'Wrong level');
