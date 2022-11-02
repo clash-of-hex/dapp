@@ -46,7 +46,7 @@ contract Cell is OwnableExternal, ICell {
         tvm.accept();
         _router = router;
         _color = color;
-        _energy = energy;
+        _energy = energy + 1500; //for test mode
         _lastCalcTime = now;
         _level = 0;
     }
