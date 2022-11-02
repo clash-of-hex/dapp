@@ -23,6 +23,7 @@ contract Router is OwnableExternal, IRouter {
     // constants
     uint128 constant ROUTER_DEPLOY_VALUE = 1.0 ever;
     uint128 constant CELL_DEPLOY_VALUE = 1.0 ever;
+    uint128 constant ACTION_VALUE = 0.2 ever;
 
     TvmCell private _codeCell;
 
@@ -35,6 +36,7 @@ contract Router is OwnableExternal, IRouter {
         require(address(this).balance > ROUTER_DEPLOY_VALUE, Errors.NOT_ENOUGH_BALANCE);
         tvm.accept();
         _codeCell = codeCell;
+        console.log(format("constructor msg.sender {}", msg.sender));
     }
 
     function getDetails() public view returns(
@@ -56,44 +58,44 @@ contract Router is OwnableExternal, IRouter {
     ////////////////////////////// 
     
     function newGame(
+        address sendGasTo, 
         Types.CubeCoord baseCoord
     ) public {
-        require(msg.value > CELL_DEPLOY_VALUE, Errors.LOW_GAS_VALUE);
+        require(msg.value > CELL_DEPLOY_VALUE + ACTION_VALUE*2, Errors.LOW_GAS_VALUE);
         require(HexUtils.isCorrectCoord(baseCoord) == true, Errors.WRONG_COORD);
-        tvm.accept();
+        tvm.rawReserve(0, 4); 
 
-        address cellAddress = deployCell(msg.pubkey(), baseCoord, Types.Color(getRndUint8(), getRndUint8(), getRndUint8()), 0);
-        console.log(format("newGame {}", cellAddress));
+        address cellAddress = deployCell(sendGasTo, msg.pubkey(), baseCoord, Types.Color(getRndUint8(), getRndUint8(), getRndUint8()), 0);
     }
 
     function _newCell(
+        address sendGasTo, 
         Types.CubeCoord baseCoord,
         Types.CubeCoord targetCoord,
         Types.Color color,
         uint128 energy
     ) override external {
-        require(msg.value > CELL_DEPLOY_VALUE, Errors.LOW_GAS_VALUE);
+        require(msg.value > CELL_DEPLOY_VALUE + ACTION_VALUE*2, Errors.LOW_GAS_VALUE);
         require(msg.sender == _resolveCell(baseCoord), Errors.WRONG_ADDRESS);
         require(HexUtils.isCorrectCoord(baseCoord) == true, Errors.WRONG_COORD);
         require(HexUtils.isCorrectCoord(targetCoord) == true, Errors.WRONG_COORD);
         require(HexUtils.isNeighborCoord(baseCoord, targetCoord) == true, Errors.WRONG_COORD);
-        tvm.accept();
+        tvm.rawReserve(0, 4); 
         
-        address cellAddress = deployCell(msg.pubkey(), targetCoord, color, energy);
-        console.log(format("_newCell {}", cellAddress));
+        address cellAddress = deployCell(sendGasTo, msg.pubkey(), targetCoord, color, energy);
     }
 
 
     ////////////////////////////// 
     
-    function deployCell(uint256 owner, Types.CubeCoord coord, Types.Color color, uint128 energy) internal returns (address cellAddress) {
+    function deployCell(address sendGasTo, uint256 owner, Types.CubeCoord coord, Types.Color color, uint128 energy) internal returns (address cellAddress) {
 
         TvmCell code = _buildCellCode(address(this));
         TvmCell state = _buildCellState(code, coord);
         cellAddress = new Cell{
             stateInit: state,
-            value: 0,
-            flag: 64
+            value: CELL_DEPLOY_VALUE + ACTION_VALUE,
+            flag: 0
         }(
             address(this),
             owner, 
@@ -101,6 +103,7 @@ contract Router is OwnableExternal, IRouter {
             energy
         ); 
         // emit CellCreated(owner, coord, cellAddress);
+        sendGasTo.transfer({value: 0, flag: MsgFlag.ALL_NOT_RESERVED + MsgFlag.IGNORE_ERRORS, bounce: false}); 
 
     }
 

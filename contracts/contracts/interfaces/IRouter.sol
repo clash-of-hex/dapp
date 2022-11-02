@@ -7,6 +7,7 @@ interface IRouter {
     event CellCreated(uint256 owner, Types.CubeCoord coord);
     
     function _newCell(
+        address sendGasTo,
         Types.CubeCoord baseCoord,
         Types.CubeCoord targetCoord,
         Types.Color color,
