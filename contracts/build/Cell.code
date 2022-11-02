@@ -45,23 +45,25 @@ CALLREF {
 	CALL $_transferOwnership_87c9187f_internal_macro$
 }
 .loc ../contracts/additional/Cell.sol, 45
-PUSH S2
-PARSEMSGADDR
-INDEX 3
-PLDU 256
-THROWIFNOT 100
+GETPARAM 7
+FIRST
+PUSHINT 1000000000
+GREATER
+THROWIFNOT 1060
 .loc ../contracts/additional/Cell.sol, 46
+ACCEPT
+.loc ../contracts/additional/Cell.sol, 47
 ROT
 SETGLOB 15
-.loc ../contracts/additional/Cell.sol, 47
+.loc ../contracts/additional/Cell.sol, 48
 SWAP
 SETGLOB 19
-.loc ../contracts/additional/Cell.sol, 48
-SETGLOB 17
 .loc ../contracts/additional/Cell.sol, 49
+SETGLOB 17
+.loc ../contracts/additional/Cell.sol, 50
 NOW
 SETGLOB 18
-.loc ../contracts/additional/Cell.sol, 50
+.loc ../contracts/additional/Cell.sol, 51
 PUSHINT 0
 SETGLOB 16
 .loc ../contracts/additional/Cell.sol, 0
@@ -79,7 +81,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Cell.sol, 53
+.loc ../contracts/additional/Cell.sol, 54
 ENDS
 .loc ../contracts/additional/Cell.sol, 0
 CALLREF {
@@ -121,7 +123,7 @@ THROW 0
 CALL $getRouter_b0f479a1_internal_macro$
 
 .macro getRouter_b0f479a1_internal_macro
-.loc ../contracts/additional/Cell.sol, 54
+.loc ../contracts/additional/Cell.sol, 55
 GETGLOB 15
 .loc ../contracts/additional/Cell.sol, 0
 
@@ -134,15 +136,15 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Cell.sol, 57
+.loc ../contracts/additional/Cell.sol, 58
 ENDS
 .loc ../contracts/additional/Cell.sol, 0
 CALLREF {
 	CALL $getDetails_fbbf93a0_internal_macro$
 }
-PUSH S9
+PUSH S8
 PUSHCONT {
-	PUSH S11
+	PUSH S10
 	CTOS
 	LDU 2
 	LDMSGADDR
@@ -153,9 +155,9 @@ PUSHCONT {
 	STSLICE
 	PUSHINT 1
 	STUR 98
-	REVERSE 10, 0
+	REVERSE 9, 0
 	NEWC
-	STSLICECONST x86998cde
+	STSLICECONST xb93d74d4
 	SWAP
 	UNTRIPLE
 	REVERSE 4, 0
@@ -168,7 +170,6 @@ PUSHCONT {
 	STU 8
 	STU 8
 	STU 8
-	STU 128
 	STU 128
 	STU 128
 	STU 128
@@ -184,7 +185,7 @@ PUSHCONT {
 	SENDRAWMSG
 }
 PUSHCONT {
-	BLKDROP 9
+	BLKDROP 8
 }
 IFELSE
 IFREF {
@@ -219,7 +220,6 @@ DICTUGET
 THROWIFNOT 50
 PLDU 128
 NOW
-DUP
 CALLREF {
 	CALL $getOwner_893d20e8_internal_macro$
 }
@@ -234,7 +234,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Cell.sol, 80
+.loc ../contracts/additional/Cell.sol, 79
 ENDS
 .loc ../contracts/additional/Cell.sol, 0
 CALLREF {
@@ -272,9 +272,9 @@ THROW 0
 CALL $calculateEnergy_b832a134_internal_macro$
 
 .macro calculateEnergy_b832a134_internal_macro
-.loc ../contracts/additional/Cell.sol, 81
+.loc ../contracts/additional/Cell.sol, 80
 GETGLOB 17
-.loc ../contracts/additional/Cell.sol, 82
+.loc ../contracts/additional/Cell.sol, 81
 DUP
 GETGLOB 16
 GETGLOB 14
@@ -285,7 +285,7 @@ THROWIFNOT 50
 PLDU 128
 GEQ
 IFRET
-.loc ../contracts/additional/Cell.sol, 85
+.loc ../contracts/additional/Cell.sol, 84
 GETGLOB 16
 GETGLOB 13
 SECOND
@@ -316,7 +316,7 @@ MIN
 CALL $startProcess_69dd15a8_internal_macro$
 
 .macro startProcess_69dd15a8_internal_macro
-.loc ../contracts/additional/Cell.sol, 90
+.loc ../contracts/additional/Cell.sol, 89
 CALLREF {
 	CALL $calculateEnergy_b832a134_internal_macro$
 }
@@ -326,7 +326,7 @@ UFITS 128
 SUBR
 UFITS 128
 SETGLOB 17
-.loc ../contracts/additional/Cell.sol, 91
+.loc ../contracts/additional/Cell.sol, 90
 NOW
 SETGLOB 18
 .loc ../contracts/additional/Cell.sol, 0
@@ -340,18 +340,16 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Cell.sol, 96
+.loc ../contracts/additional/Cell.sol, 95
 OVER
 PUSHCONT {
-	LDI 64
 	LDREF
 	ENDS
 	CTOS
 }
-PUSHCONT {
-	LDI 64
-}
-IFELSE
+IF
+LDMSGADDR
+LDI 64
 LDI 64
 LDI 64
 ROLLREV 3
@@ -361,7 +359,7 @@ LDU 128
 ENDS
 .loc ../contracts/additional/Cell.sol, 0
 CALLREF {
-	CALL $markCell_25a3df38_internal_macro$
+	CALL $markCell_83f7be40_internal_macro$
 }
 DROP
 CALLREF {
@@ -369,11 +367,11 @@ CALLREF {
 }
 THROW 0
 
-.globl	markCell_25a3df38_internal
-.type	markCell_25a3df38_internal, @function
-CALL $markCell_25a3df38_internal_macro$
+.globl	markCell_83f7be40_internal
+.type	markCell_83f7be40_internal, @function
+CALL $markCell_83f7be40_internal_macro$
 
-.macro markCell_25a3df38_internal_macro
+.macro markCell_83f7be40_internal_macro
 .loc ../contracts/abstract/OwnableExternal.sol, 35
 CALLREF {
 	CALL $owner_8da5cb5b_internal_macro$
@@ -395,7 +393,7 @@ DEPTH
 ADDCONST -2
 PICK
 PUSHINT 1000000000
-DUP
+PUSHINT 200000000
 ADD
 UFITS 128
 GREATER
@@ -442,7 +440,9 @@ TRUE
 EQUAL
 THROWANYIFNOT
 .loc ../contracts/additional/Cell.sol, 104
-ACCEPT
+PUSHINT 0
+PUSHINT 4
+RAWRESERVE
 .loc ../contracts/additional/Cell.sol, 105
 PUSHINT 0
 OVER
@@ -462,15 +462,17 @@ UFITS 128
 GETGLOB 19
 ROT
 GETGLOB 11
+ROLL 4
 GETGLOB 15
 NEWC
 STSLICECONST x62_
 STSLICE
 PUSHINT 1
 STUR 111
-ROLLREV 4
+ROLLREV 5
 NEWC
-STSLICECONST x74d4fadf
+STSLICECONST x5db7f2f5
+STSLICE
 SWAP
 UNTRIPLE
 REVERSE 4, 0
@@ -487,33 +489,16 @@ SWAP
 UNTRIPLE
 REVERSE 4, 0
 STU 8
+ROLLREV 3
+NEWC
 STU 8
 STU 8
 STU 128
 STBREFR
+STBREFR
 ENDC
-PUSHINT 64
+PUSHPOW2 7
 SENDRAWMSG
-.loc ../contracts/additional/Cell.sol, 110
-TUPLE 0
-NEWC
-PUSHSLICE x6d61726b43656c6c20
-CALLREF {
-	CALL $storeStringInBuilders_macro$
-}
-PUSHREF {
-	.blob x4f4b
-}
-CTOS
-CALLREF {
-	CALL $storeStringInBuilders_macro$
-}
-CALLREF {
-	CALL $assembleList_macro$
-}
-CALLREF {
-	CALL $console_no_obj_log_41304fac_macro$
-}
 .loc ../contracts/additional/Cell.sol, 0
 
 .macro helpCell
@@ -525,18 +510,16 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Cell.sol, 114
+.loc ../contracts/additional/Cell.sol, 113
 OVER
 PUSHCONT {
-	LDI 64
 	LDREF
 	ENDS
 	CTOS
 }
-PUSHCONT {
-	LDI 64
-}
-IFELSE
+IF
+LDMSGADDR
+LDI 64
 LDI 64
 LDI 64
 ROLLREV 3
@@ -546,7 +529,7 @@ LDU 128
 ENDS
 .loc ../contracts/additional/Cell.sol, 0
 CALLREF {
-	CALL $helpCell_d676fd5c_internal_macro$
+	CALL $helpCell_c5fcf6f7_internal_macro$
 }
 DROP
 CALLREF {
@@ -554,11 +537,11 @@ CALLREF {
 }
 THROW 0
 
-.globl	helpCell_d676fd5c_internal
-.type	helpCell_d676fd5c_internal, @function
-CALL $helpCell_d676fd5c_internal_macro$
+.globl	helpCell_c5fcf6f7_internal
+.type	helpCell_c5fcf6f7_internal, @function
+CALL $helpCell_c5fcf6f7_internal_macro$
 
-.macro helpCell_d676fd5c_internal_macro
+.macro helpCell_c5fcf6f7_internal_macro
 .loc ../contracts/abstract/OwnableExternal.sol, 35
 CALLREF {
 	CALL $owner_8da5cb5b_internal_macro$
@@ -579,7 +562,7 @@ ACCEPT
 DEPTH
 ADDCONST -2
 PICK
-PUSHINT 2000000000
+PUSHINT 400000000
 UFITS 128
 GREATER
 THROWIFNOT 2000
@@ -611,7 +594,9 @@ TRUE
 EQUAL
 THROWANYIFNOT
 .loc ../contracts/additional/Cell.sol, 122
-ACCEPT
+PUSHINT 0
+PUSHINT 4
+RAWRESERVE
 .loc ../contracts/additional/Cell.sol, 123
 PUSHINT 0
 OVER
@@ -621,7 +606,7 @@ CALLREF {
 .loc ../contracts/additional/Cell.sol, 124
 GETGLOB 19
 GETGLOB 11
-ROLL 3
+BLKSWAP 2, 3
 CALLREF {
 	CALL $_resolveCell_4321abcf_internal_macro$
 }
@@ -630,9 +615,10 @@ STSLICECONST x62_
 STSLICE
 PUSHINT 1
 STUR 111
-ROLLREV 3
+ROLLREV 4
 NEWC
-STSLICECONST x28ceccbc
+STSLICECONST x435e2c51
+STSLICE
 SWAP
 UNTRIPLE
 REVERSE 4, 0
@@ -648,28 +634,8 @@ STU 8
 STU 128
 STBREFR
 ENDC
-PUSHINT 64
+PUSHPOW2 7
 SENDRAWMSG
-.loc ../contracts/additional/Cell.sol, 128
-TUPLE 0
-NEWC
-PUSHSLICE x68656c7043656c6c20
-CALLREF {
-	CALL $storeStringInBuilders_macro$
-}
-PUSHREF {
-	.blob x4f4b
-}
-CTOS
-CALLREF {
-	CALL $storeStringInBuilders_macro$
-}
-CALLREF {
-	CALL $assembleList_macro$
-}
-CALLREF {
-	CALL $console_no_obj_log_41304fac_macro$
-}
 .loc ../contracts/additional/Cell.sol, 0
 
 .macro _helpCell
@@ -681,18 +647,16 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Cell.sol, 131
+.loc ../contracts/additional/Cell.sol, 130
 OVER
 PUSHCONT {
-	LDI 64
 	LDREF
 	ENDS
 	CTOS
 }
-PUSHCONT {
-	LDI 64
-}
-IFELSE
+IF
+LDMSGADDR
+LDI 64
 LDI 64
 LDI 64
 ROLLREV 3
@@ -708,7 +672,7 @@ LDU 128
 ENDS
 .loc ../contracts/additional/Cell.sol, 0
 CALLREF {
-	CALL $_helpCell_9f9f93ad_internal_macro$
+	CALL $_helpCell_b0a084fd_internal_macro$
 }
 DROP
 CALLREF {
@@ -716,7 +680,7 @@ CALLREF {
 }
 THROW 0
 
-.macro _helpCell_9f9f93ad_internal_macro
+.macro _helpCell_b0a084fd_internal_macro
 .loc ../contracts/abstract/OwnableExternal.sol, 35
 CALLREF {
 	CALL $owner_8da5cb5b_internal_macro$
@@ -737,7 +701,7 @@ ACCEPT
 DEPTH
 ADDCONST -2
 PICK
-PUSHINT 1000000000
+PUSHINT 200000000
 GREATER
 THROWIFNOT 2000
 .loc ../contracts/additional/Cell.sol, 137
@@ -768,7 +732,9 @@ TRUE
 EQUAL
 THROWANYIFNOT
 .loc ../contracts/additional/Cell.sol, 140
-ACCEPT
+PUSHINT 0
+PUSHINT 4
+RAWRESERVE
 .loc ../contracts/additional/Cell.sol, 141
 PUSHINT 0
 CALLREF {
@@ -776,25 +742,16 @@ CALLREF {
 }
 .loc ../contracts/additional/Cell.sol, 142
 DROP
-TUPLE 0
 NEWC
-PUSHSLICE x5f68656c7043656c6c20
-CALLREF {
-	CALL $storeStringInBuilders_macro$
-}
-PUSHREF {
-	.blob x4f4b
-}
-CTOS
-CALLREF {
-	CALL $storeStringInBuilders_macro$
-}
-CALLREF {
-	CALL $assembleList_macro$
-}
-CALLREF {
-	CALL $console_no_obj_log_41304fac_macro$
-}
+STSLICECONST x42_
+STSLICE
+PUSHINT 111
+STZEROES
+ENDC
+PUSHPOW2 7
+ADDCONST 2
+UFITS 8
+SENDRAWMSG
 .loc ../contracts/additional/Cell.sol, 0
 
 .macro attkCell
@@ -809,15 +766,13 @@ IFREF {
 .loc ../contracts/additional/Cell.sol, 147
 OVER
 PUSHCONT {
-	LDI 64
 	LDREF
 	ENDS
 	CTOS
 }
-PUSHCONT {
-	LDI 64
-}
-IFELSE
+IF
+LDMSGADDR
+LDI 64
 LDI 64
 LDI 64
 ROLLREV 3
@@ -827,7 +782,7 @@ LDU 128
 ENDS
 .loc ../contracts/additional/Cell.sol, 0
 CALLREF {
-	CALL $attkCell_77ca7247_internal_macro$
+	CALL $attkCell_10683f27_internal_macro$
 }
 DROP
 CALLREF {
@@ -835,11 +790,11 @@ CALLREF {
 }
 THROW 0
 
-.globl	attkCell_77ca7247_internal
-.type	attkCell_77ca7247_internal, @function
-CALL $attkCell_77ca7247_internal_macro$
+.globl	attkCell_10683f27_internal
+.type	attkCell_10683f27_internal, @function
+CALL $attkCell_10683f27_internal_macro$
 
-.macro attkCell_77ca7247_internal_macro
+.macro attkCell_10683f27_internal_macro
 .loc ../contracts/abstract/OwnableExternal.sol, 35
 CALLREF {
 	CALL $owner_8da5cb5b_internal_macro$
@@ -856,15 +811,15 @@ EQUAL
 THROWIFNOT 100
 .loc ../contracts/abstract/OwnableExternal.sol, 36
 ACCEPT
-.loc ../contracts/additional/Cell.sol, 151
+.loc ../contracts/additional/Cell.sol, 152
 DEPTH
 ADDCONST -2
 PICK
-PUSHINT 2000000000
+PUSHINT 400000000
 UFITS 128
 GREATER
 THROWIFNOT 2000
-.loc ../contracts/additional/Cell.sol, 152
+.loc ../contracts/additional/Cell.sol, 153
 PUSHINT 3010
 OVER
 CALLREF {
@@ -872,7 +827,7 @@ CALLREF {
 }
 LEQ
 THROWANYIFNOT
-.loc ../contracts/additional/Cell.sol, 153
+.loc ../contracts/additional/Cell.sol, 154
 PUSHINT 3000
 PUSH S2
 CALLREF {
@@ -881,7 +836,7 @@ CALLREF {
 TRUE
 EQUAL
 THROWANYIFNOT
-.loc ../contracts/additional/Cell.sol, 154
+.loc ../contracts/additional/Cell.sol, 155
 PUSHINT 3000
 GETGLOB 11
 PUSH S3
@@ -891,18 +846,20 @@ CALLREF {
 TRUE
 EQUAL
 THROWANYIFNOT
-.loc ../contracts/additional/Cell.sol, 155
-ACCEPT
 .loc ../contracts/additional/Cell.sol, 156
+PUSHINT 0
+PUSHINT 4
+RAWRESERVE
+.loc ../contracts/additional/Cell.sol, 157
 PUSHINT 0
 OVER
 CALLREF {
 	CALL $startProcess_69dd15a8_internal_macro$
 }
-.loc ../contracts/additional/Cell.sol, 157
+.loc ../contracts/additional/Cell.sol, 158
 GETGLOB 19
 GETGLOB 11
-ROLL 3
+BLKSWAP 2, 3
 CALLREF {
 	CALL $_resolveCell_4321abcf_internal_macro$
 }
@@ -911,9 +868,10 @@ STSLICECONST x62_
 STSLICE
 PUSHINT 1
 STUR 111
-ROLLREV 3
+ROLLREV 4
 NEWC
-STSLICECONST x6def9c2c
+STSLICECONST x525805a6
+STSLICE
 SWAP
 UNTRIPLE
 REVERSE 4, 0
@@ -929,28 +887,8 @@ STU 8
 STU 128
 STBREFR
 ENDC
-PUSHINT 64
+PUSHPOW2 7
 SENDRAWMSG
-.loc ../contracts/additional/Cell.sol, 161
-TUPLE 0
-NEWC
-PUSHSLICE x6174746b43656c6c20
-CALLREF {
-	CALL $storeStringInBuilders_macro$
-}
-PUSHREF {
-	.blob x4f4b
-}
-CTOS
-CALLREF {
-	CALL $storeStringInBuilders_macro$
-}
-CALLREF {
-	CALL $assembleList_macro$
-}
-CALLREF {
-	CALL $console_no_obj_log_41304fac_macro$
-}
 .loc ../contracts/additional/Cell.sol, 0
 
 .macro _attkCell
@@ -965,15 +903,13 @@ IFREF {
 .loc ../contracts/additional/Cell.sol, 164
 OVER
 PUSHCONT {
-	LDI 64
 	LDREF
 	ENDS
 	CTOS
 }
-PUSHCONT {
-	LDI 64
-}
-IFELSE
+IF
+LDMSGADDR
+LDI 64
 LDI 64
 LDI 64
 ROLLREV 3
@@ -989,7 +925,7 @@ LDU 128
 ENDS
 .loc ../contracts/additional/Cell.sol, 0
 CALLREF {
-	CALL $_attkCell_5b792247_internal_macro$
+	CALL $_attkCell_cf194796_internal_macro$
 }
 DROP
 CALLREF {
@@ -997,7 +933,7 @@ CALLREF {
 }
 THROW 0
 
-.macro _attkCell_5b792247_internal_macro
+.macro _attkCell_cf194796_internal_macro
 .loc ../contracts/abstract/OwnableExternal.sol, 35
 CALLREF {
 	CALL $owner_8da5cb5b_internal_macro$
@@ -1014,14 +950,14 @@ EQUAL
 THROWIFNOT 100
 .loc ../contracts/abstract/OwnableExternal.sol, 36
 ACCEPT
-.loc ../contracts/additional/Cell.sol, 169
+.loc ../contracts/additional/Cell.sol, 170
 DEPTH
 ADDCONST -2
 PICK
-PUSHINT 1000000000
+PUSHINT 200000000
 GREATER
 THROWIFNOT 2000
-.loc ../contracts/additional/Cell.sol, 170
+.loc ../contracts/additional/Cell.sol, 171
 GETGLOB 9
 PUSH S3
 CALLREF {
@@ -1029,7 +965,7 @@ CALLREF {
 }
 SDEQ
 THROWIFNOT 1020
-.loc ../contracts/additional/Cell.sol, 171
+.loc ../contracts/additional/Cell.sol, 172
 PUSHINT 3000
 PUSH S3
 CALLREF {
@@ -1038,7 +974,7 @@ CALLREF {
 TRUE
 EQUAL
 THROWANYIFNOT
-.loc ../contracts/additional/Cell.sol, 172
+.loc ../contracts/additional/Cell.sol, 173
 PUSHINT 3000
 GETGLOB 11
 ROLL 4
@@ -1048,22 +984,24 @@ CALLREF {
 TRUE
 EQUAL
 THROWANYIFNOT
-.loc ../contracts/additional/Cell.sol, 173
-ACCEPT
 .loc ../contracts/additional/Cell.sol, 174
+PUSHINT 0
+PUSHINT 4
+RAWRESERVE
+.loc ../contracts/additional/Cell.sol, 175
 CALLREF {
 	CALL $calculateEnergy_b832a134_internal_macro$
 }
-.loc ../contracts/additional/Cell.sol, 175
+.loc ../contracts/additional/Cell.sol, 176
 DUP2
 LEQ
 PUSHCONT {
-	.loc ../contracts/additional/Cell.sol, 176
+	.loc ../contracts/additional/Cell.sol, 177
 	PUSHINT 0
 	PUSH S2
 }
 PUSHCONT {
-	.loc ../contracts/additional/Cell.sol, 178
+	.loc ../contracts/additional/Cell.sol, 179
 	GETGLOB 5
 	DUP
 	ISNULL
@@ -1075,37 +1013,28 @@ PUSHCONT {
 	CALLREF {
 		CALL $_transferOwnership_87c9187f_internal_macro$
 	}
-	.loc ../contracts/additional/Cell.sol, 179
+	.loc ../contracts/additional/Cell.sol, 180
 	PUSH S2
 	SETGLOB 19
-	.loc ../contracts/additional/Cell.sol, 180
+	.loc ../contracts/additional/Cell.sol, 181
 	DUP2
 }
 IFELSE
 CALLREF {
 	CALL $startProcess_69dd15a8_internal_macro$
 }
-.loc ../contracts/additional/Cell.sol, 182
+.loc ../contracts/additional/Cell.sol, 183
 BLKDROP 3
-TUPLE 0
 NEWC
-PUSHSLICE x5f6174746b43656c6c20
-CALLREF {
-	CALL $storeStringInBuilders_macro$
-}
-PUSHREF {
-	.blob x4f4b
-}
-CTOS
-CALLREF {
-	CALL $storeStringInBuilders_macro$
-}
-CALLREF {
-	CALL $assembleList_macro$
-}
-CALLREF {
-	CALL $console_no_obj_log_41304fac_macro$
-}
+STSLICECONST x42_
+STSLICE
+PUSHINT 111
+STZEROES
+ENDC
+PUSHPOW2 7
+ADDCONST 2
+UFITS 8
+SENDRAWMSG
 .loc ../contracts/additional/Cell.sol, 0
 
 .macro upgradeCell
@@ -1117,11 +1046,19 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Cell.sol, 186
+.loc ../contracts/additional/Cell.sol, 187
+OVER
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+}
+IF
+LDMSGADDR
 ENDS
 .loc ../contracts/additional/Cell.sol, 0
 CALLREF {
-	CALL $upgradeCell_504495bc_internal_macro$
+	CALL $upgradeCell_f380267d_internal_macro$
 }
 DROP
 CALLREF {
@@ -1129,11 +1066,11 @@ CALLREF {
 }
 THROW 0
 
-.globl	upgradeCell_504495bc_internal
-.type	upgradeCell_504495bc_internal, @function
-CALL $upgradeCell_504495bc_internal_macro$
+.globl	upgradeCell_f380267d_internal
+.type	upgradeCell_f380267d_internal, @function
+CALL $upgradeCell_f380267d_internal_macro$
 
-.macro upgradeCell_504495bc_internal_macro
+.macro upgradeCell_f380267d_internal_macro
 .loc ../contracts/abstract/OwnableExternal.sol, 35
 CALLREF {
 	CALL $owner_8da5cb5b_internal_macro$
@@ -1150,14 +1087,14 @@ EQUAL
 THROWIFNOT 100
 .loc ../contracts/abstract/OwnableExternal.sol, 36
 ACCEPT
-.loc ../contracts/additional/Cell.sol, 188
+.loc ../contracts/additional/Cell.sol, 190
 DEPTH
 ADDCONST -2
 PICK
-PUSHINT 1000000000
+PUSHINT 200000000
 GREATER
 THROWIFNOT 2000
-.loc ../contracts/additional/Cell.sol, 189
+.loc ../contracts/additional/Cell.sol, 191
 PUSHINT 3010
 GETGLOB 16
 INC
@@ -1173,9 +1110,11 @@ CALLREF {
 }
 LEQ
 THROWANYIFNOT
-.loc ../contracts/additional/Cell.sol, 190
-ACCEPT
-.loc ../contracts/additional/Cell.sol, 191
+.loc ../contracts/additional/Cell.sol, 192
+PUSHINT 0
+PUSHINT 4
+RAWRESERVE
+.loc ../contracts/additional/Cell.sol, 193
 PUSHINT 0
 GETGLOB 16
 INC
@@ -1189,12 +1128,12 @@ PLDU 128
 CALLREF {
 	CALL $startProcess_69dd15a8_internal_macro$
 }
-.loc ../contracts/additional/Cell.sol, 192
+.loc ../contracts/additional/Cell.sol, 194
 GETGLOB 16
 INC
 UFITS 128
 SETGLOB 16
-.loc ../contracts/additional/Cell.sol, 193
+.loc ../contracts/additional/Cell.sol, 195
 TUPLE 0
 NEWC
 PUSHSLICE x7570677261646543656c6c20
@@ -1214,6 +1153,17 @@ CALLREF {
 CALLREF {
 	CALL $console_no_obj_log_41304fac_macro$
 }
+.loc ../contracts/additional/Cell.sol, 196
+NEWC
+STSLICECONST x42_
+STSLICE
+PUSHINT 111
+STZEROES
+ENDC
+PUSHPOW2 7
+ADDCONST 2
+UFITS 8
+SENDRAWMSG
 .loc ../contracts/additional/Cell.sol, 0
 
 .macro _resolveCell
@@ -1225,7 +1175,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Cell.sol, 197
+.loc ../contracts/additional/Cell.sol, 200
 OVER
 PUSHCONT {
 	LDI 64
@@ -1283,19 +1233,19 @@ THROW 0
 CALL $_resolveCell_4321abcf_internal_macro$
 
 .macro _resolveCell_4321abcf_internal_macro
-.loc ../contracts/additional/Cell.sol, 200
+.loc ../contracts/additional/Cell.sol, 203
 GETGLOB 15
 CALLREF {
 	CALL $_buildCellCode_b82b0578_internal_macro$
 }
-.loc ../contracts/additional/Cell.sol, 201
+.loc ../contracts/additional/Cell.sol, 204
 SWAP
 CALLREF {
 	CALL $_buildCellState_56197829_internal_macro$
 }
-.loc ../contracts/additional/Cell.sol, 202
+.loc ../contracts/additional/Cell.sol, 205
 HASHCU
-.loc ../contracts/additional/Cell.sol, 203
+.loc ../contracts/additional/Cell.sol, 206
 MYADDR
 PARSEMSGADDR
 THIRD
@@ -1305,7 +1255,7 @@ STI 8
 STU 256
 ENDC
 CTOS
-.loc ../contracts/additional/Cell.sol, 204
+.loc ../contracts/additional/Cell.sol, 207
 TUPLE 0
 NEWC
 PUSHSLICE x7265736f6c766543656c6c203220
@@ -1329,10 +1279,10 @@ CALLREF {
 CALL $_buildCellCode_b82b0578_internal_macro$
 
 .macro _buildCellCode_b82b0578_internal_macro
-.loc ../contracts/additional/Cell.sol, 209
+.loc ../contracts/additional/Cell.sol, 212
 NEWC
 STSLICE
-.loc ../contracts/additional/Cell.sol, 210
+.loc ../contracts/additional/Cell.sol, 213
 MYCODE
 CTOS
 SWAP
@@ -1449,7 +1399,7 @@ CALLREF {
 CALL $_buildCellState_56197829_internal_macro$
 
 .macro _buildCellState_56197829_internal_macro
-.loc ../contracts/additional/Cell.sol, 217
+.loc ../contracts/additional/Cell.sol, 220
 PUSHINT 0
 NEWC
 STU 256
@@ -2248,14 +2198,20 @@ NIP
 
 .macro public_function_selector
 DUP
-PUSHINT 753305830
+PUSHINT 767649474
 LEQ
 IFJMPREF {
 	DUP
-	PUSHINT 110726366
+	PUSHINT 403590561
 	EQUAL
 	IFJMPREF {
-		CALL $getDetails$
+		CALL $helpCell$
+	}
+	DUP
+	PUSHINT 417943995
+	EQUAL
+	IFJMPREF {
+		CALL $upgradeCell$
 	}
 	DUP
 	PUSHINT 422049209
@@ -2264,27 +2220,27 @@ IFJMPREF {
 		CALL $calculateEnergy$
 	}
 	DUP
-	PUSHINT 684641468
-	EQUAL
-	IFJMPREF {
-		CALL $_helpCell$
-	}
-	DUP
-	PUSHINT 753305830
-	EQUAL
-	IFJMPREF {
-		CALL $upgradeCell$
-	}
-}
-DUP
-PUSHINT 1226587748
-LEQ
-IFJMPREF {
-	DUP
 	PUSHINT 767649474
 	EQUAL
 	IFJMPREF {
 		CALL $_resolveCell$
+	}
+}
+DUP
+PUSHINT 1130245201
+LEQ
+IFJMPREF {
+	DUP
+	PUSHINT 857033716
+	EQUAL
+	IFJMPREF {
+		CALL $markCell$
+	}
+	DUP
+	PUSHINT 960328916
+	EQUAL
+	IFJMPREF {
+		CALL $getDetails$
 	}
 	DUP
 	PUSHINT 999350159
@@ -2293,45 +2249,39 @@ IFJMPREF {
 		CALL $constructor$
 	}
 	DUP
-	PUSHINT 1155961382
+	PUSHINT 1130245201
 	EQUAL
 	IFJMPREF {
-		CALL $helpCell$
+		CALL $_helpCell$
 	}
+}
+DUP
+PUSHINT 1482330212
+LEQ
+IFJMPREF {
 	DUP
 	PUSHINT 1226587748
 	EQUAL
 	IFJMPREF {
 		CALL $getOwner$
 	}
-}
-DUP
-PUSHINT 2013012156
-LEQ
-IFJMPREF {
 	DUP
-	PUSHINT 1482330212
-	EQUAL
-	IFJMPREF {
-		CALL $transferOwnership$
-	}
-	DUP
-	PUSHINT 1794846614
-	EQUAL
-	IFJMPREF {
-		CALL $attkCell$
-	}
-	DUP
-	PUSHINT 1844419628
+	PUSHINT 1381500326
 	EQUAL
 	IFJMPREF {
 		CALL $_attkCell$
 	}
 	DUP
-	PUSHINT 2013012156
+	PUSHINT 1405678700
 	EQUAL
 	IFJMPREF {
-		CALL $owner$
+		CALL $attkCell$
+	}
+	DUP
+	PUSHINT 1482330212
+	EQUAL
+	IFJMPREF {
+		CALL $transferOwnership$
 	}
 }
 DUP
@@ -2339,10 +2289,10 @@ PUSHINT 2065167154
 LEQ
 IFJMPREF {
 	DUP
-	PUSHINT 2063808545
+	PUSHINT 2013012156
 	EQUAL
 	IFJMPREF {
-		CALL $markCell$
+		CALL $owner$
 	}
 	DUP
 	PUSHINT 2065167154

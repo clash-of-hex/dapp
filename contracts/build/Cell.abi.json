@@ -34,7 +34,6 @@
 				{"name":"energySec","type":"uint128"},
 				{"name":"energyMax","type":"uint128"},
 				{"name":"lastCalcTime","type":"uint128"},
-				{"name":"nowCalcTime","type":"uint128"},
 				{"name":"owner","type":"uint256"}
 			]
 		},
@@ -49,6 +48,7 @@
 		{
 			"name": "markCell",
 			"inputs": [
+				{"name":"sendGasTo","type":"address"},
 				{"components":[{"name":"x","type":"int64"},{"name":"y","type":"int64"},{"name":"z","type":"int64"}],"name":"targetCoord","type":"tuple"},
 				{"name":"energy","type":"uint128"}
 			],
@@ -58,6 +58,7 @@
 		{
 			"name": "helpCell",
 			"inputs": [
+				{"name":"sendGasTo","type":"address"},
 				{"components":[{"name":"x","type":"int64"},{"name":"y","type":"int64"},{"name":"z","type":"int64"}],"name":"targetCoord","type":"tuple"},
 				{"name":"energy","type":"uint128"}
 			],
@@ -67,6 +68,7 @@
 		{
 			"name": "_helpCell",
 			"inputs": [
+				{"name":"sendGasTo","type":"address"},
 				{"components":[{"name":"x","type":"int64"},{"name":"y","type":"int64"},{"name":"z","type":"int64"}],"name":"coord","type":"tuple"},
 				{"components":[{"name":"r","type":"uint8"},{"name":"g","type":"uint8"},{"name":"b","type":"uint8"}],"name":"color","type":"tuple"},
 				{"name":"energy","type":"uint128"}
@@ -77,6 +79,7 @@
 		{
 			"name": "attkCell",
 			"inputs": [
+				{"name":"sendGasTo","type":"address"},
 				{"components":[{"name":"x","type":"int64"},{"name":"y","type":"int64"},{"name":"z","type":"int64"}],"name":"targetCoord","type":"tuple"},
 				{"name":"energy","type":"uint128"}
 			],
@@ -86,6 +89,7 @@
 		{
 			"name": "_attkCell",
 			"inputs": [
+				{"name":"sendGasTo","type":"address"},
 				{"components":[{"name":"x","type":"int64"},{"name":"y","type":"int64"},{"name":"z","type":"int64"}],"name":"coord","type":"tuple"},
 				{"components":[{"name":"r","type":"uint8"},{"name":"g","type":"uint8"},{"name":"b","type":"uint8"}],"name":"color","type":"tuple"},
 				{"name":"energy","type":"uint128"}
@@ -96,6 +100,7 @@
 		{
 			"name": "upgradeCell",
 			"inputs": [
+				{"name":"sendGasTo","type":"address"}
 			],
 			"outputs": [
 			]

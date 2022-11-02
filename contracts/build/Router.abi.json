@@ -33,6 +33,7 @@
 		{
 			"name": "newGame",
 			"inputs": [
+				{"name":"sendGasTo","type":"address"},
 				{"components":[{"name":"x","type":"int64"},{"name":"y","type":"int64"},{"name":"z","type":"int64"}],"name":"baseCoord","type":"tuple"}
 			],
 			"outputs": [
@@ -41,6 +42,7 @@
 		{
 			"name": "_newCell",
 			"inputs": [
+				{"name":"sendGasTo","type":"address"},
 				{"components":[{"name":"x","type":"int64"},{"name":"y","type":"int64"},{"name":"z","type":"int64"}],"name":"baseCoord","type":"tuple"},
 				{"components":[{"name":"x","type":"int64"},{"name":"y","type":"int64"},{"name":"z","type":"int64"}],"name":"targetCoord","type":"tuple"},
 				{"components":[{"name":"r","type":"uint8"},{"name":"g","type":"uint8"},{"name":"b","type":"uint8"}],"name":"color","type":"tuple"},

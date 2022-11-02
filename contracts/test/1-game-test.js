@@ -50,7 +50,7 @@ describe(`Test Router contract (BASE)`, async function() {
         codeCell: Cell.code,
         ownerPubkey: `0x${signer.publicKey}`,
       },
-      value: toNano(10),
+      value: toNano(2),
     });
     router = _router;
     console.log(`Router deployed at: ${router.address.toString()}`);
@@ -75,6 +75,7 @@ describe(`Test Router contract (BASE)`, async function() {
     }
     
     let res = await locklift.tracing.trace(router.methods.newGame({
+        sendGasTo: owner.address.toString(),
         baseCoord: cellCoord
     }).send({
         from: owner.address.toString(),
@@ -100,28 +101,6 @@ describe(`Test Router contract (BASE)`, async function() {
 
   });
 
-  it('Start new game in exist cell', async () => {
-    let cellCoord = {
-      x: 0,
-      y: 0,
-      z: 0
-    }
-    
-    let res = await locklift.tracing.trace(router.methods.newGame({
-        baseCoord: cellCoord
-    }).send({
-        from: owner.address.toString(),
-        amount: toNano(2),
-    }),
-    {
-      allowedCodes: {
-        compute: [51],
-        action: [],
-      },
-    });
-
-  });
-  
 });
 
 describe(`Test Cell contract (BASE)`, async function() {
@@ -133,6 +112,7 @@ describe(`Test Cell contract (BASE)`, async function() {
     }
     
     let res = await locklift.tracing.trace(cell1.methods.markCell({
+        sendGasTo: owner.address.toString(),
         targetCoord: cellCoord,
         energy: 1000
     }).send({
