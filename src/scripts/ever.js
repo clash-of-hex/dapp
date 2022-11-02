@@ -108,6 +108,7 @@ export async function newGame(cellCoord) {
   try {
     console.log('newGame', 1);
     let res = await router.methods.newGame({
+        sendGasTo: accountAddress,
         baseCoord: cellCoord
     }).send({
         from: accountAddress,
@@ -131,11 +132,12 @@ export async function markCell(address, cellCoord, energy) {
   try {
     console.log('markCell', 1);
     let res = await cell.methods.markCell({
+        sendGasTo: accountAddress,
         targetCoord: cellCoord,
         energy: energy
     }).send({
         from: accountAddress,
-        amount: '3000000000',
+        amount: '2000000000',
     });
     console.log('markCell', res);
 
@@ -155,9 +157,10 @@ export async function upgradeCell(address) {
   try {
     console.log('upgradeCell', 1);
     let res = await cell.methods.upgradeCell({
+        sendGasTo: accountAddress,
     }).send({
         from: accountAddress,
-        amount: '3000000000',
+        amount: '1000000000',
     });
     console.log('upgradeCell', res);
 
@@ -177,11 +180,12 @@ export async function helpCell(address, cellCoord, energy) {
   try {
     console.log('helpCell', 1);
     let res = await cell.methods.helpCell({
+        sendGasTo: accountAddress,
         targetCoord: cellCoord,
         energy: energy
     }).send({
         from: accountAddress,
-        amount: '3000000000',
+        amount: '1000000000',
     });
     console.log('helpCell', res);
 
@@ -201,11 +205,12 @@ export async function attkCell(address, cellCoord, energy) {
   try {
     console.log('attkCell', 1);
     let res = await cell.methods.attkCell({
+        sendGasTo: accountAddress,
         targetCoord: cellCoord,
         energy: energy
     }).send({
         from: accountAddress,
-        amount: '3000000000',
+        amount: '1000000000',
     });
     console.log('attkCell', res);
 
