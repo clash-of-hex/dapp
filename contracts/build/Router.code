@@ -1,0 +1,1474 @@
+.version sol 0.62.0
+
+.macro constructor
+DROP
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7_with_init_storage$
+}
+GETGLOB 6
+THROWIF 51
+OVER
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+}
+IF
+LDU 256
+LDREF
+ENDS
+SWAP
+.loc ../contracts/abstract/OwnableExternal.sol, 12
+CALLREF {
+	CALL $_transferOwnership_87c9187f_internal_macro$
+}
+.loc ../contracts/Router.sol, 35
+GETPARAM 7
+FIRST
+PUSHINT 1000000000
+GREATER
+THROWIFNOT 1060
+.loc ../contracts/Router.sol, 36
+ACCEPT
+.loc ../contracts/Router.sol, 37
+SETGLOB 12
+.loc ../contracts/Router.sol, 0
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro getDetails
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/Router.sol, 40
+ENDS
+.loc ../contracts/Router.sol, 0
+CALLREF {
+	CALL $getDetails_fbbf93a0_internal_macro$
+}
+PUSH S2
+PUSHCONT {
+	PUSH S4
+	CTOS
+	LDU 2
+	LDMSGADDR
+	DROP
+	NIP
+	NEWC
+	STSLICECONST xc
+	STSLICE
+	PUSHINT 98
+	STZEROES
+	REVERSE 2, 1
+	STSLICECONST xec0230cc
+	STU 16
+	STU 256
+	ENDC
+	PUSHINT 0
+	SENDRAWMSG
+}
+PUSHCONT {
+	DROP2
+}
+IFELSE
+IFREF {
+	CALL $upd_only_time_in_c4$
+}
+THROW 0
+
+.globl	getDetails_fbbf93a0_internal
+.type	getDetails_fbbf93a0_internal, @function
+CALL $getDetails_fbbf93a0_internal_macro$
+
+.macro getDetails_fbbf93a0_internal_macro
+.loc ../contracts/Router.sol, 43
+GETGLOB 11
+CALLREF {
+	CALL $owner_8da5cb5b_internal_macro$
+}
+.loc ../contracts/Router.sol, 0
+
+.macro getAddressCells
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/Router.sol, 46
+LDU 32
+LDDICT
+ROTREV
+PAIR
+SWAP
+ENDS
+.loc ../contracts/Router.sol, 0
+CALLREF {
+	CALL $getAddressCells_0db95feb_internal_macro$
+}
+OVER
+PUSHCONT {
+	PUSH S3
+	CTOS
+	LDU 2
+	LDMSGADDR
+	DROP
+	NIP
+	NEWC
+	STSLICECONST xc
+	STSLICE
+	PUSHINT 3815111823
+	STUR 130
+	SWAP
+	UNPAIR
+	XCHG S2
+	STU 32
+	STDICT
+	ENDC
+	PUSHINT 0
+	SENDRAWMSG
+}
+PUSHCONT {
+	DROP
+}
+IFELSE
+IFREF {
+	CALL $upd_only_time_in_c4$
+}
+THROW 0
+
+.globl	getAddressCells_0db95feb_internal
+.type	getAddressCells_0db95feb_internal, @function
+CALL $getAddressCells_0db95feb_internal_macro$
+
+.macro getAddressCells_0db95feb_internal_macro
+.loc ../contracts/Router.sol, 46
+PUSHINT 0
+NEWDICT
+PAIR
+.loc ../contracts/Router.sol, 51
+PUSHINT 0
+PUSHCONT {
+	PUSH2 S0, S2
+	FIRST
+	LESS
+}
+PUSHCONT {
+	.loc ../contracts/Router.sol, 52
+	DUP2
+	PUSH S4
+	SECOND
+	PUSHINT 32
+	DICTUGET
+	THROWIFNOT 50
+	CALLREF {
+		LDI 64
+		LDI 64
+		LDI 64
+		ENDS
+		TRIPLE
+	}
+	CALLREF {
+		CALL $_resolveCell_4321abcf_internal_macro$
+	}
+	SWAP
+	UNPAIR
+	OVER
+	INC
+	ROLLREV 3
+	PUSHINT 32
+	DICTUSET
+	PAIR
+	POP S2
+	.loc ../contracts/Router.sol, 51
+	INC
+	.loc ../contracts/Router.sol, 0
+}
+WHILE
+DROP
+.loc ../contracts/Router.sol, 54
+NIP
+.loc ../contracts/Router.sol, 0
+
+.macro newGame
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/Router.sol, 58
+OVER
+PUSHCONT {
+	LDI 64
+	LDREF
+	ENDS
+	CTOS
+}
+PUSHCONT {
+	LDI 64
+}
+IFELSE
+LDI 64
+LDI 64
+ROLLREV 3
+TRIPLE
+SWAP
+ENDS
+.loc ../contracts/Router.sol, 0
+CALLREF {
+	CALL $newGame_0bb0154e_internal_macro$
+}
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.globl	newGame_0bb0154e_internal
+.type	newGame_0bb0154e_internal, @function
+CALL $newGame_0bb0154e_internal_macro$
+
+.macro newGame_0bb0154e_internal_macro
+.loc ../contracts/Router.sol, 61
+DEPTH
+ADDCONST -2
+PICK
+PUSHINT 1000000000
+GREATER
+THROWIFNOT 2000
+.loc ../contracts/Router.sol, 62
+PUSHINT 3000
+OVER
+CALLREF {
+	CALL $HexUtils_no_obj_isCorrectCoord_3e33fe95_macro$
+}
+TRUE
+EQUAL
+THROWANYIFNOT
+.loc ../contracts/Router.sol, 63
+ACCEPT
+.loc ../contracts/Router.sol, 65
+GETGLOB 5
+DUP
+ISNULL
+PUSHCONT {
+	DROP
+	PUSHINT 0
+}
+IF
+SWAP
+CALLREF {
+	CALL $getRndUint8_27059573_internal_macro$
+}
+CALLREF {
+	CALL $getRndUint8_27059573_internal_macro$
+}
+CALLREF {
+	CALL $getRndUint8_27059573_internal_macro$
+}
+TRIPLE
+PUSHINT 0
+CALLREF {
+	CALL $deployCell_a11b44c8_internal_macro$
+}
+.loc ../contracts/Router.sol, 66
+TUPLE 0
+NEWC
+PUSHSLICE x6e657747616d6520
+CALLREF {
+	CALL $storeStringInBuilders_macro$
+}
+ROT
+CALLREF {
+	CALL $convertAddressToHexString_macro$
+}
+CALLREF {
+	CALL $assembleList_macro$
+}
+CALLREF {
+	CALL $console_no_obj_log_41304fac_macro$
+}
+.loc ../contracts/Router.sol, 0
+
+.macro _newCell
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/Router.sol, 69
+OVER
+PUSHCONT {
+	LDI 64
+	LDREF
+	ENDS
+	CTOS
+}
+PUSHCONT {
+	LDI 64
+}
+IFELSE
+LDI 64
+LDI 64
+ROLLREV 3
+TRIPLE
+SWAP
+LDI 64
+LDI 64
+LDI 64
+ROLLREV 3
+TRIPLE
+SWAP
+LDU 8
+LDU 8
+LDU 8
+ROLLREV 3
+TRIPLE
+SWAP
+LDU 128
+ENDS
+.loc ../contracts/Router.sol, 0
+CALLREF {
+	CALL $_newCell_212f77cb_internal_macro$
+}
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro _newCell_212f77cb_internal_macro
+.loc ../contracts/Router.sol, 75
+DEPTH
+ADDCONST -2
+PICK
+PUSHINT 1000000000
+GREATER
+THROWIFNOT 2000
+.loc ../contracts/Router.sol, 76
+GETGLOB 9
+PUSH S4
+CALLREF {
+	CALL $_resolveCell_4321abcf_internal_macro$
+}
+SDEQ
+THROWIFNOT 1020
+.loc ../contracts/Router.sol, 77
+PUSHINT 3000
+PUSH S4
+CALLREF {
+	CALL $HexUtils_no_obj_isCorrectCoord_3e33fe95_macro$
+}
+TRUE
+EQUAL
+THROWANYIFNOT
+.loc ../contracts/Router.sol, 78
+PUSHINT 3000
+PUSH S3
+CALLREF {
+	CALL $HexUtils_no_obj_isCorrectCoord_3e33fe95_macro$
+}
+TRUE
+EQUAL
+THROWANYIFNOT
+.loc ../contracts/Router.sol, 79
+PUSHINT 3000
+ROLL 4
+PUSH S4
+CALLREF {
+	CALL $HexUtils_no_obj_isNeighborCoord_8b5853ae_macro$
+}
+TRUE
+EQUAL
+THROWANYIFNOT
+.loc ../contracts/Router.sol, 80
+ACCEPT
+.loc ../contracts/Router.sol, 82
+GETGLOB 5
+DUP
+ISNULL
+PUSHCONT {
+	DROP
+	PUSHINT 0
+}
+IF
+ROLLREV 3
+CALLREF {
+	CALL $deployCell_a11b44c8_internal_macro$
+}
+.loc ../contracts/Router.sol, 83
+TUPLE 0
+NEWC
+PUSHSLICE x5f6e657743656c6c20
+CALLREF {
+	CALL $storeStringInBuilders_macro$
+}
+ROT
+CALLREF {
+	CALL $convertAddressToHexString_macro$
+}
+CALLREF {
+	CALL $assembleList_macro$
+}
+CALLREF {
+	CALL $console_no_obj_log_41304fac_macro$
+}
+.loc ../contracts/Router.sol, 0
+
+.globl	deployCell_a11b44c8_internal
+.type	deployCell_a11b44c8_internal, @function
+CALL $deployCell_a11b44c8_internal_macro$
+
+.macro deployCell_a11b44c8_internal_macro
+.loc ../contracts/Router.sol, 91
+MYADDR
+CALLREF {
+	CALL $_buildCellCode_b82b0578_internal_macro$
+}
+.loc ../contracts/Router.sol, 92
+ROLL 3
+CALLREF {
+	CALL $_buildCellState_56197829_internal_macro$
+}
+.loc ../contracts/Router.sol, 93
+REVERSE 4, 0
+MYADDR
+ROLL 4
+DUP
+HASHCU
+NEWC
+STSLICECONST x801_
+STU 256
+ENDC
+CTOS
+ROLLREV 5
+PUSH S5
+NEWC
+STSLICECONST x62_
+STSLICE
+PUSHINT 3
+STUR 111
+OVER
+CALLREF {
+	CTOS
+	LDI 1
+	SWAP
+	PUSHCONT {
+		LDI 5
+		NIP
+	}
+	IF
+	LDI 1
+	SWAP
+	PUSHCONT {
+		LDI 2
+		NIP
+	}
+	IF
+	LDOPTREF
+	LDOPTREF
+	LDDICT
+	ENDS
+	BLKDROP 3
+}
+STREF
+STSLICECONST 1
+ROLLREV 4
+NEWC
+STSLICECONST x3b90df8f
+STSLICE
+STU 256
+SWAP
+UNTRIPLE
+REVERSE 4, 0
+STU 8
+STU 8
+STU 8
+SWAP
+NEWC
+STU 128
+STBREFR
+STBREFR
+ENDC
+PUSHINT 64
+SENDRAWMSG
+.loc ../contracts/Router.sol, 0
+
+.macro _resolveCell
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/Router.sol, 107
+OVER
+PUSHCONT {
+	LDI 64
+	LDREF
+	ENDS
+	CTOS
+}
+PUSHCONT {
+	LDI 64
+}
+IFELSE
+LDI 64
+LDI 64
+ROLLREV 3
+TRIPLE
+SWAP
+ENDS
+.loc ../contracts/Router.sol, 0
+CALLREF {
+	CALL $_resolveCell_4321abcf_internal_macro$
+}
+OVER
+PUSHCONT {
+	PUSH S3
+	CTOS
+	LDU 2
+	LDMSGADDR
+	DROP
+	NIP
+	NEWC
+	STSLICECONST xc
+	STSLICE
+	PUSHINT 1
+	STUR 98
+	SWAP
+	NEWC
+	STSLICECONST xadc166c2
+	STSLICE
+	STBREFR
+	ENDC
+	PUSHINT 0
+	SENDRAWMSG
+}
+PUSHCONT {
+	DROP
+}
+IFELSE
+IFREF {
+	CALL $upd_only_time_in_c4$
+}
+THROW 0
+
+.globl	_resolveCell_4321abcf_internal
+.type	_resolveCell_4321abcf_internal, @function
+CALL $_resolveCell_4321abcf_internal_macro$
+
+.macro _resolveCell_4321abcf_internal_macro
+.loc ../contracts/Router.sol, 110
+MYADDR
+CALLREF {
+	CALL $_buildCellCode_b82b0578_internal_macro$
+}
+.loc ../contracts/Router.sol, 111
+SWAP
+CALLREF {
+	CALL $_buildCellState_56197829_internal_macro$
+}
+.loc ../contracts/Router.sol, 112
+HASHCU
+.loc ../contracts/Router.sol, 113
+MYADDR
+PARSEMSGADDR
+THIRD
+NEWC
+STSLICECONST x9_
+STI 8
+STU 256
+ENDC
+CTOS
+.loc ../contracts/Router.sol, 0
+
+.globl	_buildCellCode_b82b0578_internal
+.type	_buildCellCode_b82b0578_internal, @function
+CALL $_buildCellCode_b82b0578_internal_macro$
+
+.macro _buildCellCode_b82b0578_internal_macro
+.loc ../contracts/Router.sol, 118
+NEWC
+STSLICE
+.loc ../contracts/Router.sol, 119
+GETGLOB 12
+CTOS
+SWAP
+ENDC
+
+CALLREF {
+	PUSH S1
+	PUSHSLICE x8adb35
+	SDEQ
+	PUSHREFCONT {
+		SWAP      ; salt sliceCode
+		LDREF
+		LDREF
+		DROP         ; salt selfCallCode usualSelector
+		XCHG S1, S2  ; selfCallCode salt usualSelector
+		CTOS         ; selfCallCode salt usualSelector
+		CALLREF {
+			
+			LDREFRTOS  ; selfCallCode salt restUsualSelector intSelector
+
+			PUSHSLICE xF4A4_
+			SDBEGINSX
+			LDDICT     ; selfCallCode salt restUsualSelector dict intSelector
+			LDU 10
+			NIP
+			DUP
+			SREFS      ; selfCallCode salt restUsualSelector dict intSelector refs
+			PUSHCONT {
+				LDREF
+			}
+			PUSHCONT {
+				PUSHREF {
+				}
+				SWAP
+			}
+			IFELSE
+		                ; selfCallCode salt restUsualSelector dict version intSelector
+			PUSHSLICE xF4A1
+			SDBEGINSX
+			DROP
+			            ; selfCallCode salt restUsualSelector dict version
+			SWAP        ; selfCallCode salt restUsualSelector version dict
+			NEWC        ; selfCallCode salt restUsualSelector version dict builder
+			STSLICECONST xF4A4_ ; DICTPUSHCONST
+			STDICT
+			PUSHINT 32
+			STUR 10
+			STSLICECONST xF4A1 ; DICTUGETJMP
+			STREF       ; selfCallCode salt restUsualSelector builder
+			XCHG S1, S2 ; selfCallCode restUsualSelector salt builder
+			STREF       ; selfCallCode restUsualSelector builder
+			NEWC        ; selfCallCode restUsualSelector builder usualBuilder
+			STBREF      ; selfCallCode restUsualSelector usualBuilder
+			STSLICE     ; selfCallCode usualBuilder
+
+		}
+		NEWC        ; selfCallCode usualBuilder mainBuilder
+		STSLICECONST x8adb35
+		XCHG S1, S2 ; usualBuilder selfCallCode mainBuilder
+		STREF
+		STBREF
+		ENDC
+	}
+	PUSHREFCONT {
+		SWAP
+		CALLREF {
+			
+			LDREFRTOS  ; selfCallCode salt restUsualSelector intSelector
+
+			PUSHSLICE xF4A4_
+			SDBEGINSX
+			LDDICT     ; selfCallCode salt restUsualSelector dict intSelector
+			LDU 10
+			NIP
+			DUP
+			SREFS      ; selfCallCode salt restUsualSelector dict intSelector refs
+			PUSHCONT {
+				LDREF
+			}
+			PUSHCONT {
+				PUSHREF {
+				}
+				SWAP
+			}
+			IFELSE
+		                ; selfCallCode salt restUsualSelector dict version intSelector
+			PUSHSLICE xF4A1
+			SDBEGINSX
+			DROP
+			            ; selfCallCode salt restUsualSelector dict version
+			SWAP        ; selfCallCode salt restUsualSelector version dict
+			NEWC        ; selfCallCode salt restUsualSelector version dict builder
+			STSLICECONST xF4A4_ ; DICTPUSHCONST
+			STDICT
+			PUSHINT 32
+			STUR 10
+			STSLICECONST xF4A1 ; DICTUGETJMP
+			STREF       ; selfCallCode salt restUsualSelector builder
+			XCHG S1, S2 ; selfCallCode restUsualSelector salt builder
+			STREF       ; selfCallCode restUsualSelector builder
+			NEWC        ; selfCallCode restUsualSelector builder usualBuilder
+			STBREF      ; selfCallCode restUsualSelector usualBuilder
+			STSLICE     ; selfCallCode usualBuilder
+
+		}
+		ENDC
+	}
+	IFELSE
+}
+.loc ../contracts/Router.sol, 0
+
+.globl	_buildCellState_56197829_internal
+.type	_buildCellState_56197829_internal, @function
+CALL $_buildCellState_56197829_internal_macro$
+
+.macro _buildCellState_56197829_internal_macro
+.loc ../contracts/Router.sol, 126
+PUSHINT 0
+NEWC
+STU 256
+PUSHINT 0
+NEWDICT
+PUSHINT 64
+DICTUSETB
+SWAP
+CALLREF {
+	UNTRIPLE
+	XCHG S2
+	NEWC
+	STI 64
+	STI 64
+	STI 64
+}
+PUSHINT 1
+ROT
+PUSHINT 64
+DICTUSETB
+NEWC
+STDICT
+ENDC
+SWAP
+NEWC
+STSLICECONST x2_
+STOPTREF
+STOPTREF
+STZERO
+ENDC
+.loc ../contracts/Router.sol, 0
+
+.macro on_bounce_macro
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/Router.sol, 134
+PLDU 32
+.loc ../contracts/Router.sol, 135
+DUP
+PUSHINT 999350159
+EQUAL
+PUSHCONT {
+	.loc ../contracts/Router.sol, 136
+	TUPLE 0
+	NEWC
+	PUSHSLICE x6f6e426f756e63652043656c6c20636f6e7374727563746f7220
+	CALLREF {
+		CALL $storeStringInBuilders_macro$
+	}
+	GETGLOB 9
+	CALLREF {
+		CALL $convertAddressToHexString_macro$
+	}
+	PUSHSLICE x20
+	CALLREF {
+		CALL $storeStringInBuilders_macro$
+	}
+	PUSH S2
+	PUSHINT 0
+	BLKPUSH 2, 0
+	CALLREF {
+		CALL $convertIntToDecStr_macro$
+	}
+	CALLREF {
+		CALL $assembleList_macro$
+	}
+	CALLREF {
+		CALL $console_no_obj_log_41304fac_macro$
+	}
+	.loc ../contracts/Router.sol, 0
+}
+IF
+.loc ../contracts/Router.sol, 0
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+
+.globl	getRndUint8_27059573_internal
+.type	getRndUint8_27059573_internal, @function
+CALL $getRndUint8_27059573_internal_macro$
+
+.macro getRndUint8_27059573_internal_macro
+.loc ../contracts/Router.sol, 141
+LTIME
+ADDRAND
+.loc ../contracts/Router.sol, 142
+PUSHPOW2DEC 8
+RAND
+.loc ../contracts/Router.sol, 0
+
+.macro getOwner
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/abstract/OwnableExternal.sol, 15
+ENDS
+.loc ../contracts/abstract/OwnableExternal.sol, 0
+CALLREF {
+	CALL $getOwner_893d20e8_internal_macro$
+}
+OVER
+PUSHCONT {
+	PUSH S3
+	CTOS
+	LDU 2
+	LDMSGADDR
+	DROP
+	NIP
+	NEWC
+	STSLICECONST xc
+	STSLICE
+	PUSHINT 3374071396
+	STUR 130
+	STU 256
+	ENDC
+	PUSHINT 0
+	SENDRAWMSG
+}
+PUSHCONT {
+	DROP
+}
+IFELSE
+IFREF {
+	CALL $upd_only_time_in_c4$
+}
+THROW 0
+
+.globl	getOwner_893d20e8_internal
+.type	getOwner_893d20e8_internal, @function
+CALL $getOwner_893d20e8_internal_macro$
+
+.macro getOwner_893d20e8_internal_macro
+.loc ../contracts/abstract/OwnableExternal.sol, 16
+GETGLOB 10
+.loc ../contracts/abstract/OwnableExternal.sol, 0
+
+.macro owner
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/abstract/OwnableExternal.sol, 19
+LDU 32
+GETGLOB 4
+ROT
+SETINDEXQ 5
+SETGLOB 4
+ENDS
+.loc ../contracts/abstract/OwnableExternal.sol, 0
+CALLREF {
+	CALL $owner_8da5cb5b_internal_macro$
+}
+OVER
+PUSHCONT {
+	PUSH S3
+	CTOS
+	LDU 2
+	LDMSGADDR
+	DROP
+	NIP
+	NEWC
+	STSLICECONST xc
+	STSLICE
+	PUSHINT 4160495804
+	STUR 130
+	STU 256
+	ENDC
+	PUSHINT 0
+}
+PUSHCONT {
+	GETGLOB 4
+	DUP
+	INDEX 3
+	OVER
+	THIRD
+	GETGLOB 9
+	ROLL 3
+	SECOND
+	NEWC
+	STSLICECONST x2_
+	STI 1
+	STSLICECONST x1_
+	STSLICE
+	SWAP
+	STGRAMS
+	STDICT
+	PUSHINT 1
+	STUR 106
+	SWAP
+	NEWC
+	GETGLOB 4
+	INDEX 5
+	STUR 32
+	STU 256
+	STBREFR
+	ENDC
+	GETGLOB 4
+	INDEX 4
+}
+IFELSE
+SENDRAWMSG
+IFREF {
+	CALL $upd_only_time_in_c4$
+}
+THROW 0
+
+.globl	owner_8da5cb5b_internal
+.type	owner_8da5cb5b_internal, @function
+CALL $owner_8da5cb5b_internal_macro$
+
+.macro owner_8da5cb5b_internal_macro
+.loc ../contracts/abstract/OwnableExternal.sol, 20
+GETGLOB 4
+PUSHINT 0
+SETINDEXQ 2
+PUSHINT 64
+SETINDEXQ 4
+FALSE
+SETINDEXQ 1
+SETGLOB 4
+GETGLOB 10
+.loc ../contracts/abstract/OwnableExternal.sol, 0
+
+.macro transferOwnership
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/abstract/OwnableExternal.sol, 23
+OVER
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+}
+IF
+LDU 256
+ENDS
+.loc ../contracts/abstract/OwnableExternal.sol, 0
+CALLREF {
+	CALL $transferOwnership_d23e8489_internal_macro$
+}
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.globl	transferOwnership_d23e8489_internal
+.type	transferOwnership_d23e8489_internal, @function
+CALL $transferOwnership_d23e8489_internal_macro$
+
+.macro transferOwnership_d23e8489_internal_macro
+.loc ../contracts/abstract/OwnableExternal.sol, 35
+CALLREF {
+	CALL $owner_8da5cb5b_internal_macro$
+}
+GETGLOB 5
+DUP
+ISNULL
+PUSHCONT {
+	DROP
+	PUSHINT 0
+}
+IF
+EQUAL
+THROWIFNOT 100
+.loc ../contracts/abstract/OwnableExternal.sol, 36
+ACCEPT
+.loc ../contracts/abstract/OwnableExternal.sol, 24
+DUP
+THROWIFNOT 100
+.loc ../contracts/abstract/OwnableExternal.sol, 25
+CALLREF {
+	CALL $_transferOwnership_87c9187f_internal_macro$
+}
+.loc ../contracts/abstract/OwnableExternal.sol, 0
+
+.globl	_transferOwnership_87c9187f_internal
+.type	_transferOwnership_87c9187f_internal, @function
+CALL $_transferOwnership_87c9187f_internal_macro$
+
+.macro _transferOwnership_87c9187f_internal_macro
+.loc ../contracts/abstract/OwnableExternal.sol, 29
+GETGLOB 10
+.loc ../contracts/abstract/OwnableExternal.sol, 30
+OVER
+SETGLOB 10
+.loc ../contracts/abstract/OwnableExternal.sol, 31
+PUSHSLICE xc0000000000000000000000000536cd3f2
+NEWC
+STSLICE
+STU 256
+STU 256
+ENDC
+PUSHINT 0
+SENDRAWMSG
+.loc ../contracts/abstract/OwnableExternal.sol, 0
+
+.macro c4_to_c7
+PUSHROOT
+CTOS
+LDU 256 ; pubkey c4
+LDU 64 ; pubkey timestamp c4
+LDU 1 ; ctor flag
+NIP
+LDU 256
+LDU 16
+LDREF
+ENDS
+SETGLOB 12
+SETGLOB 11
+SETGLOB 10
+SETGLOB 3
+SETGLOB 2
+
+.macro c4_to_c7_with_init_storage
+PUSHROOT
+CTOS
+SBITS
+GTINT 1
+PUSHCONT {
+	PUSHINT 0
+	PUSHROOT
+	CTOS
+	PLDDICT ; D
+	PUSHINT 0
+	PUSHINT 1
+	PUSH S2
+	PUSHINT 64
+	DICTUGET
+	ZEROSWAPIFNOT
+	PUSHCONT {
+		PLDU 16
+	}
+	IF
+	PUSHREF {
+	}
+	SETGLOB 12
+	SETGLOB 11
+	SETGLOB 10
+	PUSHINT 64
+	DICTUGET
+	THROWIFNOT 61
+	PLDU 256
+	SETGLOB 2
+	PUSHINT 0 ; timestamp
+	SETGLOB 3
+}
+IFREFELSE {
+	CALL $c4_to_c7$
+}
+
+.macro c7_to_c4
+GETGLOB 12
+GETGLOB 11
+GETGLOB 10
+GETGLOB 3
+GETGLOB 2
+NEWC
+STU 256
+STU 64
+STONE
+STU 256
+STU 16
+STREF
+ENDC
+POPROOT
+
+.macro upd_only_time_in_c4
+PUSHROOT
+CTOS
+LDU 256
+LDU 64
+NIP
+GETGLOB 3
+ROT
+NEWC
+STU 256
+STU 64
+STSLICE
+ENDC
+POPROOT
+
+.internal-alias :main_internal, 0
+.internal :main_internal
+PUSHROOT
+CTOS
+SBITS
+NEQINT 1
+SETGLOB 6
+PUSH S2
+CTOS
+LDU 4 ; bounced tail
+LDMSGADDR ; bounced src tail
+DROP
+SETGLOB 9
+MODPOW2 1
+GETGLOB 4
+TRUE
+SETINDEXQ 1
+PUSHINT 10000000
+SETINDEXQ 2
+NULL
+SETINDEXQ 3
+PUSHINT 0
+SETINDEXQ 4
+SETGLOB 4
+IFJMPREF {
+	OVER
+	LDSLICE 32
+	NIP
+	CALL $on_bounce_macro$
+}
+OVER
+SEMPTY ; isEmpty
+IFJMPREF {
+	GETGLOB 6
+	THROWIFNOT 76
+}
+OVER
+LDUQ 32  ; [funcId] body' ok
+THROWIFNOT 60
+OVER
+IFNOTJMPREF {
+	GETGLOB 6
+	THROWIFNOT 76
+}
+SWAP
+CALLREF {
+	CALL $public_function_selector$
+}
+THROW 60
+
+.internal-alias :main_external, -1
+.internal :main_external
+PUSHROOT
+CTOS
+SBITS
+NEQINT 1
+SETGLOB 6
+PUSHSLICE x8000000000000000000000000000000000000000000000000000000000000000001_
+SETGLOB 9
+OVER
+CALLREF {
+	CALL $c4_to_c7_with_init_storage$
+}
+LDU 1 ; haveSign msgSlice
+SWAP
+PUSHCONT {
+	PUSHPOW2 9
+	LDSLICEX ; signatureSlice msgSlice
+	DUP
+	HASHSU ; signatureSlice msgSlice hashMsgSlice
+	SWAP
+	LDU 1 ; signatureSlice hashMsgSlice hasPubkey msgSlice
+	SWAP
+	PUSHCONT {
+		LDU 256 ; signatureSlice hashMsgSlice pubkey msgSlice
+		XCHG S3
+		SWAP
+	}
+	PUSHCONT {
+		XCHG S2
+		GETGLOB 2
+	}
+	IFELSE
+	DUP
+	SETGLOB 5
+	CHKSIGNU ; msgSlice isSigned
+	THROWIFNOT 40
+}
+PUSHCONT {
+	LDU 1 ; hasPubkey msgSlice
+	SWAP
+	THROWIF 58
+}
+IFELSE
+LDU 64 ; timestamp msgSlice
+SWAP
+CALL $replay_protection_macro$
+LDU 32 ; expireAt msgSlice
+SWAP
+NOW ; msgSlice expireAt now
+GREATER ; msgSlice expireAt>now
+THROWIFNOT 57
+LDU 32 ; funcId body
+SWAP
+CALLREF {
+	CALL $public_function_selector$
+}
+THROW 60
+
+.globl	HexUtils_with_obj_isCorrectCoord_3e33fe95
+.type	HexUtils_with_obj_isCorrectCoord_3e33fe95, @function
+CALL $HexUtils_with_obj_isCorrectCoord_3e33fe95_macro$
+
+.macro HexUtils_with_obj_isCorrectCoord_3e33fe95_macro
+.loc ../contracts/utils/HexUtils.sol, 44
+DUP
+FIRST
+OVER
+SECOND
+ADD
+FITS 64
+OVER
+THIRD
+ADD
+FITS 64
+EQINT 0
+.loc ../contracts/utils/HexUtils.sol, 0
+
+.globl	HexUtils_no_obj_isCorrectCoord_3e33fe95
+.type	HexUtils_no_obj_isCorrectCoord_3e33fe95, @function
+CALL $HexUtils_no_obj_isCorrectCoord_3e33fe95_macro$
+
+.macro HexUtils_no_obj_isCorrectCoord_3e33fe95_macro
+.loc ../contracts/utils/HexUtils.sol, 44
+DUP
+FIRST
+OVER
+SECOND
+ADD
+FITS 64
+SWAP
+THIRD
+ADD
+FITS 64
+EQINT 0
+.loc ../contracts/utils/HexUtils.sol, 0
+
+.globl	HexUtils_with_obj_isNeighborCoord_8b5853ae
+.type	HexUtils_with_obj_isNeighborCoord_8b5853ae, @function
+CALL $HexUtils_with_obj_isNeighborCoord_8b5853ae_macro$
+
+.macro HexUtils_with_obj_isNeighborCoord_8b5853ae_macro
+.loc ../contracts/utils/HexUtils.sol, 48
+PUXC S1, S-1
+CALLREF {
+	CALL $HexUtils_no_obj_cube_distance_527ce867_macro$
+}
+EQINT 1
+.loc ../contracts/utils/HexUtils.sol, 0
+
+.globl	HexUtils_no_obj_isNeighborCoord_8b5853ae
+.type	HexUtils_no_obj_isNeighborCoord_8b5853ae, @function
+CALL $HexUtils_no_obj_isNeighborCoord_8b5853ae_macro$
+
+.macro HexUtils_no_obj_isNeighborCoord_8b5853ae_macro
+.loc ../contracts/utils/HexUtils.sol, 48
+CALLREF {
+	CALL $HexUtils_no_obj_cube_distance_527ce867_macro$
+}
+EQINT 1
+.loc ../contracts/utils/HexUtils.sol, 0
+
+.globl	HexUtils_with_obj_cube_distance_527ce867
+.type	HexUtils_with_obj_cube_distance_527ce867, @function
+CALL $HexUtils_with_obj_cube_distance_527ce867_macro$
+
+.macro HexUtils_with_obj_cube_distance_527ce867_macro
+.loc ../contracts/utils/HexUtils.sol, 36
+OVER
+FIRST
+OVER
+FIRST
+SUB
+FITS 64
+ABS
+FITS 64
+PUSH S2
+SECOND
+PUSH S2
+SECOND
+SUB
+FITS 64
+ABS
+FITS 64
+PUSH S3
+THIRD
+ROLL 3
+THIRD
+SUB
+FITS 64
+ABS
+FITS 64
+MAX
+MAX
+.loc ../contracts/utils/HexUtils.sol, 0
+
+.globl	HexUtils_no_obj_cube_distance_527ce867
+.type	HexUtils_no_obj_cube_distance_527ce867, @function
+CALL $HexUtils_no_obj_cube_distance_527ce867_macro$
+
+.macro HexUtils_no_obj_cube_distance_527ce867_macro
+.loc ../contracts/utils/HexUtils.sol, 36
+OVER
+FIRST
+OVER
+FIRST
+SUB
+FITS 64
+ABS
+FITS 64
+PUSH S2
+SECOND
+PUSH S2
+SECOND
+SUB
+FITS 64
+ABS
+FITS 64
+ROLL 3
+THIRD
+ROLL 3
+THIRD
+SUB
+FITS 64
+ABS
+FITS 64
+MAX
+MAX
+.loc ../contracts/utils/HexUtils.sol, 0
+
+.globl	console_with_obj_log_41304fac
+.type	console_with_obj_log_41304fac, @function
+CALL $console_with_obj_log_41304fac_macro$
+
+.macro console_with_obj_log_41304fac_macro
+.loc ../node_modules/locklift/src/console.sol, 10
+DUP
+PUSHREFSLICE {
+	.blob xc600fffffffffffffffffffffffffffffffffffffffffffffffffe2468acf13579bc0000000000000000000000000903f4294_
+}
+NEWC
+STSLICE
+STREF
+ENDC
+PUSHINT 0
+SENDRAWMSG
+.loc ../node_modules/locklift/src/console.sol, 0
+
+.globl	console_no_obj_log_41304fac
+.type	console_no_obj_log_41304fac, @function
+CALL $console_no_obj_log_41304fac_macro$
+
+.macro console_no_obj_log_41304fac_macro
+.loc ../node_modules/locklift/src/console.sol, 10
+PUSHREFSLICE {
+	.blob xc600fffffffffffffffffffffffffffffffffffffffffffffffffe2468acf13579bc0000000000000000000000000903f4294_
+}
+NEWC
+STSLICE
+STREF
+ENDC
+PUSHINT 0
+SENDRAWMSG
+.loc ../node_modules/locklift/src/console.sol, 0
+
+.macro public_function_selector
+DUP
+PUSHINT 1482330212
+LEQ
+IFJMPREF {
+	DUP
+	PUSHINT 610047689
+	EQUAL
+	IFJMPREF {
+		CALL $newGame$
+	}
+	DUP
+	PUSHINT 767649474
+	EQUAL
+	IFJMPREF {
+		CALL $_resolveCell$
+	}
+	DUP
+	PUSHINT 1226587748
+	EQUAL
+	IFJMPREF {
+		CALL $getOwner$
+	}
+	DUP
+	PUSHINT 1482330212
+	EQUAL
+	IFJMPREF {
+		CALL $transferOwnership$
+	}
+}
+DUP
+PUSHINT 2013012156
+LEQ
+IFJMPREF {
+	DUP
+	PUSHINT 1667628175
+	EQUAL
+	IFJMPREF {
+		CALL $getAddressCells$
+	}
+	DUP
+	PUSHINT 1812082892
+	EQUAL
+	IFJMPREF {
+		CALL $getDetails$
+	}
+	DUP
+	PUSHINT 1960114911
+	EQUAL
+	IFJMPREF {
+		CALL $_newCell$
+	}
+	DUP
+	PUSHINT 2013012156
+	EQUAL
+	IFJMPREF {
+		CALL $owner$
+	}
+}
+DUP
+PUSHINT 2058756614
+EQUAL
+IFJMPREF {
+	CALL $constructor$
+}
+

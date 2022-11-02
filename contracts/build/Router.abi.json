@@ -1,0 +1,118 @@
+{
+	"ABI version": 2,
+	"version": "2.2",
+	"header": ["pubkey", "time", "expire"],
+	"functions": [
+		{
+			"name": "constructor",
+			"inputs": [
+				{"name":"ownerPubkey","type":"uint256"},
+				{"name":"codeCell","type":"cell"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "getDetails",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"nonce","type":"uint16"},
+				{"name":"owner","type":"uint256"}
+			]
+		},
+		{
+			"name": "getAddressCells",
+			"inputs": [
+				{"components":[{"name":"x","type":"int64"},{"name":"y","type":"int64"},{"name":"z","type":"int64"}],"name":"coords","type":"tuple[]"}
+			],
+			"outputs": [
+				{"name":"addreses","type":"address[]"}
+			]
+		},
+		{
+			"name": "newGame",
+			"inputs": [
+				{"components":[{"name":"x","type":"int64"},{"name":"y","type":"int64"},{"name":"z","type":"int64"}],"name":"baseCoord","type":"tuple"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "_newCell",
+			"inputs": [
+				{"components":[{"name":"x","type":"int64"},{"name":"y","type":"int64"},{"name":"z","type":"int64"}],"name":"baseCoord","type":"tuple"},
+				{"components":[{"name":"x","type":"int64"},{"name":"y","type":"int64"},{"name":"z","type":"int64"}],"name":"targetCoord","type":"tuple"},
+				{"components":[{"name":"r","type":"uint8"},{"name":"g","type":"uint8"},{"name":"b","type":"uint8"}],"name":"color","type":"tuple"},
+				{"name":"energy","type":"uint128"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "_resolveCell",
+			"inputs": [
+				{"components":[{"name":"x","type":"int64"},{"name":"y","type":"int64"},{"name":"z","type":"int64"}],"name":"coord","type":"tuple"}
+			],
+			"outputs": [
+				{"name":"cellAddress","type":"address"}
+			]
+		},
+		{
+			"name": "getOwner",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"pubkey","type":"uint256"}
+			]
+		},
+		{
+			"name": "owner",
+			"inputs": [
+				{"name":"answerId","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"pubkey","type":"uint256"}
+			]
+		},
+		{
+			"name": "transferOwnership",
+			"inputs": [
+				{"name":"newOwner","type":"uint256"}
+			],
+			"outputs": [
+			]
+		}
+	],
+	"data": [
+		{"key":1,"name":"_nonce","type":"uint16"}
+	],
+	"events": [
+		{
+			"name": "CellCreated",
+			"inputs": [
+				{"name":"owner","type":"uint256"},
+				{"components":[{"name":"x","type":"int64"},{"name":"y","type":"int64"},{"name":"z","type":"int64"}],"name":"coord","type":"tuple"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "OwnershipTransferred",
+			"inputs": [
+				{"name":"oldOwner","type":"uint256"},
+				{"name":"newOwner","type":"uint256"}
+			],
+			"outputs": [
+			]
+		}
+	],
+	"fields": [
+		{"name":"_pubkey","type":"uint256"},
+		{"name":"_timestamp","type":"uint64"},
+		{"name":"_constructorFlag","type":"bool"},
+		{"name":"_owner","type":"uint256"},
+		{"name":"_nonce","type":"uint16"},
+		{"name":"_codeCell","type":"cell"}
+	]
+}
