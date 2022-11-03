@@ -33,43 +33,51 @@ describe(`Test Router contract (BASE)`, async function() {
     signer = (await locklift.keystore.getSigner("0"));
     console.log('signer publicKey', signer)
     console.log('_randomNonce', _randomNonce)
-    const { account: _owner } = await locklift.factory.accounts.addNewAccount({
+    // const { account: _owner } = await locklift.factory.accounts.addNewAccount({
+      // publicKey: signer.publicKey,
+      // type: WalletTypes.WalletV3,
+      // value: toNano(100),
+    // });
+    const _owner = await locklift.factory.accounts.addExistingAccount({
       publicKey: signer.publicKey,
       type: WalletTypes.WalletV3,
-      value: toNano(100),
     });
     owner = _owner;
-    console.log(`Owner: ${owner.publicKey.toString(16)}`);
+    console.log(`Owner address: ${owner.address.toString()}`);
+    console.log(`Owner pubkey: ${owner.publicKey.toString(16)}`);
   });
   
   it('Deploy router', async () => {
-    
-    const Cell = await locklift.factory.getContractArtifacts("Cell");
-    let { contract: _router } = await locklift.factory.deployContract({
-      contract: "Router",
-      publicKey: signer.publicKey,
-      initParams: {
-        _nonce: _randomNonce,
-      },
-      constructorParams: {
-        codeCell: Cell.code,
-        ownerPubkey: `0x${signer.publicKey}`,
-      },
-      value: toNano(2),
-    });
-    router = _router;
-    console.log(`Router deployed at: ${router.address.toString()}`);
-    
-    let details
-    details = await router.methods.getDetails().call();
-    console.log('getDetails router', details);
-    expect(details.nonce)
-        .to.be.equal(_randomNonce, 'Wrong nonce');
-    expect(BigNumber(details.owner).toString(16).padStart("0", 64))
-        .to.be.equal(signer.publicKey, 'Wrong public Key');
-    let conf = Config.readConf();
-    conf.router = router.address.toString()
-    Config.saveConf(conf)
+    try {
+      const Cell = await locklift.factory.getContractArtifacts("Cell");
+      let { contract: _router } = await locklift.factory.deployContract({
+        contract: "Router",
+        publicKey: signer.publicKey,
+        initParams: {
+          _nonce: _randomNonce,
+        },
+        constructorParams: {
+          codeCell: Cell.code,
+          ownerPubkey: `0x${signer.publicKey}`,
+        },
+        value: toNano(2),
+      });
+      router = _router;
+      console.log(`Router deployed at: ${router.address.toString()}`);
+      
+      let details
+      details = await router.methods.getDetails().call();
+      console.log('getDetails router', details);
+      expect(details.nonce)
+          .to.be.equal(_randomNonce, 'Wrong nonce');
+      expect(BigNumber(details.owner).toString(16).padStart("0", 64))
+          .to.be.equal(signer.publicKey, 'Wrong public Key');
+      let conf = Config.readConf();
+      conf.router = router.address.toString()
+      Config.saveConf(conf)
+    } catch(err) {
+      console.log('error', err);
+    }
   });
   
 });

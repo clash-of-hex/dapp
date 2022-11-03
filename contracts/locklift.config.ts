@@ -86,6 +86,35 @@ const config: LockliftConfig = {
         amount: 20,
       },
     },
+    devnet: {
+      // Specify connection settings for https://github.com/broxus/everscale-standalone-client/
+      connection: {
+        id: 1,
+        group: "dev",
+        type: "graphql",
+        data: {
+          endpoints: ['https://devnet-sandbox.evercloud.dev/graphql'],
+          latencyDetectionInterval: 1000,
+          local: false,
+        },
+      },
+      // This giver is default Wallet
+      giver: {
+        // Check if you need provide custom giver
+        giverFactory: (ever, keyPair, address) => new GiverWallet(ever, keyPair, address),
+        // address: "0:08beb8d49e0312a5ef466d81cc37fe94e8f4e575fce884236f1227235c38f933",
+        // key: "08c88a120e81897fa3c08a34aa6366294cb1225a359a741e154b7c18787f8f31",
+        address: "0:643d0fb053652ae024c970a20302ca8d5d06e4ee6fa4d3848a1d2031d810f9d0",
+        phrase: "wet marine air vague urban history fish virtual mandate future charge busy",
+        accountId: 0
+      },
+      keys: {
+        // Use everdev to generate your phrase
+        // !!! Never commit it in your repos !!!
+        phrase: "action inject penalty envelope rabbit element slim tornado dinner pizza off blood",
+        amount: 20,
+      },
+    },
   },
   mocha: {
     timeout: 2000000,
