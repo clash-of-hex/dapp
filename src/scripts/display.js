@@ -44,23 +44,9 @@ export async function initiateMap(map, ever) {
     camera.y = halfCanvasHeight;
     
     PROVIDER = ever
-    await PROVIDER.init()
-    
-    let coords = []
-    for (let i = 0; i < currentMap.length; i++) {
-        let hex = currentMap[i]
-        coords.push({x: hex.x, y: hex.y, z: -hex.x-hex.y})
-    }
-    //console.log('coords', coords)
-    let addreses = await PROVIDER.getAddressCells(coords);
-    //console.log('addreses', addreses)
+    await PROVIDER.init(currentMap)
     recalcEnergy();
-    for (let i = 0; i < currentMap.length; i++) {
-        let hex = currentMap[i]
-        hex.address = addreses[i];
-        await PROVIDER.subscribeCellState(addreses[i], hex);
-        hex.details = await PROVIDER.getDetailsCell(addreses[i]);
-    }
+    
 }
 
 function recalcEnergy() {
