@@ -24,7 +24,7 @@ contract Cell is OwnableExternal, ICell {
     Types.CubeCoord static _coord;
     
     uint128[] _costPerLevel      = [uint128(1000), uint128(1500), uint128(2000), uint128(2500), uint128(3000)];
-    uint128[] _energyPerLevel    = [uint128(50),   uint128(60),   uint128(70),   uint128(80),   uint128(90)  ];
+    uint128[] _energyPerLevel    = [uint128(10),   uint128(11),   uint128(12),   uint128(13),   uint128(14)  ];
     uint128[] _energyPerLevelMax = [uint128(2000), uint128(3000), uint128(4000), uint128(5000), uint128(6000)];
    
     address private _router; // admin

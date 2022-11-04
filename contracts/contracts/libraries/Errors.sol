@@ -1,4 +1,4 @@
-pragma ton-solidity >= 0.57.0;
+pragma ever-solidity >= 0.62.0;
 
 library Errors {
 
@@ -13,5 +13,6 @@ library Errors {
     
     uint16 constant WRONG_COORD                                     = 3000;
     uint16 constant NOT_ENOUGH_ENERGY                               = 3010;
+    uint16 constant WRONG_PARAMS                                    = 3020;
     
 }

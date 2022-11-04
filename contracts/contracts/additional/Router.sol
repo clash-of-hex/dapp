@@ -6,19 +6,19 @@ pragma AbiHeader pubkey;
 
 import "locklift/src/console.sol";
 
-import './abstract/OwnableExternal.sol';
-import './libraries/MsgFlag.sol';
-import './libraries/Errors.sol';
-import './utils/HexUtils.sol';
-import './utils/Types.sol';
+import '../abstract/OwnableInternal.sol';
+import '../libraries/MsgFlag.sol';
+import '../libraries/Errors.sol';
+import '../utils/HexUtils.sol';
+import '../utils/Types.sol';
 
-import './additional/Cell.sol';
-import './interfaces/IRouter.sol';
-import './interfaces/ICell.sol';
+import '../additional/Cell.sol';
+import '../interfaces/IRouter.sol';
+import '../interfaces/ICell.sol';
 
-contract Router is OwnableExternal, IRouter {
+contract Router is OwnableInternal, IRouter {
 
-    uint16 static _nonce;
+    uint32 static _nonce;
     
     // constants
     uint128 constant ROUTER_DEPLOY_VALUE = 1.0 ever;
@@ -26,23 +26,32 @@ contract Router is OwnableExternal, IRouter {
     uint128 constant ACTION_VALUE = 0.2 ever;
 
     TvmCell private _codeCell;
+    uint64 private _radius;
+    uint64 private _speed;
+    string private _name;
 
     constructor(
-        uint256 ownerPubkey,
-        TvmCell codeCell
-    ) OwnableExternal (
-        ownerPubkey
+        address root,
+        TvmCell codeCell,
+        uint64 radius,
+        uint64 speed,
+        string name
+    ) OwnableInternal (
+        root
     ) public {
         require(address(this).balance > ROUTER_DEPLOY_VALUE, Errors.NOT_ENOUGH_BALANCE);
         tvm.accept();
         _codeCell = codeCell;
+        _radius = radius;
+        _speed = speed;
+        _name = name;
         console.log(format("constructor msg.sender {}", msg.sender));
     }
 
     function getDetails() public view returns(
-        uint16 nonce, uint256 owner
+        uint32 nonce, uint64 radius, uint64 speed, string name, address owner
     ) {
-        return ( _nonce, OwnableExternal.owner() );
+        return ( _nonce, _radius, _speed, _name, OwnableInternal.owner() );
     }
 
     function getAddressCells(
@@ -65,6 +74,7 @@ contract Router is OwnableExternal, IRouter {
         require(HexUtils.isCorrectCoord(baseCoord) == true, Errors.WRONG_COORD);
         tvm.rawReserve(0, 4); 
 
+        console.log(format("newGame msg.pubkey {}", msg.pubkey()));
         address cellAddress = deployCell(sendGasTo, msg.pubkey(), baseCoord, Types.Color(getRndUint8(), getRndUint8(), getRndUint8()), 0);
     }
 
