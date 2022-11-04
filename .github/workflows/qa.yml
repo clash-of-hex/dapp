@@ -4,14 +4,20 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'src/*'
+      - 'package*'
+      - 'webpack.config.js'
+      - 'config.json'
+
   pull_request:
     branches:
       - main
-  paths:
-    - 'src/*'
-    - 'package*'
-    - 'webpack.config.js'
-    - 'config.json'
+    paths:
+      - 'src/*'
+      - 'package*'
+      - 'webpack.config.js'
+      - 'config.json'
 
 jobs:
   build:
