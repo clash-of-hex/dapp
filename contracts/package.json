@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "npx locklift test --network local",
     "dev":  "npx locklift test --network devnet",
+    "test": "npx locklift test --network local"
   },
   "author": "",
   "license": "ISC",

@@ -12,7 +12,7 @@ crypto.createHash = algorithm => crypto_orig_createHash(algorithm == "md4" ? "sh
 const config = {
     output: {
         filename: 'main.[contenthash].js',
-        path: path.resolve(__dirname, 'docs')
+        path: path.resolve(__dirname, 'dist')
     },
     plugins: [new HtmlWebpackPlugin({
         template: './src/index.html'
