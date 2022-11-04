@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "dev":  "npx locklift test --network devnet",
-    "test": "npx locklift test --network local"
+    "test": "npx locklift test --network local",
+    "deploy_dev":  "npx locklift run --network devnet --script scripts/1-deploy-router.js"
   },
   "author": "",
   "license": "ISC",
