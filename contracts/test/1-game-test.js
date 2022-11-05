@@ -117,7 +117,7 @@ describe(`Test Router contract (BASE)`, async function() {
           .to.be.equal(gameroot.address.toString(), 'Wrong owner');
 
       let routerState = await locklift.factory.ever.getFullContractState({address: router1.address});
-      console.log('routerState', routerState);
+      console.log('routerState codeHash', routerState.state.codeHash);
           
       let conf = Config.readConf();
       conf['localnet'] = conf['localnet'] || {}

@@ -1,5 +1,9 @@
-import { toNano } from "locklift";
+import { toNano, WalletTypes } from "locklift";
 const Config = require("../scripts/utilsConfig.js"); 
+
+async function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 async function main() {
 
@@ -32,7 +36,7 @@ async function main() {
   console.log(`Gameroot deployed at: ${gameroot.address.toString()}`);
   
   let _nonceNewRouter = locklift.utils.getRandomNonce().toString();
-  let res = await gameroot.methods.newRouter({
+  let res = gameroot.methods.newRouter({
       sendGasTo: owner.address.toString(),
       radius: 10,
       speed: 1,
@@ -41,12 +45,14 @@ async function main() {
   }).send({
       from: owner.address.toString(),
       amount: toNano(2),
-  }));
-  let eventsRouterCreated = await gameroot.getPastEvents({ filter: event => event.event === "RouterCreated" });
-  let eventNewRouter = eventsRouterCreated.events[0].data;
+  });
+  //await sleep(10000);
+  let futureEvent = await gameroot.waitForEvent({ filter: event => event.event === "RouterCreated" });
+  console.log('futureEvent', futureEvent.data);
+  let eventNewRouter = futureEvent.data;
 
   let routerState = await locklift.factory.ever.getFullContractState({address: eventNewRouter.routerAddress});
-  console.log('routerState', routerState);
+  console.log('routerState codeHash', routerState.state.codeHash);
 
   let conf = Config.readConf();
   conf['testnet'] = conf['testnet'] || {}
