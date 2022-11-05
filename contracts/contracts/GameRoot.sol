@@ -56,8 +56,8 @@ contract GameRoot is OwnableExternal {
         uint16 nonce
     ) public {
         require(msg.value > ROUTER_DEPLOY_VALUE + ACTION_VALUE*2, Errors.LOW_GAS_VALUE);
-        require(radius < 10, Errors.WRONG_PARAMS);
-        require(speed < 10, Errors.WRONG_PARAMS);
+        require(radius <= 10, Errors.WRONG_PARAMS);
+        require(speed <= 10, Errors.WRONG_PARAMS);
         require(name.byteLength() < 128, Errors.WRONG_PARAMS);
         tvm.rawReserve(0, 4); 
 
