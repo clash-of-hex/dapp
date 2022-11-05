@@ -178,7 +178,7 @@ contract Cell is OwnableExternal, ICell {
         } else {
           _transferOwnership(msg.pubkey());
           _color = color;
-          startProcess(energy, energyTemp);
+          startProcess(energy - energyTemp, energyTemp);
         }
         sendGasTo.transfer({value: 0, flag: MsgFlag.ALL_NOT_RESERVED + MsgFlag.IGNORE_ERRORS, bounce: false}); 
     }
