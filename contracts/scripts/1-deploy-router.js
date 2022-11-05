@@ -46,13 +46,13 @@ async function main() {
       from: owner.address.toString(),
       amount: toNano(2),
   });
-  //await sleep(10000);
   let futureEvent = await gameroot.waitForEvent({ filter: event => event.event === "RouterCreated" });
   console.log('futureEvent', futureEvent.data);
   let eventNewRouter = futureEvent.data;
-
-  let routerState = await locklift.factory.ever.getFullContractState({address: eventNewRouter.routerAddress});
-  console.log('routerState codeHash', routerState.state.codeHash);
+  console.log('routerAddress', eventNewRouter.routerAddress.toString());
+  await sleep(10000);
+  let routerState = await locklift.factory.ever.getFullContractState({address: eventNewRouter.routerAddress.toString()});
+  console.log('routerState codeHash', routerState);
 
   let conf = Config.readConf();
   conf['testnet'] = conf['testnet'] || {}
