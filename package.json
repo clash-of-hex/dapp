@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "gh-pages": "gh-pages -d dist -r $(git remote get-url gh-pages) -b main",
+    "gh-pages": "gh-pages -d dist -r $(git remote get-url gh-pages) -b main -m \"up ref:$(git log -n 1 --pretty=format:%h)\"",
     "dev": "webpack serve",
     "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
