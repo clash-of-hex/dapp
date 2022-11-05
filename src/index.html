@@ -12,21 +12,6 @@
     <table style="position: absolute; right: 0px;">
         <tbody>
             <tr>
-                <td></td>
-                <td><button id="camera_up">- Y ⬆️</button></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td><button id="camera_left">- X ⬅️</button></td>
-                <td>📷</td>
-                <td><button id="camera_right">+ X ➡️</button></td>
-            </tr>
-            <tr>
-                <td><button id="zoom_out">- Zoom</button></td>
-                <td><button id="camera_down">+ Y ⬇️</button></td>
-                <td><button id="zoom_in">+ Zoom</button></td>
-            </tr>
-            <tr>
                 <td>network</td>
                 <td colspan=2><div><p data-behavior="network"></p></div></td>
             </tr>
@@ -50,6 +35,12 @@
             </tr>
             <tr data-behavior="main" style="display: none">
                 <td colspan=3><button type="button" data-behavior="disconnectAction">Disconnect</button></td>
+            </tr>
+            <tr data-behavior="main" style="display: none">
+                <td colspan=3>_________</td>
+            </tr>
+            <tr data-behavior="main" style="display: none">
+                <td colspan=3><button type="button" data-behavior="getRoutersAction">Get Routers</button></td>
             </tr>
         </tbody>
     </table>

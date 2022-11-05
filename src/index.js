@@ -10,8 +10,8 @@ import * as PROVIDER from './scripts/ever.js'
 //https://github.com/flauwekeul/honeycomb
 //console.clear();
 
-let map = MAPGENERATOR.getRandomMap(20, 15)
-DISPLAY.initiateMap(map, PROVIDER)
+// let map = MAPGENERATOR.getMap(5)
+DISPLAY.initiateMap(PROVIDER)
 CONTROLS.initiateControls()
 
 if (module.hot) {

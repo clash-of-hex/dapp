@@ -1,8 +1,5 @@
 //Imports
-import {
-    extendHex,
-    defineGrid
-} from 'honeycomb-grid'
+import { defineHex, Grid, spiral, hexToPoint } from 'honeycomb-grid'
 
 //Public variables
 export const camera = {
@@ -11,6 +8,7 @@ export const camera = {
     zoom: 1
 }
 export let currentMap
+const Hex = defineHex({ dimensions: 60, orientation: 'FLAT', origin: { x: -500, y: -400 } })
 
 //Private variables
 const mainCanvas = document.querySelector("#mainCanvas")
@@ -21,7 +19,7 @@ let scales = []
 let hexSize
 let a_full, b_full, c_full, a_hex, b_hex, c_hex
 let halfCanvasWidth, halfCanvasHeight
-let Grid = defineGrid(extendHex({}))
+let grid =  new Grid(Hex)
 let PROVIDER
 let isdblclick = false
 
@@ -29,9 +27,19 @@ async function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 } 
 
+export function getMap(radius) {
+    let map = new Grid(Hex, spiral({ radius: radius }))
+    //Basic water layer
+    for (let hex of map) {
+        hex.type = "64, 128, 255"
+        hex.highlight = false
+    }
+    return map
+}
+
 //Public functions
-export async function initiateMap(map, ever) {
-    currentMap = map
+export async function initiateMap(ever) {
+    currentMap = getMap(5);
     mainCanvas.width = window.innerWidth
     mainCanvas.height = window.innerHeight
     animCanvas.width = window.innerWidth
@@ -71,24 +79,17 @@ function calculateEnergy(hex) {
 }
   
 export function zoomUpdate() {
-    const hex = Grid.pointToHex(camera.x, camera.y)
+    const hex = grid.pointToHex({ x: camera.x, y: camera.y })
     const x = hex.x
     const y = hex.y
     hexSize = scales[camera.zoom]
     calculateHexDimensions()
-    Grid = defineGrid(extendHex({
-        size: hexSize,
-        orientation: 'flat'
-    }))
-    const replacementMap = Grid.rectangle({
-        width: currentMap.width,
-        height: currentMap.height
-    })
+    let replacementMap = new Grid(Hex, spiral({ radius : currentMap.radius }));
     for (let i = 0; i < currentMap.length; i++) {
         currentMap[i].size = replacementMap[i].size
         if (currentMap[i].x === x && currentMap[i].y === y) {
-            camera.x = Math.round(currentMap[i].toPoint().x + b_full + (hexSize / 2))
-            camera.y = Math.round(currentMap[i].toPoint().y + c_full)
+            camera.x = Math.round(hexToPoint(currentMap[i]).x + b_full + (hexSize / 2))
+            camera.y = Math.round(hexToPoint(currentMap[i]).y + c_full)
         }
     }
 }
@@ -106,9 +107,10 @@ function drawMap() {
     for (let hex of currentMap) {
         //Hex is ignored if it wasn't seen yet
         //if (hex.visibility === 'unseen') continue
-
-        let x = hex.toPoint().x,
-            y = hex.toPoint().y
+        // console.log('hex', hex)
+        // console.log('hexToPoint', hexToPoint(hex))
+        let x = hexToPoint(hex).x,
+            y = hexToPoint(hex).y
 
         //Checking if hex is visible within canvas
         if (Math.abs(x - camera.x) > halfCanvasWidth + hexSize ||
@@ -141,7 +143,7 @@ function drawMap() {
         mainCtx.closePath()
         mainCtx.fill()
 
-        setText(mainCtx, x, y-hexSize/2, `${hex.x};${hex.y}`)
+        setText(mainCtx, x, y-hexSize/2, `${hex.q};${hex.r}`)
         if (hex.details) {
           setText(mainCtx, x, y, `${hex.details.energy}`)
           setText(mainCtx, x, y+hexSize/2, `lvl: ${1*hex.details.level+1}`)
@@ -191,9 +193,9 @@ animCanvas.addEventListener('click', async ({
     if (isdblclick) {
       return;
     }
-    offsetX += camera.x + b_full - (mainCanvas.width / 2)
-    offsetY += camera.y + c_full - (mainCanvas.height / 2)
-    const hexCoordinates = Grid.pointToHex(offsetX, offsetY)
+    offsetX += camera.x - (mainCanvas.width / 2)
+    offsetY += camera.y - (mainCanvas.height / 2)
+    const hexCoordinates = grid.pointToHex({ x: offsetX, y: offsetY })
     for (let hex of currentMap) {
       if (hex.x == hexCoordinates.x && hex.y == hexCoordinates.y) {
         hex.highlight = !hex.highlight
@@ -212,9 +214,9 @@ animCanvas.addEventListener('dblclick', async ({
     await sleep(500);
     isdblclick = false
     console.log('dblclick', isdblclick);
-    offsetX += camera.x + b_full - (mainCanvas.width / 2)
-    offsetY += camera.y + c_full - (mainCanvas.height / 2)
-    const hexCoordinates = Grid.pointToHex(offsetX, offsetY)
+    offsetX += camera.x - (mainCanvas.width / 2)
+    offsetY += camera.y - (mainCanvas.height / 2)
+    const hexCoordinates = grid.pointToHex({ x: offsetX, y: offsetY })
     console.log(hexCoordinates)
     let hHex
     let tHex
@@ -231,9 +233,9 @@ animCanvas.addEventListener('dblclick', async ({
     console.log('hHex', hHex);
     console.log('tHex', tHex);
     let cellCoord = {
-      x: hexCoordinates.x,
-      y: hexCoordinates.y,
-      z: -hexCoordinates.x-hexCoordinates.y
+      x: hexCoordinates.q,
+      y: hexCoordinates.r,
+      z: hexCoordinates.s
     }
     if (!hHex) {
       if (!tHex.details) {
@@ -264,7 +266,7 @@ function isNeighborHex(hex1, hex2) {
 }
 
 function cube_distance(hex1, hex2) {
-    return Math.max(Math.abs(hex1.x - hex2.x), Math.abs(hex1.y - hex2.y), Math.abs((-hex1.x-hex1.y) - (-hex2.x-hex2.y)));
+    return Math.max(Math.abs(hex1.q - hex2.q), Math.abs(hex1.r - hex2.r), Math.abs(hex1.s - hex2.s));
 }
 
 window.addEventListener('resize', () => {

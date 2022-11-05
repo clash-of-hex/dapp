@@ -21,7 +21,7 @@ const config = {
     devtool: 'eval-cheap-source-map',
     devServer: {
         port: 8080,
-        contentBase: path.resolve(__dirname, 'docs'),
+        directory: path.join(__dirname, 'public'),
         hot: true
     },
     module: {

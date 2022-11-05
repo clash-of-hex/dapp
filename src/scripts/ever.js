@@ -1,5 +1,11 @@
 import { Address, ProviderRpcClient, TvmException } from 'everscale-inpage-provider';
 import { EverscaleStandaloneClient, SimpleKeystore, SimpleAccountsStorage, WalletV3Account } from 'everscale-standalone-client';
+const { TonClient, signerKeys, signerNone } = require("@eversdk/core");
+//const { libNode } = require("@eversdk/lib-node");
+const { libWeb } = require("@eversdk/lib-web");
+const { Account } = require("@eversdk/appkit");
+
+TonClient.useBinaryLibrary(libWeb)
 
 const routerAbi = require('../../contracts/build/Router.abi.json');
 const cellAbi = require('../../contracts/build/Cell.abi.json');
@@ -9,6 +15,92 @@ let currentMap;
 
 const ever = new ProviderRpcClient({
 });
+
+let everClient;
+let subscribeAcc;
+
+const createClient = (endpoint) => {
+  let client = new TonClient({
+      network: {
+          endpoints: [endpoint],
+          message_retries_count: 3,
+          message_processing_timeout: 60000,
+      },
+  });
+  return client
+};
+
+const getAccount = (abi, address = '', keys = null) => {
+    try {
+        return new Account({abi}, {
+            address: address,
+            signer: (keys ? signerKeys(keys) : signerNone()),
+            client: everClient
+        });
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+const getAccArr = async (addreses) => {
+    try {
+        const result = (await everClient.net.query_collection({
+            collection: "accounts",
+            filter: {
+                id: {
+                    in: addreses,
+                },
+            },
+            result: "id acc_type balance boc",
+        })).result;
+
+        return result;
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+const runLocal = async (abi, address, functionName, input = {}, log = true, boc = null)  => {
+  try {
+    const [account, message] = await Promise.all([
+        boc || everClient.net.query_collection({
+            collection: "accounts",
+            filter: { id: { eq: address } },
+            result: "boc",
+        })
+            .then(({ result }) => result[0].boc)
+            .catch(() => {
+                return undefined;
+            }),
+        everClient.abi.encode_message({
+            abi: {
+                type: 'Contract',
+                value: (abi)
+            },
+            address,
+            call_set: {
+                function_name: functionName,
+                input: input,
+            },
+            signer: { type: "None" },
+        }).then(({ message }) => message),
+    ]);
+    if (!account) return undefined;
+    let response = await everClient.tvm.run_tvm({
+        message: message,
+        account: account,
+        abi: {
+            type: 'Contract',
+            value: (abi)
+        },
+    });
+    if (log) console.log("output:", response.decoded.output);
+
+    return response.decoded.output;
+  } catch (error) {
+      console.error(error);
+  }
+}
 
 function behavior(name, fn) {
     document.querySelectorAll(`[data-behavior=${name}]`).forEach(fn);
@@ -30,6 +122,16 @@ function requestPermissions() {
 async function disconnectAction() {
     console.log('disconnectAction')
     await ever.disconnect();
+}
+
+async function getRoutersAction() {
+    console.log('getRoutersAction')
+    const providerState = await ever.getProviderState();
+    let details = await ever.getAccountsByCodeHash({
+      codeHash: Config[providerState.selectedConnection].codeHash,
+      limit: 10
+    });
+    console.log('routers', details);
 }
 
 async function connect() {
@@ -81,6 +183,12 @@ async function checkConnect() {
         behavior('address', innerText(`${address.substr(0,6)}...${address.substr(-4,4)}`));
         behavior('publicKey', innerText(`${pubkey.substr(0,6)}...${pubkey.substr(-4,4)}`));
         behavior('disconnectAction', elem => elem.onclick = disconnectAction);
+        behavior('getRoutersAction', elem => elem.onclick = getRoutersAction);
+        
+        console.log('endpoint:', Config[network].endpoint);
+        everClient = createClient(Config[network].endpoint);
+        subscribeAcc = getAccount({});
+
         loadMap();
     }
 }
@@ -93,18 +201,11 @@ async function setNetworkChanged(network) {
 }
 
 function contractAddress(network, name = "router") {
-    // if (addr[network] && addr[network][name]) {
-        // return new Address(addr[network][name]);
-    // }
-    // return null
-    return new Address(Config.router)
+    if (Config[network] && Config[network][name]) {
+        return new Address(Config[network][name]);
+    }
+    return null
 }
-
-// async function Contract() {
-    // const providerState = await ever.getProviderState();
-    // const address = contractAddress(providerState.selectedConnection);
-    // return new ever.Contract(abi, address);
-// }
 
 function switchScreen(to) {
     console.log('switchScreen:', to);
@@ -135,17 +236,32 @@ async function mainFlow() {
 async function loadMap() {
     await routerDetails();
     let coords = []
-    for (let i = 0; i < currentMap.length; i++) {
-        let hex = currentMap[i]
-        coords.push({x: hex.x, y: hex.y, z: -hex.x-hex.y})
+    for (const hex of currentMap) {
+        coords.push({x: hex.q, y: hex.r, z: hex.s})
     }
+
     let addreses = await getAddressCells(coords);
-    for (let i = 0; i < currentMap.length; i++) {
-        let hex = currentMap[i]
+    addreses = addreses.map(el => el.toString())
+    let i=0;
+    for (const hex of currentMap) {
         hex.address = addreses[i];
-        await subscribeCellState(addreses[i], hex);
-        hex.details = await getDetailsCell(addreses[i]);
+        i++;
     }
+    
+    await subscribeAllCellState(addreses);
+    let accs = await getAccArr(addreses);
+    console.log('accs', accs);
+    for (let i = 0; i < accs.length; i++) {
+        let details = await getDetailsCell(accs[i].id, accs[i].boc);
+        if (details) {
+          let hex = findHex(accs[i].id);
+          console.log('hex', hex);
+          if (hex) {
+            hex.details = details;
+          }        
+        }
+    }
+
 }
 
 export async function init(map) {
@@ -162,12 +278,22 @@ export async function init(map) {
     }
 }
 
+function findHex(address) {
+  let _hex;
+  for (const hex of currentMap) {
+    if (hex.address == address) {
+      _hex = hex;
+      break;
+    }
+  }
+  return _hex;
+}
+
 
 export async function routerDetails() {
 
   const providerState = await ever.getProviderState();
   const router = new ever.Contract(routerAbi, contractAddress(providerState.selectedConnection, 'router'));
-
   try {
     let details
     details = await router.methods.getDetails({}).call();
@@ -181,17 +307,24 @@ export async function routerDetails() {
 
 }
 
-export async function subscribeCellState(address, hex) {
+export async function subscribeAllCellState(arrAcc) {
 
   try {
-    (await ever.subscribe('contractStateChanged', {
-        address: address,
-    })).on('data', async (event) => {
-        // console.log('contractStateChanged:', {
-            // address: event.address,
-            // state: event.state,
-        // });
-        hex.details = await getDetailsCell(event.address);
+    
+    await subscribeAcc.free();  
+    await subscribeAcc.subscribe("accounts", {
+      id: { in: arrAcc } 
+    }, "id boc", 
+    async (msg) => {
+      console.log(`onAcc:`, msg.id);
+      let hex = findHex(msg.id);
+      console.log('hex', hex);
+      if (hex) {
+        hex.details = await getDetailsCell(msg.id, msg.boc);
+      }        
+    }, 
+    async (msg) => {
+      console.log(`onError:`, msg);
     });
   } catch (e) {
     console.error(e);
@@ -199,7 +332,7 @@ export async function subscribeCellState(address, hex) {
       console.error(e.code);
     }
   }
-
+    
 }
 
 export async function getAddressCells(coords) {
@@ -368,8 +501,16 @@ export async function attkCell(address, cellCoord, energy) {
 
 }
 
-export async function getDetailsCell(address) {
+export async function getDetailsCell(address, boc = null) {
 
+  if (boc) {
+    try {
+        const output = await runLocal(cellAbi, address, "getDetails", {}, true, boc);
+        return output;
+    } catch (error) {
+        console.error(error);
+    }
+  }
   const cell = new ever.Contract(cellAbi, address);
   try {
     const stateRes = await cell.getFullState();
