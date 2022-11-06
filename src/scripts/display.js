@@ -28,7 +28,8 @@ async function sleep(ms) {
 } 
 
 export function getMap(radius) {
-    let map = new Grid(Hex, spiral({ radius: radius }))
+    let map = new Grid(Hex, spiral({ radius: 1*radius }))
+    console.log('getMap', map.size)
     //Basic water layer
     for (let hex of map) {
         hex.type = "64, 128, 255"
@@ -39,7 +40,12 @@ export function getMap(radius) {
 
 //Public functions
 export async function initiateMap(ever) {
-    currentMap = getMap(5);
+    currentMap = []
+    PROVIDER = ever
+    await PROVIDER.init((radius) => {
+      currentMap = getMap(radius)
+      PROVIDER.setMap(currentMap)
+    })
     mainCanvas.width = window.innerWidth
     mainCanvas.height = window.innerHeight
     animCanvas.width = window.innerWidth
@@ -51,8 +57,6 @@ export async function initiateMap(ever) {
     camera.x = halfCanvasWidth;
     camera.y = halfCanvasHeight;
     
-    PROVIDER = ever
-    await PROVIDER.init(currentMap)
     recalcEnergy();
     
 }

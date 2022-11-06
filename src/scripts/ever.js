@@ -12,7 +12,8 @@ const cellAbi = require('../../contracts/build/Cell.abi.json');
 const rootAbi = require('../../contracts/build/GameRoot.abi.json');
 const Config = require("../../config.json");  
 
-let currentMap;
+let currentMap = [];
+let onRoumingChange;
 
 const ever = new ProviderRpcClient({
 });
@@ -149,15 +150,38 @@ async function getRoutersAction() {
           cell.innerHTML = details.radius;
           cell = row.insertCell(2);
           cell.innerHTML = details.speed;
-
-          row = addTblRow('tblRouters')
-          cell = row.insertCell(0);
+          cell = row.insertCell(3);
+          var btn = document.createElement('button');
+          btn.textContent = "Set";
+          btn.setAttribute('type', 'button');
+          btn.setAttribute("addr", accs[i].id);
+          btn.onclick = setRouter
+          cell.appendChild(btn);
+          cell = row.insertCell(4);
           cell.innerHTML = accs[i].id;
-          cell.colSpan = "3"
+          cell.style  = "visibility: hidden";
+          // cell.colSpan = "4"
           // cell.style="text-align:left;"
         }
     }
 
+}
+
+async function setRouter(el) {
+    console.log('setRouter', el)
+    let address = el.target.attributes.addr.value
+    console.log('address', address)
+    const providerState = await ever.getProviderState();
+    const network = providerState.selectedConnection;
+    Config[network].router = address;
+    for (let hex of currentMap) {
+        hex.highlight = false
+        hex.details = undefined;
+    }
+    let details = await routerDetails()
+    console.log('details', details)
+    onRoumingChange(details.radius)
+    loadMap();
 }
 
 async function addRouterAction() {
@@ -272,20 +296,20 @@ async function mainFlow() {
 }
 
 async function loadMap() {
-    await routerDetails();
     let coords = []
     for (const hex of currentMap) {
         coords.push({x: hex.q, y: hex.r, z: hex.s})
     }
 
+    // console.log('coords', coords);
     let addreses = await getAddressCells(coords);
     addreses = addreses.map(el => el.toString())
     let i=0;
     for (const hex of currentMap) {
-        hex.address = addreses[i];
+        hex.address = addreses[i].toString();
         i++;
     }
-    
+    // console.log('addreses', addreses);
     await subscribeAllCellState(addreses);
     let accs = await getAccArr(addreses);
     console.log('accs', accs);
@@ -302,8 +326,13 @@ async function loadMap() {
 
 }
 
-export async function init(map) {
-    currentMap = map;
+export function setMap(map) {
+  currentMap = map;
+}
+
+export async function init(_onRoumingChange) {
+    onRoumingChange = _onRoumingChange;
+
     if ((await ever.hasProvider())) {
         try {
             await ever.ensureInitialized();
@@ -336,6 +365,7 @@ export async function routerDetails() {
     let details
     details = await router.methods.getDetails({}).call();
     console.log('getDetails router', details);
+    return details
   } catch (e) {
     console.error(e);
     if (e instanceof TvmException) {
