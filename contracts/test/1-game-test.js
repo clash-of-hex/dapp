@@ -92,6 +92,7 @@ describe(`Test Router contract (BASE)`, async function() {
     try {
       let res = await locklift.tracing.trace(gameroot.methods.newRouter({
           sendGasTo: owner.address.toString(),
+          roundTime: 300,
           radius: 5,
           speed: 1,
           name: 'Test location radius:5 speed:1',
@@ -134,6 +135,7 @@ describe(`Test Router contract (BASE)`, async function() {
     try {
     let res = await locklift.tracing.trace(gameroot.methods.newRouter({
         sendGasTo: owner.address.toString(),
+        roundTime: 3600,
         radius: 3,
         speed: 2,
         name: 'Test location radius:3 speed:2',

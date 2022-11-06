@@ -38,6 +38,7 @@ async function main() {
   let _nonceNewRouter = locklift.utils.getRandomNonce().toString();
   let res = gameroot.methods.newRouter({
       sendGasTo: owner.address.toString(),
+      roundTime: 3600,
       radius: 10,
       speed: 1,
       name: 'Test location radius:10 speed:1',
