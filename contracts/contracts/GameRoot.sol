@@ -50,6 +50,7 @@ contract GameRoot is OwnableExternal {
     
     function newRouter(
         address sendGasTo,
+        uint64 roundTime,
         uint64 radius,
         uint64 speed,
         string name,
@@ -61,13 +62,13 @@ contract GameRoot is OwnableExternal {
         require(name.byteLength() < 128, Errors.WRONG_PARAMS);
         tvm.rawReserve(0, 4); 
 
-        address routerAddress = deployRouter(sendGasTo, radius, speed, name);
+        address routerAddress = deployRouter(sendGasTo, roundTime, radius, speed, name);
         emit RouterCreated(nonce, routerAddress);
     }
 
     ////////////////////////////// 
     
-    function deployRouter(address sendGasTo, uint64 radius, uint64 speed, string name) internal returns (address routerAddress) {
+    function deployRouter(address sendGasTo, uint64 roundTime, uint64 radius, uint64 speed, string name) internal returns (address routerAddress) {
 
         TvmCell code = _buildRouterCode(address(this));
         TvmCell state = _buildRouterState(code);
@@ -78,6 +79,7 @@ contract GameRoot is OwnableExternal {
         }(
             address(this),
             _codeCell,
+            roundTime,
             radius,
             speed,
             name

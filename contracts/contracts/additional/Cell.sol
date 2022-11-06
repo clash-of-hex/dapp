@@ -23,28 +23,34 @@ contract Cell is OwnableExternal, ICell {
     
     Types.CubeCoord static _coord;
     
-    uint128[] _costPerLevel      = [uint128(1000), uint128(1500), uint128(2000), uint128(2500), uint128(3000)];
-    uint128[] _energyPerLevel    = [uint128(1),   uint128(2),   uint128(3),   uint128(4),   uint128(5)  ];
-    uint128[] _energyPerLevelMax = [uint128(2000), uint128(3000), uint128(4000), uint128(5000), uint128(6000)];
+    uint64[] _costPerLevel      = [uint64(1000), uint64(1500), uint64(2000), uint64(2500), uint64(3000)];
+    uint64[] _energyPerLevel    = [uint64(1),    uint64(2),    uint64(3),    uint64(4),    uint64(5)  ];
+    uint64[] _energyPerLevelMax = [uint64(2000), uint64(3000), uint64(4000), uint64(5000), uint64(6000)];
    
     address private _router; // admin
-    uint128 private _level; // 
-    uint128 private _energy; // 
+    uint64 private _speed;
+    uint64 private _level; // 
+    uint64 private _energy; // 
     uint128 private _lastCalcTime;
+    uint128 private _endTime;
     
     Types.Color private _color; // 
 
     constructor(
         address router,
         uint256 ownerPubkey, // marked cell user
+        uint128 endTime,
+        uint64 speed,
         Types.Color color,
-        uint128 energy
+        uint64 energy
     ) OwnableExternal (
         ownerPubkey
     ) public {
         require(address(this).balance > CELL_DEPLOY_VALUE, Errors.NOT_ENOUGH_BALANCE);
         tvm.accept();
         _router = router;
+        _endTime = endTime;
+        _speed = speed;
         _color = color;
         _energy = energy;
         _lastCalcTime = now;
@@ -58,16 +64,20 @@ contract Cell is OwnableExternal, ICell {
     function getDetails() public view returns (
         Types.CubeCoord coord,
         Types.Color color,
-        uint128 level,
-        uint128 energy,
-        uint128 energySec,
-        uint128 energyMax,
+        uint64 level,
+        uint64 speed,
+        uint128 endTime,
+        uint64 energy,
+        uint64 energySec,
+        uint64 energyMax,
         uint128 lastCalcTime,
         uint256 owner) {
         return ( 
             _coord,
             _color,
             _level,
+            _speed,
+            _endTime,
             calculateEnergy(),
             _energyPerLevel[_level],
             _energyPerLevelMax[_level],
@@ -76,16 +86,16 @@ contract Cell is OwnableExternal, ICell {
         );
     }
 
-    function calculateEnergy() public view returns (uint128 energy) {
+    function calculateEnergy() public view returns (uint64 energy) {
         energy = _energy;
         if (energy >= _energyPerLevelMax[_level]) {
             return energy;
         }
-        energy = math.min(energy + _energyPerLevel[_level] * (now - _lastCalcTime), _energyPerLevelMax[_level]); 
+        energy = math.min(energy + _energyPerLevel[_level] * _speed * uint64(now - _lastCalcTime), _energyPerLevelMax[_level]); 
     }
 
 //////////////////////////////////
-    function startProcess(uint128 energyP, uint128 energyM) internal {
+    function startProcess(uint64 energyP, uint64 energyM) internal {
         _energy = calculateEnergy() + energyP - energyM;
         _lastCalcTime = now;
     }
@@ -95,8 +105,9 @@ contract Cell is OwnableExternal, ICell {
     function markCell(
         address sendGasTo,
         Types.CubeCoord targetCoord,
-        uint128 energy
+        uint64 energy
     ) public onlyOwner {
+        require(now < _endTime, Errors.TIME_IS_OVER);
         require(msg.value > CELL_DEPLOY_VALUE + ACTION_VALUE, Errors.LOW_GAS_VALUE);
         require(energy >= _costPerLevel[0] && energy <= calculateEnergy(), Errors.NOT_ENOUGH_ENERGY);
         require(HexUtils.isCorrectCoord(targetCoord) == true, Errors.WRONG_COORD);
@@ -113,8 +124,9 @@ contract Cell is OwnableExternal, ICell {
     function helpCell(
         address sendGasTo,
         Types.CubeCoord targetCoord,
-        uint128 energy
+        uint64 energy
     ) public onlyOwner {
+        require(now < _endTime, Errors.TIME_IS_OVER);
         require(msg.value > ACTION_VALUE*2, Errors.LOW_GAS_VALUE);
         require(energy <= calculateEnergy(), Errors.NOT_ENOUGH_ENERGY);
         require(HexUtils.isCorrectCoord(targetCoord) == true, Errors.WRONG_COORD);
@@ -131,7 +143,7 @@ contract Cell is OwnableExternal, ICell {
         address sendGasTo,
         Types.CubeCoord coord,
         Types.Color color,
-        uint128 energy
+        uint64 energy
     ) override external onlyOwner {
         require(msg.value > ACTION_VALUE, Errors.LOW_GAS_VALUE);
         require(msg.sender == _resolveCell(coord), Errors.WRONG_ADDRESS);
@@ -147,8 +159,9 @@ contract Cell is OwnableExternal, ICell {
     function attkCell(
         address sendGasTo,
         Types.CubeCoord targetCoord,
-        uint128 energy
+        uint64 energy
     ) public onlyOwner {
+        require(now < _endTime, Errors.TIME_IS_OVER);
         require(msg.value > ACTION_VALUE*2, Errors.LOW_GAS_VALUE);
         require(energy <= calculateEnergy(), Errors.NOT_ENOUGH_ENERGY);
         require(HexUtils.isCorrectCoord(targetCoord) == true, Errors.WRONG_COORD);
@@ -165,14 +178,14 @@ contract Cell is OwnableExternal, ICell {
         address sendGasTo,
         Types.CubeCoord coord,
         Types.Color color,
-        uint128 energy
+        uint64 energy
     ) override external onlyOwner {
         require(msg.value > ACTION_VALUE, Errors.LOW_GAS_VALUE);
         require(msg.sender == _resolveCell(coord), Errors.WRONG_ADDRESS);
         require(HexUtils.isCorrectCoord(coord) == true, Errors.WRONG_COORD);
         require(HexUtils.isNeighborCoord(_coord, coord) == true, Errors.WRONG_COORD);
         tvm.rawReserve(0, 4); 
-        uint128 energyTemp = calculateEnergy();
+        uint64 energyTemp = calculateEnergy();
         if (energy <= energyTemp) {
           startProcess(0, energy);
         } else {
@@ -187,6 +200,7 @@ contract Cell is OwnableExternal, ICell {
     function upgradeCell(
         address sendGasTo
     ) public onlyOwner {
+        require(now < _endTime, Errors.TIME_IS_OVER);
         require(msg.value > ACTION_VALUE, Errors.LOW_GAS_VALUE);
         require(_costPerLevel[_level+1] <= calculateEnergy(), Errors.NOT_ENOUGH_ENERGY);
         tvm.rawReserve(0, 4); 

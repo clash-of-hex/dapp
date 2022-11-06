@@ -8,14 +8,14 @@ interface ICell {
         address sendGasTo,
         Types.CubeCoord coord,
         Types.Color color,
-        uint128 energy
+        uint64 energy
     ) external; 
 
     function _attkCell(
         address sendGasTo,
         Types.CubeCoord coord,
         Types.Color color,
-        uint128 energy
+        uint64 energy
     ) external; 
 
 }

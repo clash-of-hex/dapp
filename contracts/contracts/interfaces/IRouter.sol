@@ -11,7 +11,7 @@ interface IRouter {
         Types.CubeCoord baseCoord,
         Types.CubeCoord targetCoord,
         Types.Color color,
-        uint128 energy
+        uint64 energy
     ) external; 
     
 }

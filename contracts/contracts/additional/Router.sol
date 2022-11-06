@@ -29,10 +29,12 @@ contract Router is OwnableInternal, IRouter {
     uint64 private _radius;
     uint64 private _speed;
     string private _name;
+    uint128 private _endTime;
 
     constructor(
         address root,
         TvmCell codeCell,
+        uint64 roundTime,
         uint64 radius,
         uint64 speed,
         string name
@@ -42,6 +44,7 @@ contract Router is OwnableInternal, IRouter {
         require(address(this).balance > ROUTER_DEPLOY_VALUE, Errors.NOT_ENOUGH_BALANCE);
         tvm.accept();
         _codeCell = codeCell;
+        _endTime = now + roundTime;
         _radius = radius;
         _speed = speed;
         _name = name;
@@ -49,9 +52,9 @@ contract Router is OwnableInternal, IRouter {
     }
 
     function getDetails() public view returns(
-        uint32 nonce, uint64 radius, uint64 speed, string name, address owner
+        uint32 nonce, uint128 endTime, uint64 radius, uint64 speed, string name, address owner
     ) {
-        return ( _nonce, _radius, _speed, _name, OwnableInternal.owner() );
+        return ( _nonce, _endTime, _radius, _speed, _name, OwnableInternal.owner() );
     }
 
     function getAddressCells(
@@ -70,6 +73,7 @@ contract Router is OwnableInternal, IRouter {
         address sendGasTo, 
         Types.CubeCoord baseCoord
     ) public {
+        require(now < _endTime, Errors.TIME_IS_OVER);
         require(msg.value > CELL_DEPLOY_VALUE + ACTION_VALUE*2, Errors.LOW_GAS_VALUE);
         require(HexUtils.isCorrectCoord(baseCoord) == true, Errors.WRONG_COORD);
         tvm.rawReserve(0, 4); 
@@ -83,8 +87,9 @@ contract Router is OwnableInternal, IRouter {
         Types.CubeCoord baseCoord,
         Types.CubeCoord targetCoord,
         Types.Color color,
-        uint128 energy
+        uint64 energy
     ) override external {
+        require(now < _endTime, Errors.TIME_IS_OVER);
         require(msg.value > CELL_DEPLOY_VALUE + ACTION_VALUE*2, Errors.LOW_GAS_VALUE);
         require(msg.sender == _resolveCell(baseCoord), Errors.WRONG_ADDRESS);
         require(HexUtils.isCorrectCoord(baseCoord) == true, Errors.WRONG_COORD);
@@ -98,7 +103,7 @@ contract Router is OwnableInternal, IRouter {
 
     ////////////////////////////// 
     
-    function deployCell(address sendGasTo, uint256 owner, Types.CubeCoord coord, Types.Color color, uint128 energy) internal returns (address cellAddress) {
+    function deployCell(address sendGasTo, uint256 owner, Types.CubeCoord coord, Types.Color color, uint64 energy) internal returns (address cellAddress) {
 
         TvmCell code = _buildCellCode(address(this));
         TvmCell state = _buildCellState(code, coord);
@@ -108,7 +113,9 @@ contract Router is OwnableInternal, IRouter {
             flag: 0
         }(
             address(this),
-            owner, 
+            owner,
+            _endTime,
+            _speed,
             color,
             energy
         ); 

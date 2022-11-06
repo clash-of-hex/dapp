@@ -14,5 +14,6 @@ library Errors {
     uint16 constant WRONG_COORD                                     = 3000;
     uint16 constant NOT_ENOUGH_ENERGY                               = 3010;
     uint16 constant WRONG_PARAMS                                    = 3020;
+    uint16 constant TIME_IS_OVER                                    = 3030;
     
 }
