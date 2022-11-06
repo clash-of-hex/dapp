@@ -8,14 +8,14 @@ export const camera = {
     zoom: 1
 }
 export let currentMap
-const Hex = defineHex({ dimensions: 60, orientation: 'FLAT', origin: { x: -500, y: -400 } })
+const Hex = defineHex({ dimensions: 52, orientation: 'FLAT', origin: { x: -500, y: -400 } })
 
 //Private variables
 const mainCanvas = document.querySelector("#mainCanvas")
 const animCanvas = document.querySelector("#animationCanvas")
 const mainCtx = mainCanvas.getContext("2d")
 const animCtx = animCanvas.getContext("2d")
-let scales = []
+let scales = 0
 let hexSize
 let a_full, b_full, c_full, a_hex, b_hex, c_hex
 let halfCanvasWidth, halfCanvasHeight
@@ -82,7 +82,7 @@ export function zoomUpdate() {
     const hex = grid.pointToHex({ x: camera.x, y: camera.y })
     const x = hex.x
     const y = hex.y
-    hexSize = scales[camera.zoom]
+    hexSize = scales
     calculateHexDimensions()
     let replacementMap = new Grid(Hex, spiral({ radius : currentMap.radius }));
     for (let i = 0; i < currentMap.length; i++) {
@@ -179,7 +179,9 @@ function windowResizeUpdate() {
     halfCanvasWidth = mainCanvas.width / 2
     halfCanvasHeight = mainCanvas.height / 2
     const min = Math.min(halfCanvasWidth, halfCanvasHeight)
-    scales = [min / 10, min / 7, min / 5]
+    scales = min / 7
+    console.log('halfCanvas', halfCanvasWidth, halfCanvasHeight)
+    console.log('scales', scales)
 }
 
 //Hex Highlighting
