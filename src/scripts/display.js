@@ -276,5 +276,3 @@ window.addEventListener('resize', () => {
     zoomUpdate()
 })
 
-//http://jsfiddle.net/gfcarv/QKgHs/ or http://jsfiddle.net/gfcarv/tAwQV/
-//https://jsfiddle.net/931wk75n/2/

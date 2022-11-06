@@ -9,6 +9,7 @@ TonClient.useBinaryLibrary(libWeb)
 
 const routerAbi = require('../../contracts/build/Router.abi.json');
 const cellAbi = require('../../contracts/build/Cell.abi.json');
+const rootAbi = require('../../contracts/build/GameRoot.abi.json');
 const Config = require("../../config.json");  
 
 let currentMap;
@@ -125,13 +126,47 @@ async function disconnectAction() {
 }
 
 async function getRoutersAction() {
+    clearTblRows('tblRouters');
     console.log('getRoutersAction')
     const providerState = await ever.getProviderState();
     let details = await ever.getAccountsByCodeHash({
       codeHash: Config[providerState.selectedConnection].codeHash,
-      limit: 10
+      limit: 50
     });
-    console.log('routers', details);
+    let addreses = details.accounts.map(el => el.toString())
+    console.log('routers', addreses);
+    let accs = await getAccArr(addreses);
+    console.log('routers', accs);
+    for (let i = 0; i < accs.length; i++) {
+        let details = await getDetailsRouter(accs[i].id, accs[i].boc);
+        if (details) {
+          let row, cell
+
+          row = addTblRow('tblRouters')
+          cell = row.insertCell(0);
+          cell.innerHTML = details.name;
+          cell = row.insertCell(1);
+          cell.innerHTML = details.radius;
+          cell = row.insertCell(2);
+          cell.innerHTML = details.speed;
+
+          row = addTblRow('tblRouters')
+          cell = row.insertCell(0);
+          cell.innerHTML = accs[i].id;
+          cell.colSpan = "3"
+          // cell.style="text-align:left;"
+        }
+    }
+
+}
+
+async function addRouterAction() {
+    let name = document.getElementById('router_name').value;
+    let radius = document.getElementById('router_radius').value;
+    let speed = document.getElementById('router_speed').value;
+    console.log('addRouterAction', name, radius, speed)
+    const providerState = await newRouter(name, radius, speed);
+    await getRoutersAction();
 }
 
 async function connect() {
@@ -184,12 +219,15 @@ async function checkConnect() {
         behavior('publicKey', innerText(`${pubkey.substr(0,6)}...${pubkey.substr(-4,4)}`));
         behavior('disconnectAction', elem => elem.onclick = disconnectAction);
         behavior('getRoutersAction', elem => elem.onclick = getRoutersAction);
+        behavior('addRouterAction', elem => elem.onclick = addRouterAction);
         
         console.log('endpoint:', Config[network].endpoint);
         everClient = createClient(Config[network].endpoint);
         subscribeAcc = getAccount({});
 
         loadMap();
+        await getRoutersAction();
+
     }
 }
 
@@ -501,6 +539,38 @@ export async function attkCell(address, cellCoord, energy) {
 
 }
 
+export async function newRouter(name, radius, speed) {
+
+  const providerState = await ever.getProviderState();
+  const permissions = providerState.permissions;
+  if (!permissions.accountInteraction) return;
+  const account = permissions.accountInteraction;
+
+  const gameroot = new ever.Contract(rootAbi, Config[providerState.selectedConnection].gameroot);
+
+  try {
+    console.log('newRouter', 1);
+    let res = await gameroot.methods.newRouter({
+        sendGasTo: account.address.toString(),
+        radius: radius,
+        speed: speed,
+        name: name,
+        nonce: '0'
+    }).send({
+        from: account.address.toString(),
+        amount: '2000000000',
+    });
+    console.log('newRouter', res);
+
+  } catch (e) {
+    console.error(e);
+    if (e instanceof TvmException) {
+      console.error(e.code);
+    }
+  }
+
+}
+
 export async function getDetailsCell(address, boc = null) {
 
   if (boc) {
@@ -531,10 +601,48 @@ export async function getDetailsCell(address, boc = null) {
 
 }
 
+export async function getDetailsRouter(address, boc = null) {
+
+  if (boc) {
+    try {
+        const output = await runLocal(routerAbi, address, "getDetails", {}, true, boc);
+        return output;
+    } catch (error) {
+        console.error(error);
+    }
+  }
+  const router = new ever.Contract(routerAbi, address);
+  try {
+    const stateRes = await router.getFullState();
+    if (stateRes.state == null || !stateRes.state.isDeployed) {
+        return null;
+    } 
+    //console.log('state', stateRes.state);
+    let details
+    details = await router.methods.getDetails({}).call();
+    console.log('getDetails router', details);
+    return details
+  } catch (e) {
+    console.error(e);
+    if (e instanceof TvmException) {
+      console.error(e.code);
+    }
+  }
+
+}
+
 export async function subscribePermissionsChanged() {
   await ever.subscribe('permissionsChanged').on('data', permissions => {
     console.log(permissions)
   })
 }
 
+function addTblRow(tblName) {
+  var table = document.getElementById(tblName);
+  return table.insertRow(table.rows.length);
+}
 
+function clearTblRows(tblName) {
+  var table = document.getElementById(tblName);
+  while(table.rows.length > 3) table.deleteRow(table.rows.length-1)
+}
