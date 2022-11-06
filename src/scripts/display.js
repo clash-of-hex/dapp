@@ -75,7 +75,7 @@ function calculateEnergy(hex) {
         return;
     }
     let energy = Math.min(
-        1*hex.details.energy + hex.details.energySec * (dateNow - hex.details.lastCalcTime),
+        1*hex.details.energy + hex.details.energySec * hex.details.speed * (dateNow - hex.details.lastCalcTime),
         1*hex.details.energyMax
     ); 
     hex.details.lastCalcTime = dateNow;

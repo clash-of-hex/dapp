@@ -142,7 +142,8 @@ async function getRoutersAction() {
         let details = await getDetailsRouter(accs[i].id, accs[i].boc);
         if (details) {
           let row, cell
-
+          var date = new Date(1000*details.endTime);
+          console.log('date', date)
           row = addTblRow('tblRouters')
           cell = row.insertCell(0);
           cell.innerHTML = details.name;
@@ -151,13 +152,15 @@ async function getRoutersAction() {
           cell = row.insertCell(2);
           cell.innerHTML = details.speed;
           cell = row.insertCell(3);
+          cell.innerHTML = date.customFormat( "#DD#-#MM#-#YYYY# #hh#:#mm#:#ss#" );
+          cell = row.insertCell(4);
           var btn = document.createElement('button');
           btn.textContent = "Set";
           btn.setAttribute('type', 'button');
           btn.setAttribute("addr", accs[i].id);
           btn.onclick = setRouter
           cell.appendChild(btn);
-          cell = row.insertCell(4);
+          cell = row.insertCell(5);
           cell.innerHTML = accs[i].id;
           cell.style  = "visibility: hidden";
           // cell.colSpan = "4"
@@ -675,4 +678,26 @@ function addTblRow(tblName) {
 function clearTblRows(tblName) {
   var table = document.getElementById(tblName);
   while(table.rows.length > 3) table.deleteRow(table.rows.length-1)
+}
+
+Date.prototype.customFormat = function(formatString){
+	var YYYY,YY,MMMM,MMM,MM,M,DDDD,DDD,DD,D,hhhh,hhh,hh,h,mm,m,ss,s,ampm,AMPM,dMod,th;
+	var dateObject = this;
+	YY = ((YYYY=dateObject.getFullYear())+"").slice(-2);
+	MM = (M=dateObject.getMonth()+1)<10?('0'+M):M;
+	MMM = (MMMM=["January","February","March","April","May","June","July","August","September","October","November","December"][M-1]).substring(0,3);
+	DD = (D=dateObject.getDate())<10?('0'+D):D;
+	DDD = (DDDD=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][dateObject.getDay()]).substring(0,3);
+	th=(D>=10&&D<=20)?'th':((dMod=D%10)==1)?'st':(dMod==2)?'nd':(dMod==3)?'rd':'th';
+	formatString = formatString.replace("#YYYY#",YYYY).replace("#YY#",YY).replace("#MMMM#",MMMM).replace("#MMM#",MMM).replace("#MM#",MM).replace("#M#",M).replace("#DDDD#",DDDD).replace("#DDD#",DDD).replace("#DD#",DD).replace("#D#",D).replace("#th#",th);
+
+	h=(hhh=dateObject.getHours());
+	if (h==0) h=24;
+	if (h>12) h-=12;
+	hh = h<10?('0'+h):h;
+  hhhh = hhh<10?('0'+hhh):hhh;
+	AMPM=(ampm=hhh<12?'am':'pm').toUpperCase();
+	mm=(m=dateObject.getMinutes())<10?('0'+m):m;
+	ss=(s=dateObject.getSeconds())<10?('0'+s):s;
+	return formatString.replace("#hhhh#",hhhh).replace("#hhh#",hhh).replace("#hh#",hh).replace("#h#",h).replace("#mm#",mm).replace("#m#",m).replace("#ss#",ss).replace("#s#",s).replace("#ampm#",ampm).replace("#AMPM#",AMPM);
 }

@@ -69,18 +69,20 @@
     <table style="position: absolute; left: 0px;" id="tblRouters">
         <tbody data-behavior="main" style="display: none">
             <tr>
-                <td colspan=3>New Location:</td>
+                <td colspan=5>New Location:</td>
             </tr>
             <tr>
                 <td>Name:</td>
                 <td>Radius:</td>
                 <td>Speed:</td>
+                <td>End:</td>
                 <td></td>
             </tr>
             <tr>
                 <td><input type="text" id="router_name" name="name" value="new Location test"></td>
                 <td><input type="number" id="router_radius" name="radius" min="3" max="10" value="5"></td>
                 <td><input type="number" id="router_speed" name="speed" min="1" max="10" value="1"></td>
+                <td><input type="number" id="router_time" name="time" min="60" max="2592000" step="60" value="3600"></td>
                 <td><button type="button" data-behavior="addRouterAction">Add</button></td>
             </tr>
         </tbody>
