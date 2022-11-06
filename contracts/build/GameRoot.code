@@ -138,12 +138,13 @@ IF
 LDMSGADDR
 LDU 64
 LDU 64
+LDU 64
 LDREF
 LDU 16
 ENDS
 .loc ../contracts/GameRoot.sol, 0
 CALLREF {
-	CALL $newRouter_2c10a1a9_internal_macro$
+	CALL $newRouter_2294b500_internal_macro$
 }
 DROP
 CALLREF {
@@ -151,12 +152,12 @@ CALLREF {
 }
 THROW 0
 
-.globl	newRouter_2c10a1a9_internal
-.type	newRouter_2c10a1a9_internal, @function
-CALL $newRouter_2c10a1a9_internal_macro$
+.globl	newRouter_2294b500_internal
+.type	newRouter_2294b500_internal, @function
+CALL $newRouter_2294b500_internal_macro$
 
-.macro newRouter_2c10a1a9_internal_macro
-.loc ../contracts/GameRoot.sol, 58
+.macro newRouter_2294b500_internal_macro
+.loc ../contracts/GameRoot.sol, 59
 DEPTH
 ADDCONST -2
 PICK
@@ -167,17 +168,17 @@ ADD
 UFITS 128
 GREATER
 THROWIFNOT 2000
-.loc ../contracts/GameRoot.sol, 59
+.loc ../contracts/GameRoot.sol, 60
 PUSHINT 3020
 PUSH S4
 LESSINT 11
 THROWANYIFNOT
-.loc ../contracts/GameRoot.sol, 60
+.loc ../contracts/GameRoot.sol, 61
 PUSHINT 3020
 PUSH S3
 LESSINT 11
 THROWANYIFNOT
-.loc ../contracts/GameRoot.sol, 61
+.loc ../contracts/GameRoot.sol, 62
 PUSHINT 3020
 PUSH S2
 PUSHPOW2DEC 32
@@ -188,16 +189,16 @@ RSHIFT 3
 PUSHPOW2 7
 LESS
 THROWANYIFNOT
-.loc ../contracts/GameRoot.sol, 62
+.loc ../contracts/GameRoot.sol, 63
 PUSHINT 0
 PUSHINT 4
 RAWRESERVE
-.loc ../contracts/GameRoot.sol, 64
-ROLLREV 4
-CALLREF {
-	CALL $deployRouter_2c6882e4_internal_macro$
-}
 .loc ../contracts/GameRoot.sol, 65
+ROLLREV 5
+CALLREF {
+	CALL $deployRouter_8b5b1a03_internal_macro$
+}
+.loc ../contracts/GameRoot.sol, 66
 SWAP
 PUSHSLICE xc00000000000000000000000005b26a9cb
 NEWC
@@ -209,25 +210,25 @@ PUSHINT 0
 SENDRAWMSG
 .loc ../contracts/GameRoot.sol, 0
 
-.globl	deployRouter_2c6882e4_internal
-.type	deployRouter_2c6882e4_internal, @function
-CALL $deployRouter_2c6882e4_internal_macro$
+.globl	deployRouter_8b5b1a03_internal
+.type	deployRouter_8b5b1a03_internal, @function
+CALL $deployRouter_8b5b1a03_internal_macro$
 
-.macro deployRouter_2c6882e4_internal_macro
-.loc ../contracts/GameRoot.sol, 72
+.macro deployRouter_8b5b1a03_internal_macro
+.loc ../contracts/GameRoot.sol, 73
 MYADDR
 CALLREF {
 	CALL $_buildRouterCode_b2ae5b71_internal_macro$
 }
-.loc ../contracts/GameRoot.sol, 73
+.loc ../contracts/GameRoot.sol, 74
 CALLREF {
 	CALL $_buildRouterState_a601c8bd_internal_macro$
 }
-.loc ../contracts/GameRoot.sol, 74
-REVERSE 4, 0
+.loc ../contracts/GameRoot.sol, 75
+REVERSE 5, 0
 GETGLOB 13
 MYADDR
-ROLL 5
+ROLL 6
 DUP
 HASHCU
 NEWC
@@ -235,12 +236,12 @@ STSLICECONST x801_
 STU 256
 ENDC
 CTOS
-ROLLREV 6
+ROLLREV 7
 PUSHINT 1000000000
 PUSHINT 200000000
 ADD
 UFITS 128
-PUSH S7
+PUSH S8
 NEWC
 STSLICECONST x62_
 STSLICE
@@ -273,11 +274,12 @@ CALLREF {
 }
 STREF
 STSLICECONST 1
-ROLLREV 5
+ROLLREV 6
 NEWC
-STSLICECONST x7240a0a9
+STSLICECONST x348794ca
 STSLICE
 STREF
+STU 64
 STU 64
 STU 64
 STREF
@@ -285,7 +287,7 @@ STBREFR
 ENDC
 PUSHINT 0
 SENDRAWMSG
-.loc ../contracts/GameRoot.sol, 85
+.loc ../contracts/GameRoot.sol, 87
 SWAP
 NEWC
 STSLICECONST x42_
@@ -304,10 +306,10 @@ SENDRAWMSG
 CALL $_buildRouterCode_b2ae5b71_internal_macro$
 
 .macro _buildRouterCode_b2ae5b71_internal_macro
-.loc ../contracts/GameRoot.sol, 91
+.loc ../contracts/GameRoot.sol, 93
 NEWC
 STSLICE
-.loc ../contracts/GameRoot.sol, 92
+.loc ../contracts/GameRoot.sol, 94
 GETGLOB 12
 CTOS
 SWAP
@@ -424,7 +426,7 @@ CALLREF {
 CALL $_buildRouterState_a601c8bd_internal_macro$
 
 .macro _buildRouterState_a601c8bd_internal_macro
-.loc ../contracts/GameRoot.sol, 98
+.loc ../contracts/GameRoot.sol, 100
 PUSHINT 0
 NEWC
 STU 256
@@ -461,14 +463,14 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/GameRoot.sol, 106
+.loc ../contracts/GameRoot.sol, 108
 PLDU 32
-.loc ../contracts/GameRoot.sol, 107
+.loc ../contracts/GameRoot.sol, 109
 DUP
-PUSHINT 1916838057
+PUSHINT 881300682
 EQUAL
 PUSHCONT {
-	.loc ../contracts/GameRoot.sol, 108
+	.loc ../contracts/GameRoot.sol, 110
 	TUPLE 0
 	NEWC
 	PUSHSLICE x6f6e426f756e636520526f7574657220636f6e7374727563746f7220
@@ -509,10 +511,10 @@ CALLREF {
 CALL $getRndUint32_0d51ea7a_internal_macro$
 
 .macro getRndUint32_0d51ea7a_internal_macro
-.loc ../contracts/GameRoot.sol, 113
+.loc ../contracts/GameRoot.sol, 115
 LTIME
 ADDRAND
-.loc ../contracts/GameRoot.sol, 114
+.loc ../contracts/GameRoot.sol, 116
 PUSHPOW2DEC 32
 RAND
 .loc ../contracts/GameRoot.sol, 0
@@ -976,7 +978,7 @@ SENDRAWMSG
 
 .macro public_function_selector
 DUP
-PUSHINT 1812082892
+PUSHINT 1655249920
 LEQ
 IFJMPREF {
 	DUP
@@ -998,27 +1000,27 @@ IFJMPREF {
 		CALL $transferOwnership$
 	}
 	DUP
+	PUSHINT 1655249920
+	EQUAL
+	IFJMPREF {
+		CALL $newRouter$
+	}
+}
+DUP
+PUSHINT 2013012156
+LEQ
+IFJMPREF {
+	DUP
 	PUSHINT 1812082892
 	EQUAL
 	IFJMPREF {
 		CALL $getDetails$
 	}
-}
-DUP
-PUSHINT 2099428651
-LEQ
-IFJMPREF {
 	DUP
 	PUSHINT 2013012156
 	EQUAL
 	IFJMPREF {
 		CALL $owner$
-	}
-	DUP
-	PUSHINT 2099428651
-	EQUAL
-	IFJMPREF {
-		CALL $newRouter$
 	}
 }
 

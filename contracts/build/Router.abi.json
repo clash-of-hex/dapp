@@ -8,6 +8,7 @@
 			"inputs": [
 				{"name":"root","type":"address"},
 				{"name":"codeCell","type":"cell"},
+				{"name":"roundTime","type":"uint64"},
 				{"name":"radius","type":"uint64"},
 				{"name":"speed","type":"uint64"},
 				{"name":"name","type":"string"}
@@ -21,6 +22,7 @@
 			],
 			"outputs": [
 				{"name":"nonce","type":"uint32"},
+				{"name":"endTime","type":"uint128"},
 				{"name":"radius","type":"uint64"},
 				{"name":"speed","type":"uint64"},
 				{"name":"name","type":"string"},
@@ -52,7 +54,7 @@
 				{"components":[{"name":"x","type":"int64"},{"name":"y","type":"int64"},{"name":"z","type":"int64"}],"name":"baseCoord","type":"tuple"},
 				{"components":[{"name":"x","type":"int64"},{"name":"y","type":"int64"},{"name":"z","type":"int64"}],"name":"targetCoord","type":"tuple"},
 				{"components":[{"name":"r","type":"uint8"},{"name":"g","type":"uint8"},{"name":"b","type":"uint8"}],"name":"color","type":"tuple"},
-				{"name":"energy","type":"uint128"}
+				{"name":"energy","type":"uint64"}
 			],
 			"outputs": [
 			]
@@ -115,6 +117,7 @@
 		{"name":"_codeCell","type":"cell"},
 		{"name":"_radius","type":"uint64"},
 		{"name":"_speed","type":"uint64"},
-		{"name":"_name","type":"string"}
+		{"name":"_name","type":"string"},
+		{"name":"_endTime","type":"uint128"}
 	]
 }

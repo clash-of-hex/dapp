@@ -8,8 +8,10 @@
 			"inputs": [
 				{"name":"router","type":"address"},
 				{"name":"ownerPubkey","type":"uint256"},
+				{"name":"endTime","type":"uint128"},
+				{"name":"speed","type":"uint64"},
 				{"components":[{"name":"r","type":"uint8"},{"name":"g","type":"uint8"},{"name":"b","type":"uint8"}],"name":"color","type":"tuple"},
-				{"name":"energy","type":"uint128"}
+				{"name":"energy","type":"uint64"}
 			],
 			"outputs": [
 			]
@@ -29,10 +31,12 @@
 			"outputs": [
 				{"components":[{"name":"x","type":"int64"},{"name":"y","type":"int64"},{"name":"z","type":"int64"}],"name":"coord","type":"tuple"},
 				{"components":[{"name":"r","type":"uint8"},{"name":"g","type":"uint8"},{"name":"b","type":"uint8"}],"name":"color","type":"tuple"},
-				{"name":"level","type":"uint128"},
-				{"name":"energy","type":"uint128"},
-				{"name":"energySec","type":"uint128"},
-				{"name":"energyMax","type":"uint128"},
+				{"name":"level","type":"uint64"},
+				{"name":"speed","type":"uint64"},
+				{"name":"endTime","type":"uint128"},
+				{"name":"energy","type":"uint64"},
+				{"name":"energySec","type":"uint64"},
+				{"name":"energyMax","type":"uint64"},
 				{"name":"lastCalcTime","type":"uint128"},
 				{"name":"owner","type":"uint256"}
 			]
@@ -42,7 +46,7 @@
 			"inputs": [
 			],
 			"outputs": [
-				{"name":"energy","type":"uint128"}
+				{"name":"energy","type":"uint64"}
 			]
 		},
 		{
@@ -50,7 +54,7 @@
 			"inputs": [
 				{"name":"sendGasTo","type":"address"},
 				{"components":[{"name":"x","type":"int64"},{"name":"y","type":"int64"},{"name":"z","type":"int64"}],"name":"targetCoord","type":"tuple"},
-				{"name":"energy","type":"uint128"}
+				{"name":"energy","type":"uint64"}
 			],
 			"outputs": [
 			]
@@ -60,7 +64,7 @@
 			"inputs": [
 				{"name":"sendGasTo","type":"address"},
 				{"components":[{"name":"x","type":"int64"},{"name":"y","type":"int64"},{"name":"z","type":"int64"}],"name":"targetCoord","type":"tuple"},
-				{"name":"energy","type":"uint128"}
+				{"name":"energy","type":"uint64"}
 			],
 			"outputs": [
 			]
@@ -71,7 +75,7 @@
 				{"name":"sendGasTo","type":"address"},
 				{"components":[{"name":"x","type":"int64"},{"name":"y","type":"int64"},{"name":"z","type":"int64"}],"name":"coord","type":"tuple"},
 				{"components":[{"name":"r","type":"uint8"},{"name":"g","type":"uint8"},{"name":"b","type":"uint8"}],"name":"color","type":"tuple"},
-				{"name":"energy","type":"uint128"}
+				{"name":"energy","type":"uint64"}
 			],
 			"outputs": [
 			]
@@ -81,7 +85,7 @@
 			"inputs": [
 				{"name":"sendGasTo","type":"address"},
 				{"components":[{"name":"x","type":"int64"},{"name":"y","type":"int64"},{"name":"z","type":"int64"}],"name":"targetCoord","type":"tuple"},
-				{"name":"energy","type":"uint128"}
+				{"name":"energy","type":"uint64"}
 			],
 			"outputs": [
 			]
@@ -92,7 +96,7 @@
 				{"name":"sendGasTo","type":"address"},
 				{"components":[{"name":"x","type":"int64"},{"name":"y","type":"int64"},{"name":"z","type":"int64"}],"name":"coord","type":"tuple"},
 				{"components":[{"name":"r","type":"uint8"},{"name":"g","type":"uint8"},{"name":"b","type":"uint8"}],"name":"color","type":"tuple"},
-				{"name":"energy","type":"uint128"}
+				{"name":"energy","type":"uint64"}
 			],
 			"outputs": [
 			]
@@ -160,13 +164,15 @@
 		{"name":"_constructorFlag","type":"bool"},
 		{"name":"_owner","type":"uint256"},
 		{"components":[{"name":"x","type":"int64"},{"name":"y","type":"int64"},{"name":"z","type":"int64"}],"name":"_coord","type":"tuple"},
-		{"name":"_costPerLevel","type":"uint128[]"},
-		{"name":"_energyPerLevel","type":"uint128[]"},
-		{"name":"_energyPerLevelMax","type":"uint128[]"},
+		{"name":"_costPerLevel","type":"uint64[]"},
+		{"name":"_energyPerLevel","type":"uint64[]"},
+		{"name":"_energyPerLevelMax","type":"uint64[]"},
 		{"name":"_router","type":"address"},
-		{"name":"_level","type":"uint128"},
-		{"name":"_energy","type":"uint128"},
+		{"name":"_speed","type":"uint64"},
+		{"name":"_level","type":"uint64"},
+		{"name":"_energy","type":"uint64"},
 		{"name":"_lastCalcTime","type":"uint128"},
+		{"name":"_endTime","type":"uint128"},
 		{"components":[{"name":"r","type":"uint8"},{"name":"g","type":"uint8"},{"name":"b","type":"uint8"}],"name":"_color","type":"tuple"}
 	]
 }
