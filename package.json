@@ -7,7 +7,7 @@
     "postinstall": "run-p build-asset",
     "gh-pages": "gh-pages -d dist -r $(git remote get-url gh-pages) -b main -m \"up ref:$(git log -n 1 --pretty=format:%h)\"",
     "dev": "webpack serve",
-    "build": "run-p build-webpack build-asset build-cp",
+    "build": "run-p --max-parallel 1 build-webpack build-asset build-cp",
     "build-asset": "pwa-asset-generator src/asset/logo.svg public --favicon --type png --padding 0 --background transparent --opaque false --log false",
     "build-cp": "cp public/*.png dist/",
     "build-webpack": "webpack",
@@ -55,5 +55,10 @@
   "devDependencies": {
     "npm-run-all": "^4.1.5",
     "pwa-asset-generator": "^6.2.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
