@@ -29,5 +29,5 @@ npm run build
 
 ```shell
 git remote add gh-pages git@github.com:hex-battle-game/hex-battle-game.github.io.git
-npm run gh-pages
+npm run deploy
 ```

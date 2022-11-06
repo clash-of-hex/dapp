@@ -12,6 +12,7 @@
     "build-cp": "cp public/*.png dist/",
     "build-wasm": "cp node_modules/nekoton-wasm/nekoton_wasm_bg.wasm dist && cp public/*.wasm dist/",
     "build-webpack": "webpack",
+    "deploy": "run-p --max-parallel 1 build gh-pages",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
