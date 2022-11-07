@@ -127,7 +127,7 @@ async function disconnectAction() {
 }
 
 async function getRoutersAction() {
-    clearTblRows('tblRouters');
+    clearTblRows('tblRouters', 3);
     console.log('getRoutersAction')
     const providerState = await ever.getProviderState();
     let details = await ever.getAccountsByCodeHash({
@@ -170,6 +170,27 @@ async function getRoutersAction() {
 
 }
 
+async function getLiderBoard() {
+    clearTblRows('tblLiders', 1);
+    console.log('getLiderBoard')
+    const providerState = await ever.getProviderState();
+    let details = await routerLiders();
+    let users = details.users.map(el => el.toString())
+    console.log('users', users);
+    for (let i = 0; i < users.length; i++) {
+        let usr = users[i].split(',');
+        let row, cell
+        row = addTblRow('tblLiders')
+        cell = row.insertCell(0);
+        cell.innerHTML = `${usr[0].substr(0,6)}...${usr[0].substr(-4,4)}`;
+        cell = row.insertCell(1);
+        cell.innerHTML = usr[1];
+        // cell.colSpan = "4"
+        // cell.style="text-align:left;"
+    }
+
+}
+
 async function setRouter(el) {
     console.log('setRouter', el)
     let address = el.target.attributes.addr.value
@@ -185,14 +206,16 @@ async function setRouter(el) {
     console.log('details', details)
     onRoumingChange(details.radius)
     loadMap();
+    getLiderBoard();
 }
 
 async function addRouterAction() {
     let name = document.getElementById('router_name').value;
     let radius = document.getElementById('router_radius').value;
     let speed = document.getElementById('router_speed').value;
-    console.log('addRouterAction', name, radius, speed)
-    const providerState = await newRouter(name, radius, speed);
+    let time = document.getElementById('router_time').value;
+    console.log('addRouterAction', name, radius, speed, time)
+    const providerState = await newRouter(name, radius, speed, time);
     await getRoutersAction();
 }
 
@@ -241,7 +264,7 @@ async function checkConnect() {
         switchScreen("main");
         const account = permissions.accountInteraction;
         let address = account.address.toString();
-        let pubkey = account.address.toString();
+        let pubkey = account.publicKey.toString();
         behavior('address', innerText(`${address.substr(0,6)}...${address.substr(-4,4)}`));
         behavior('publicKey', innerText(`${pubkey.substr(0,6)}...${pubkey.substr(-4,4)}`));
         behavior('disconnectAction', elem => elem.onclick = disconnectAction);
@@ -252,9 +275,8 @@ async function checkConnect() {
         everClient = createClient(Config[network].endpoint);
         subscribeAcc = getAccount({});
 
-        loadMap();
+        // loadMap();
         await getRoutersAction();
-
     }
 }
 
@@ -378,6 +400,24 @@ export async function routerDetails() {
 
 }
 
+export async function routerLiders() {
+
+  const providerState = await ever.getProviderState();
+  const router = new ever.Contract(routerAbi, contractAddress(providerState.selectedConnection, 'router'));
+  try {
+    let details
+    details = await router.methods.getUsers({}).call();
+    console.log('getUsers router', details);
+    return details
+  } catch (e) {
+    console.error(e);
+    if (e instanceof TvmException) {
+      console.error(e.code);
+    }
+  }
+
+}
+
 export async function subscribeAllCellState(arrAcc) {
 
   try {
@@ -393,6 +433,7 @@ export async function subscribeAllCellState(arrAcc) {
       if (hex) {
         hex.details = await getDetailsCell(msg.id, msg.boc);
       }        
+      getLiderBoard();
     }, 
     async (msg) => {
       console.log(`onError:`, msg);
@@ -437,7 +478,6 @@ export async function newGame(cellCoord) {
   try {
     console.log('newGame', 1);
     let res = await router.methods.newGame({
-        sendGasTo: account.address.toString(),
         baseCoord: cellCoord
     }).send({
         from: account.address.toString(),
@@ -466,7 +506,6 @@ export async function markCell(address, cellCoord, energy) {
   try {
     console.log('markCell', 1);
     let res = await cell.methods.markCell({
-        sendGasTo: account.address.toString(),
         targetCoord: cellCoord,
         energy: energy
     }).send({
@@ -496,7 +535,7 @@ export async function upgradeCell(address) {
   try {
     console.log('upgradeCell', 1);
     let res = await cell.methods.upgradeCell({
-        sendGasTo: account.address.toString(),
+    // }).sendExternal({ publicKey: account.publicKey.toString() })
     }).send({
         from: account.address.toString(),
         amount: '1000000000',
@@ -524,7 +563,6 @@ export async function helpCell(address, cellCoord, energy) {
   try {
     console.log('helpCell', 1);
     let res = await cell.methods.helpCell({
-        sendGasTo: account.address.toString(),
         targetCoord: cellCoord,
         energy: energy
     }).send({
@@ -554,7 +592,6 @@ export async function attkCell(address, cellCoord, energy) {
   try {
     console.log('attkCell', 1);
     let res = await cell.methods.attkCell({
-        sendGasTo: account.address.toString(),
         targetCoord: cellCoord,
         energy: energy
     }).send({
@@ -572,7 +609,7 @@ export async function attkCell(address, cellCoord, energy) {
 
 }
 
-export async function newRouter(name, radius, speed) {
+export async function newRouter(name, radius, speed, time) {
 
   const providerState = await ever.getProviderState();
   const permissions = providerState.permissions;
@@ -584,7 +621,7 @@ export async function newRouter(name, radius, speed) {
   try {
     console.log('newRouter', 1);
     let res = await gameroot.methods.newRouter({
-        sendGasTo: account.address.toString(),
+        roundTime: time,
         radius: radius,
         speed: speed,
         name: name,
@@ -675,9 +712,9 @@ function addTblRow(tblName) {
   return table.insertRow(table.rows.length);
 }
 
-function clearTblRows(tblName) {
+function clearTblRows(tblName, min = 1) {
   var table = document.getElementById(tblName);
-  while(table.rows.length > 3) table.deleteRow(table.rows.length-1)
+  while(table.rows.length > min) table.deleteRow(table.rows.length-1)
 }
 
 Date.prototype.customFormat = function(formatString){
