@@ -6,7 +6,6 @@
 		{
 			"name": "constructor",
 			"inputs": [
-				{"name":"root","type":"address"},
 				{"name":"codeCell","type":"cell"},
 				{"name":"roundTime","type":"uint64"},
 				{"name":"radius","type":"uint64"},
@@ -26,7 +25,15 @@
 				{"name":"radius","type":"uint64"},
 				{"name":"speed","type":"uint64"},
 				{"name":"name","type":"string"},
-				{"name":"owner","type":"address"}
+				{"name":"root","type":"address"}
+			]
+		},
+		{
+			"name": "getUsers",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"users","type":"map(address,uint128)"}
 			]
 		},
 		{
@@ -41,7 +48,6 @@
 		{
 			"name": "newGame",
 			"inputs": [
-				{"name":"sendGasTo","type":"address"},
 				{"components":[{"name":"x","type":"int64"},{"name":"y","type":"int64"},{"name":"z","type":"int64"}],"name":"baseCoord","type":"tuple"}
 			],
 			"outputs": [
@@ -50,11 +56,20 @@
 		{
 			"name": "_newCell",
 			"inputs": [
-				{"name":"sendGasTo","type":"address"},
+				{"name":"owner","type":"address"},
 				{"components":[{"name":"x","type":"int64"},{"name":"y","type":"int64"},{"name":"z","type":"int64"}],"name":"baseCoord","type":"tuple"},
 				{"components":[{"name":"x","type":"int64"},{"name":"y","type":"int64"},{"name":"z","type":"int64"}],"name":"targetCoord","type":"tuple"},
 				{"components":[{"name":"r","type":"uint8"},{"name":"g","type":"uint8"},{"name":"b","type":"uint8"}],"name":"color","type":"tuple"},
 				{"name":"energy","type":"uint64"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "onCellOwnerChanged",
+			"inputs": [
+				{"name":"oldOwner","type":"address"},
+				{"name":"newOwner","type":"address"}
 			],
 			"outputs": [
 			]
@@ -69,19 +84,11 @@
 			]
 		},
 		{
-			"name": "owner",
+			"name": "_users",
 			"inputs": [
 			],
 			"outputs": [
-				{"name":"owner","type":"address"}
-			]
-		},
-		{
-			"name": "transferOwnership",
-			"inputs": [
-				{"name":"newOwner","type":"address"}
-			],
-			"outputs": [
+				{"name":"_users","type":"map(address,uint128)"}
 			]
 		}
 	],
@@ -97,23 +104,15 @@
 			],
 			"outputs": [
 			]
-		},
-		{
-			"name": "OwnershipTransferred",
-			"inputs": [
-				{"name":"oldOwner","type":"address"},
-				{"name":"newOwner","type":"address"}
-			],
-			"outputs": [
-			]
 		}
 	],
 	"fields": [
 		{"name":"_pubkey","type":"uint256"},
 		{"name":"_timestamp","type":"uint64"},
 		{"name":"_constructorFlag","type":"bool"},
-		{"name":"_owner","type":"address"},
 		{"name":"_nonce","type":"uint32"},
+		{"name":"_root","type":"address"},
+		{"name":"_users","type":"map(address,uint128)"},
 		{"name":"_codeCell","type":"cell"},
 		{"name":"_radius","type":"uint64"},
 		{"name":"_speed","type":"uint64"},

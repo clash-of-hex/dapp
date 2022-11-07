@@ -25,7 +25,6 @@
 		{
 			"name": "newRouter",
 			"inputs": [
-				{"name":"sendGasTo","type":"address"},
 				{"name":"roundTime","type":"uint64"},
 				{"name":"radius","type":"uint64"},
 				{"name":"speed","type":"uint64"},
