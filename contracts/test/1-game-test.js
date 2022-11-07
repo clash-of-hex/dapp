@@ -8,7 +8,7 @@ const { expect, assert } = chai;
 
 const Config = require("../scripts/utilsConfig.js"); 
 
-let signer, owner, gameroot, router1, router2, cell1, cell2, cell3;
+let signer, owner, signer2, owner2, gameroot, router1, router2, cell1, cell2, cell3;
 let cellCoord1 = {  x: 2,  y: 1,  z: -3  } // user1 start
 let cellCoord2 = {  x: 2,  y: 2,  z: -4 } // user1 mark
 let cellCoord3 = {  x: 3,  y: 1,  z: -4 } // user2 start
@@ -45,6 +45,24 @@ describe(`Test Router contract (BASE)`, async function() {
     owner = _owner;
     console.log(`Owner address: ${owner.address.toString()}`);
     console.log(`Owner pubkey: ${owner.publicKey.toString(16)}`);
+  });
+  
+  it('Start 2', async () => {
+    signer2 = (await locklift.keystore.getSigner("1"));
+    console.log('signer publicKey', signer2)
+    console.log('_randomNonce', _randomNonce)
+    const { account: _owner } = await locklift.factory.accounts.addNewAccount({
+      publicKey: signer2.publicKey,
+      type: WalletTypes.WalletV3,
+      value: toNano(100),
+    });
+    // const _owner = await locklift.factory.accounts.addExistingAccount({
+      // publicKey: signer2.publicKey,
+      // type: WalletTypes.WalletV3,
+    // });
+    owner2 = _owner;
+    console.log(`Owner address: ${owner2.address.toString()}`);
+    console.log(`Owner pubkey: ${owner2.publicKey.toString(16)}`);
   });
   
   it('Deploy game root', async () => {
@@ -91,7 +109,6 @@ describe(`Test Router contract (BASE)`, async function() {
     let _nonceNewRouter = locklift.utils.getRandomNonce().toString();
     try {
       let res = await locklift.tracing.trace(gameroot.methods.newRouter({
-          sendGasTo: owner.address.toString(),
           roundTime: 300,
           radius: 5,
           speed: 1,
@@ -114,8 +131,8 @@ describe(`Test Router contract (BASE)`, async function() {
       );
       details = await router1.methods.getDetails({}).call();
       console.log('getDetails router1', details);
-      expect(details.owner.toString())
-          .to.be.equal(gameroot.address.toString(), 'Wrong owner');
+      expect(details.root.toString())
+          .to.be.equal(gameroot.address.toString(), 'Wrong root');
 
       let routerState = await locklift.factory.ever.getFullContractState({address: router1.address});
       console.log('routerState codeHash', routerState.state.codeHash);
@@ -134,7 +151,6 @@ describe(`Test Router contract (BASE)`, async function() {
     let _nonceNewRouter = locklift.utils.getRandomNonce().toString();
     try {
     let res = await locklift.tracing.trace(gameroot.methods.newRouter({
-        sendGasTo: owner.address.toString(),
         roundTime: 3600,
         radius: 3,
         speed: 2,
@@ -158,8 +174,8 @@ describe(`Test Router contract (BASE)`, async function() {
     details = await router2.methods.getDetails({}).call();
     console.log('getDetails router2', details);
 
-    expect(details.owner.toString())
-        .to.be.equal(gameroot.address.toString(), 'Wrong owner');
+    expect(details.root.toString())
+        .to.be.equal(gameroot.address.toString(), 'Wrong root');
     } catch (err) {
       console.log('error', err);
     }
@@ -171,7 +187,6 @@ describe(`Test Cell contract (BASE)`, async function() {
   it('Start Cell1 User1', async () => {
     
     let res = await locklift.tracing.trace(router1.methods.newGame({
-        sendGasTo: owner.address.toString(),
         baseCoord: cellCoord1
     }).send({
         from: owner.address.toString(),
@@ -192,12 +207,13 @@ describe(`Test Cell contract (BASE)`, async function() {
     expect(details.level)
         .to.be.equal('0', 'Wrong level');
 
+    details = await router1.methods.getUsers({}).call();
+    console.log('getUsers', details);
   });
 
   it('Mark Cell2 User1', async () => {
     
     let res = await locklift.tracing.trace(cell1.methods.markCell({
-        sendGasTo: owner.address.toString(),
         targetCoord: cellCoord2,
         energy: 1000
     }).send({
@@ -222,12 +238,13 @@ describe(`Test Cell contract (BASE)`, async function() {
     expect(details.level)
         .to.be.equal('0', 'Wrong level');
 
+    details = await router1.methods.getUsers({}).call();
+    console.log('getUsers', details);
   });
 
   it('Upgrade Cell2 User1', async () => {
     
     let res = await locklift.tracing.trace(cell2.methods.upgradeCell({
-        sendGasTo: owner.address.toString(),
     }).send({
         from: owner.address.toString(),
         amount: toNano(1),
@@ -245,7 +262,6 @@ describe(`Test Cell contract (BASE)`, async function() {
   it('help Cell1 to Cell2 User1', async () => {
     
     let res = await locklift.tracing.trace(cell1.methods.helpCell({
-        sendGasTo: owner.address.toString(),
         targetCoord: cellCoord2,
         energy: 500
     }).send({
@@ -268,10 +284,9 @@ describe(`Test Cell contract (BASE)`, async function() {
   it('Start new game User2', async () => {
     
     let res = await locklift.tracing.trace(router1.methods.newGame({
-        sendGasTo: owner.address.toString(),
         baseCoord: cellCoord3
     }).send({
-        from: owner.address.toString(),
+        from: owner2.address.toString(),
         amount: toNano(2),
     }));
 
@@ -289,17 +304,25 @@ describe(`Test Cell contract (BASE)`, async function() {
     expect(details.level)
         .to.be.equal('0', 'Wrong level');
 
+    details = await router1.methods.getUsers({}).call();
+    console.log('getUsers', details);
+
   });
 
   it('attk Cell3 to Cell1 User2', async () => {
     
     let res = await locklift.tracing.trace(cell3.methods.attkCell({
-        sendGasTo: owner.address.toString(),
         targetCoord: cellCoord1,
         energy: 1000
     }).send({
-        from: owner.address.toString(),
+        from: owner2.address.toString(),
         amount: toNano(1),
+    // }),
+    // {
+      // allowedCodes: {
+        // compute: [null],
+        // //action: [],
+      // },
     }));
     
     let details
@@ -311,6 +334,9 @@ describe(`Test Cell contract (BASE)`, async function() {
 
     expect(details.level)
         .to.be.equal('0', 'Wrong level');
+
+    details = await router1.methods.getUsers({}).call();
+    console.log('getUsers', details);
 
   });
 
