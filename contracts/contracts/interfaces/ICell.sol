@@ -5,14 +5,14 @@ import '../utils/Types.sol';
 interface ICell {
 
     function _helpCell(
-        address sendGasTo,
+        address owner,
         Types.CubeCoord coord,
         Types.Color color,
         uint64 energy
     ) external; 
 
     function _attkCell(
-        address sendGasTo,
+        address owner,
         Types.CubeCoord coord,
         Types.Color color,
         uint64 energy

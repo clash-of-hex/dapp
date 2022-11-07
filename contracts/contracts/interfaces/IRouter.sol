@@ -6,8 +6,13 @@ interface IRouter {
 
     event CellCreated(uint256 owner, Types.CubeCoord coord);
     
+    function onCellOwnerChanged(
+        address oldOwner,
+        address newOwner
+    ) external;
+    
     function _newCell(
-        address sendGasTo,
+        address owner,
         Types.CubeCoord baseCoord,
         Types.CubeCoord targetCoord,
         Types.Color color,

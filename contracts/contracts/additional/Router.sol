@@ -6,7 +6,6 @@ pragma AbiHeader pubkey;
 
 import "locklift/src/console.sol";
 
-import '../abstract/OwnableInternal.sol';
 import '../libraries/MsgFlag.sol';
 import '../libraries/Errors.sol';
 import '../utils/HexUtils.sol';
@@ -16,7 +15,7 @@ import '../additional/Cell.sol';
 import '../interfaces/IRouter.sol';
 import '../interfaces/ICell.sol';
 
-contract Router is OwnableInternal, IRouter {
+contract Router is IRouter {
 
     uint32 static _nonce;
     
@@ -25,6 +24,16 @@ contract Router is OwnableInternal, IRouter {
     uint128 constant CELL_DEPLOY_VALUE = 1.0 ever;
     uint128 constant ACTION_VALUE = 0.2 ever;
 
+    address private _root; 
+    
+    modifier onlyRoot() virtual {
+        require(_root == msg.sender, 100);
+        require(msg.value != 0, 101);
+        _;
+    }    
+
+    mapping(address => uint128) public _users; 
+    
     TvmCell private _codeCell;
     uint64 private _radius;
     uint64 private _speed;
@@ -32,29 +41,33 @@ contract Router is OwnableInternal, IRouter {
     uint128 private _endTime;
 
     constructor(
-        address root,
         TvmCell codeCell,
         uint64 roundTime,
         uint64 radius,
         uint64 speed,
         string name
-    ) OwnableInternal (
-        root
     ) public {
         require(address(this).balance > ROUTER_DEPLOY_VALUE, Errors.NOT_ENOUGH_BALANCE);
         tvm.accept();
+        _root = msg.sender;
         _codeCell = codeCell;
         _endTime = now + roundTime;
         _radius = radius;
         _speed = speed;
         _name = name;
-        console.log(format("constructor msg.sender {}", msg.sender));
+        console.log(format("router constructor msg.sender {}", msg.sender));
     }
 
     function getDetails() public view returns(
-        uint32 nonce, uint128 endTime, uint64 radius, uint64 speed, string name, address owner
+        uint32 nonce, uint128 endTime, uint64 radius, uint64 speed, string name, address root
     ) {
-        return ( _nonce, _endTime, _radius, _speed, _name, OwnableInternal.owner() );
+        return ( _nonce, _endTime, _radius, _speed, _name, _root );
+    }
+
+    function getUsers() public view returns(
+        mapping(address => uint128) users
+    ) {
+        return ( _users );
     }
 
     function getAddressCells(
@@ -70,20 +83,20 @@ contract Router is OwnableInternal, IRouter {
     ////////////////////////////// 
     
     function newGame(
-        address sendGasTo, 
         Types.CubeCoord baseCoord
     ) public {
-        require(now < _endTime, Errors.TIME_IS_OVER);
         require(msg.value > CELL_DEPLOY_VALUE + ACTION_VALUE*2, Errors.LOW_GAS_VALUE);
+        require(now < _endTime, Errors.TIME_IS_OVER);
+        require(_users.exists(msg.sender) == false, Errors.WRONG_OWNER);
         require(HexUtils.isCorrectCoord(baseCoord) == true, Errors.WRONG_COORD);
         tvm.rawReserve(0, 4); 
-
-        console.log(format("newGame msg.pubkey {}", msg.pubkey()));
-        address cellAddress = deployCell(sendGasTo, msg.pubkey(), baseCoord, Types.Color(getRndUint8(), getRndUint8(), getRndUint8()), 0);
+        _users[msg.sender] = 1;
+        console.log(format("newGame msg.sender {}", msg.sender));
+        address cellAddress = deployCell(msg.sender, baseCoord, Types.Color(getRndUint8(), getRndUint8(), getRndUint8()), 0);
     }
 
     function _newCell(
-        address sendGasTo, 
+        address owner, 
         Types.CubeCoord baseCoord,
         Types.CubeCoord targetCoord,
         Types.Color color,
@@ -91,19 +104,34 @@ contract Router is OwnableInternal, IRouter {
     ) override external {
         require(now < _endTime, Errors.TIME_IS_OVER);
         require(msg.value > CELL_DEPLOY_VALUE + ACTION_VALUE*2, Errors.LOW_GAS_VALUE);
-        require(msg.sender == _resolveCell(baseCoord), Errors.WRONG_ADDRESS);
+        require(_users.exists(owner) == true, Errors.WRONG_OWNER);
         require(HexUtils.isCorrectCoord(baseCoord) == true, Errors.WRONG_COORD);
         require(HexUtils.isCorrectCoord(targetCoord) == true, Errors.WRONG_COORD);
         require(HexUtils.isNeighborCoord(baseCoord, targetCoord) == true, Errors.WRONG_COORD);
+        require(msg.sender == _resolveCell(baseCoord), Errors.WRONG_ADDRESS);
         tvm.rawReserve(0, 4); 
-        
-        address cellAddress = deployCell(sendGasTo, msg.pubkey(), targetCoord, color, energy);
+        _users[owner] += 1;
+        address cellAddress = deployCell(owner, targetCoord, color, energy);
     }
 
+    function onCellOwnerChanged(
+        address oldOwner,
+        address newOwner
+    ) override external {
+        require(now < _endTime, Errors.TIME_IS_OVER);
+        require(msg.value > ACTION_VALUE, Errors.LOW_GAS_VALUE);
+        //require(msg.sender == _resolveCell(baseCoord), Errors.WRONG_ADDRESS); Придумать Проверку откуда пришло сообщение
+        require(_users.exists(oldOwner) == true, Errors.WRONG_OWNER);
+        require(_users.exists(newOwner) == true, Errors.WRONG_OWNER);
+        tvm.rawReserve(0, 4); 
+        _users[oldOwner] -= 1;
+        _users[newOwner] += 1;
+        newOwner.transfer({value: 0, flag: MsgFlag.ALL_NOT_RESERVED + MsgFlag.IGNORE_ERRORS, bounce: false}); 
+    }
 
     ////////////////////////////// 
     
-    function deployCell(address sendGasTo, uint256 owner, Types.CubeCoord coord, Types.Color color, uint64 energy) internal returns (address cellAddress) {
+    function deployCell(address owner, Types.CubeCoord coord, Types.Color color, uint64 energy) internal returns (address cellAddress) {
 
         TvmCell code = _buildCellCode(address(this));
         TvmCell state = _buildCellState(code, coord);
@@ -120,7 +148,7 @@ contract Router is OwnableInternal, IRouter {
             energy
         ); 
         // emit CellCreated(owner, coord, cellAddress);
-        sendGasTo.transfer({value: 0, flag: MsgFlag.ALL_NOT_RESERVED + MsgFlag.IGNORE_ERRORS, bounce: false}); 
+        owner.transfer({value: 0, flag: MsgFlag.ALL_NOT_RESERVED + MsgFlag.IGNORE_ERRORS, bounce: false}); 
 
     }
 

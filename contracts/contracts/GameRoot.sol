@@ -37,7 +37,7 @@ contract GameRoot is OwnableExternal {
         tvm.accept();
         _codeRouter = codeRouter;
         _codeCell = codeCell;
-        console.log(format("constructor msg.sender {}", msg.sender));
+        console.log(format("constructor msg.pubkey {}", msg.pubkey()));
     }
 
     function getDetails() public view returns(
@@ -49,7 +49,6 @@ contract GameRoot is OwnableExternal {
     ////////////////////////////// 
     
     function newRouter(
-        address sendGasTo,
         uint64 roundTime,
         uint64 radius,
         uint64 speed,
@@ -57,12 +56,14 @@ contract GameRoot is OwnableExternal {
         uint16 nonce
     ) public {
         require(msg.value > ROUTER_DEPLOY_VALUE + ACTION_VALUE*2, Errors.LOW_GAS_VALUE);
+        require(msg.sender.value != 0, Errors.WRONG_OWNER);
         require(radius <= 10, Errors.WRONG_PARAMS);
         require(speed <= 10, Errors.WRONG_PARAMS);
         require(name.byteLength() < 128, Errors.WRONG_PARAMS);
         tvm.rawReserve(0, 4); 
 
-        address routerAddress = deployRouter(sendGasTo, roundTime, radius, speed, name);
+        console.log(format("root newRouter msg.sender {}", msg.sender));
+        address routerAddress = deployRouter(msg.sender, roundTime, radius, speed, name);
         emit RouterCreated(nonce, routerAddress);
     }
 
@@ -77,7 +78,6 @@ contract GameRoot is OwnableExternal {
             value: ROUTER_DEPLOY_VALUE + ACTION_VALUE,
             flag: 0
         }(
-            address(this),
             _codeCell,
             roundTime,
             radius,
