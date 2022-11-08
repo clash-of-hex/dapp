@@ -1,11 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" fill="none">
-    <g clip-path="url(#a)">
-        <path fill="#6347F5" fill-rule="evenodd" d="M389.818 600 600 391.388V-1H207.612L-1 209.35h390.65l.168 390.65Z"
-              clip-rule="evenodd"/>
-    </g>
-    <defs>
-        <clipPath id="a">
-            <path fill="#fff" d="M0 0h600v600H0z"/>
-        </clipPath>
-    </defs>
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" fill="none">
+    <path d="M250.067 460 431.5 353.835l-3.748-81.272L250.067 391Z" style="fill:#6347f5"/>
+    <path d="m372.067 321-126.861 72.828.53-70.442L312.067 287Z" style="fill:#2a18bf"/>
+    <path d="m250.067 108.643 122.64 69.719-58.702 35.763L250.067 178Z" style="fill:#c7bcff"/>
+    <path d="m124.13 180.063 125.937-71.42V178l-61.458 35.84z" style="fill:#6347f5"/>
+    <path d="M306.942 76.393 126.067 179l-58.066-34.271L250.067 40Z" style="fill:#2a18bf"/>
+    <path fill="#2A18BF" d="M432 145.873 250.067 40v68.643l122 69.357L432 145.873Z"/>
+    <path d="M73.388 290.418 250.067 391v69L68 354.147Z" style="fill:#c7bcff"/>
+    <path fill="#C7BCFF" d="M68 144.729v209.418L126.067 321V179l-58.066-34.271Z"/>
+    <path fill="#6347F5" d="M372.067 321V178L432 145.873l-.5 207.962L372.067 321Z"/>
+    <path fill="#2A18BF" d="m250.067 391-124-70 64-34 60 34v70Z"/>
+    <path fill="#C7BCFF" d="M372.067 178v143l-60-34v-74l60-35Z"/>
+    <path fill="#6347F5" d="M126.067 321V179l64 34v74l-64 34Z"/>
 </svg>
