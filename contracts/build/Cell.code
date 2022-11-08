@@ -55,8 +55,6 @@ SETGLOB 16
 SWAP
 SETGLOB 21
 .loc ../contracts/additional/Cell.sol, 66
-PUSHINT 2000
-ADD
 UFITS 64
 SETGLOB 18
 .loc ../contracts/additional/Cell.sol, 67
@@ -215,13 +213,7 @@ PUSHINT 32
 DICTUGET
 THROWIFNOT 50
 PLDU 64
-GETGLOB 17
 GETGLOB 13
-SECOND
-PUSHINT 32
-DICTUGET
-THROWIFNOT 50
-PLDU 64
 NOW
 GETGLOB 15
 .loc ../contracts/additional/Cell.sol, 0
@@ -277,13 +269,7 @@ CALL $calculateEnergy_b832a134_internal_macro$
 GETGLOB 18
 .loc ../contracts/additional/Cell.sol, 102
 DUP
-GETGLOB 17
 GETGLOB 13
-SECOND
-PUSHINT 32
-DICTUGET
-THROWIFNOT 50
-PLDU 64
 GEQ
 IFRET
 .loc ../contracts/additional/Cell.sol, 105
@@ -305,13 +291,7 @@ MUL
 UFITS 64
 ADD
 UFITS 64
-GETGLOB 17
 GETGLOB 13
-SECOND
-PUSHINT 32
-DICTUGET
-THROWIFNOT 50
-PLDU 64
 MIN
 .loc ../contracts/additional/Cell.sol, 0
 
@@ -1416,7 +1396,7 @@ STZERO
 ENDC
 .loc ../contracts/additional/Cell.sol, 0
 
-.macro destruct
+.macro _destroy
 DROP
 GETGLOB 6
 THROWIFNOT 76
@@ -1426,18 +1406,10 @@ IFREF {
 	CALL $c4_to_c7$
 }
 .loc ../contracts/additional/Cell.sol, 254
-OVER
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-}
-IF
-LDMSGADDR
 ENDS
 .loc ../contracts/additional/Cell.sol, 0
 CALLREF {
-	CALL $destruct_1beb2615_internal_macro$
+	CALL $_destroy_b4c298ca_internal_macro$
 }
 DROP
 CALLREF {
@@ -1445,17 +1417,24 @@ CALLREF {
 }
 THROW 0
 
-.globl	destruct_1beb2615_internal
-.type	destruct_1beb2615_internal, @function
-CALL $destruct_1beb2615_internal_macro$
+.globl	_destroy_b4c298ca_internal
+.type	_destroy_b4c298ca_internal, @function
+CALL $_destroy_b4c298ca_internal_macro$
 
-.macro destruct_1beb2615_internal_macro
+.macro _destroy_b4c298ca_internal_macro
 .loc ../contracts/additional/Cell.sol, 32
 GETGLOB 14
 GETGLOB 9
 SDEQ
 THROWIFNOT 100
 .loc ../contracts/additional/Cell.sol, 255
+PUSHINT 3030
+NOW
+GETGLOB 20
+GREATER
+THROWANYIFNOT
+.loc ../contracts/additional/Cell.sol, 256
+GETGLOB 14
 NEWC
 STSLICECONST x42_
 STSLICE
@@ -1489,11 +1468,7 @@ LDDICT
 ROTREV
 PAIR
 SWAP
-LDU 32
-LDDICT
-ROTREV
-PAIR
-SWAP
+LDU 64
 LDREF
 ENDS
 CTOS
@@ -1562,7 +1537,8 @@ IFREFELSEREF
 	PUSHINT 0
 	NEWDICT
 	PAIR
-	BLKPUSH 2, 0
+	DUP
+	PUSHINT 0
 	PUSHREFSLICE {
 		.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 	}
@@ -1591,18 +1567,15 @@ IFREFELSEREF
 	SETGLOB 3
 	PUSHINT 5
 	PUSHREF
-	.compute $inline_array_line_24_column_34_ast_id_45$
+	.compute $inline_array_line_24_column_32_ast_id_45$
 	PAIR
 	SETGLOB 11
 	PUSHINT 5
 	PUSHREF
-	.compute $inline_array_line_25_column_34_ast_id_69$
+	.compute $inline_array_line_25_column_32_ast_id_69$
 	PAIR
 	SETGLOB 12
-	PUSHINT 5
-	PUSHREF
-	.compute $inline_array_line_26_column_34_ast_id_93$
-	PAIR
+	PUSHINT 5000
 	SETGLOB 13
 }
 IFREFELSE {
@@ -1644,11 +1617,7 @@ UNPAIR
 XCHG S2
 STU 32
 STDICT
-SWAP
-UNPAIR
-XCHG S2
-STU 32
-STDICT
+STU 64
 ROLLREV 8
 NEWC
 STSLICE
@@ -1808,79 +1777,6 @@ CALLREF {
 EQINT 1
 .loc ../contracts/utils/HexUtils.sol, 0
 
-.globl	console_with_obj_log_41304fac
-.type	console_with_obj_log_41304fac, @function
-CALL $console_with_obj_log_41304fac_macro$
-
-.macro console_with_obj_log_41304fac_macro
-.loc ../node_modules/locklift/src/console.sol, 10
-DUP
-PUSHREFSLICE {
-	.blob xc600fffffffffffffffffffffffffffffffffffffffffffffffffe2468acf13579bc0000000000000000000000000903f4294_
-}
-NEWC
-STSLICE
-STREF
-ENDC
-PUSHINT 0
-SENDRAWMSG
-.loc ../node_modules/locklift/src/console.sol, 0
-
-.globl	console_no_obj_log_41304fac
-.type	console_no_obj_log_41304fac, @function
-CALL $console_no_obj_log_41304fac_macro$
-
-.macro console_no_obj_log_41304fac_macro
-.loc ../node_modules/locklift/src/console.sol, 10
-PUSHREFSLICE {
-	.blob xc600fffffffffffffffffffffffffffffffffffffffffffffffffe2468acf13579bc0000000000000000000000000903f4294_
-}
-NEWC
-STSLICE
-STREF
-ENDC
-PUSHINT 0
-SENDRAWMSG
-.loc ../node_modules/locklift/src/console.sol, 0
-
-.globl	HexUtils_with_obj_isCorrectCoord_3e33fe95
-.type	HexUtils_with_obj_isCorrectCoord_3e33fe95, @function
-CALL $HexUtils_with_obj_isCorrectCoord_3e33fe95_macro$
-
-.macro HexUtils_with_obj_isCorrectCoord_3e33fe95_macro
-.loc ../contracts/utils/HexUtils.sol, 44
-DUP
-FIRST
-OVER
-SECOND
-ADD
-FITS 64
-OVER
-THIRD
-ADD
-FITS 64
-EQINT 0
-.loc ../contracts/utils/HexUtils.sol, 0
-
-.globl	HexUtils_no_obj_isCorrectCoord_3e33fe95
-.type	HexUtils_no_obj_isCorrectCoord_3e33fe95, @function
-CALL $HexUtils_no_obj_isCorrectCoord_3e33fe95_macro$
-
-.macro HexUtils_no_obj_isCorrectCoord_3e33fe95_macro
-.loc ../contracts/utils/HexUtils.sol, 44
-DUP
-FIRST
-OVER
-SECOND
-ADD
-FITS 64
-SWAP
-THIRD
-ADD
-FITS 64
-EQINT 0
-.loc ../contracts/utils/HexUtils.sol, 0
-
 .globl	HexUtils_with_obj_cube_distance_527ce867
 .type	HexUtils_with_obj_cube_distance_527ce867, @function
 CALL $HexUtils_with_obj_cube_distance_527ce867_macro$
@@ -1949,58 +1845,108 @@ MAX
 MAX
 .loc ../contracts/utils/HexUtils.sol, 0
 
-.macro inline_array_line_24_column_34_ast_id_45
-PUSHINT 3000
-PUSHINT 2500
-PUSHINT 2000
-PUSHINT 1500
-PUSHINT 1000
-PUSHINT 0
-NEWDICT
-PUSHINT 5
-PUSHCONT {
-	ROT
-	NEWC
-	STU 64
-	PUSH S2
-	INC
-	XCHG S3
-	ROT
-	PUSHINT 32
-	DICTUSETB
-}
-REPEAT
-NIP
+.globl	HexUtils_with_obj_isCorrectCoord_3e33fe95
+.type	HexUtils_with_obj_isCorrectCoord_3e33fe95, @function
+CALL $HexUtils_with_obj_isCorrectCoord_3e33fe95_macro$
 
-.macro inline_array_line_25_column_34_ast_id_69
-PUSHINT 5
-PUSHINT 4
-PUSHINT 3
-PUSHINT 2
-PUSHINT 1
-PUSHINT 0
-NEWDICT
-PUSHINT 5
-PUSHCONT {
-	ROT
-	NEWC
-	STU 64
-	PUSH S2
-	INC
-	XCHG S3
-	ROT
-	PUSHINT 32
-	DICTUSETB
-}
-REPEAT
-NIP
+.macro HexUtils_with_obj_isCorrectCoord_3e33fe95_macro
+.loc ../contracts/utils/HexUtils.sol, 44
+DUP
+FIRST
+OVER
+SECOND
+ADD
+FITS 64
+OVER
+THIRD
+ADD
+FITS 64
+EQINT 0
+.loc ../contracts/utils/HexUtils.sol, 0
 
-.macro inline_array_line_26_column_34_ast_id_93
-PUSHINT 6000
-PUSHINT 5000
+.globl	HexUtils_no_obj_isCorrectCoord_3e33fe95
+.type	HexUtils_no_obj_isCorrectCoord_3e33fe95, @function
+CALL $HexUtils_no_obj_isCorrectCoord_3e33fe95_macro$
+
+.macro HexUtils_no_obj_isCorrectCoord_3e33fe95_macro
+.loc ../contracts/utils/HexUtils.sol, 44
+DUP
+FIRST
+OVER
+SECOND
+ADD
+FITS 64
+SWAP
+THIRD
+ADD
+FITS 64
+EQINT 0
+.loc ../contracts/utils/HexUtils.sol, 0
+
+.globl	console_with_obj_log_41304fac
+.type	console_with_obj_log_41304fac, @function
+CALL $console_with_obj_log_41304fac_macro$
+
+.macro console_with_obj_log_41304fac_macro
+.loc ../node_modules/locklift/src/console.sol, 10
+DUP
+PUSHREFSLICE {
+	.blob xc600fffffffffffffffffffffffffffffffffffffffffffffffffe2468acf13579bc0000000000000000000000000903f4294_
+}
+NEWC
+STSLICE
+STREF
+ENDC
+PUSHINT 0
+SENDRAWMSG
+.loc ../node_modules/locklift/src/console.sol, 0
+
+.globl	console_no_obj_log_41304fac
+.type	console_no_obj_log_41304fac, @function
+CALL $console_no_obj_log_41304fac_macro$
+
+.macro console_no_obj_log_41304fac_macro
+.loc ../node_modules/locklift/src/console.sol, 10
+PUSHREFSLICE {
+	.blob xc600fffffffffffffffffffffffffffffffffffffffffffffffffe2468acf13579bc0000000000000000000000000903f4294_
+}
+NEWC
+STSLICE
+STREF
+ENDC
+PUSHINT 0
+SENDRAWMSG
+.loc ../node_modules/locklift/src/console.sol, 0
+
+.macro inline_array_line_24_column_32_ast_id_45
 PUSHINT 4000
 PUSHINT 3000
 PUSHINT 2000
+PUSHINT 1000
+PUSHINT 4000
+PUSHINT 0
+NEWDICT
+PUSHINT 5
+PUSHCONT {
+	ROT
+	NEWC
+	STU 64
+	PUSH S2
+	INC
+	XCHG S3
+	ROT
+	PUSHINT 32
+	DICTUSETB
+}
+REPEAT
+NIP
+
+.macro inline_array_line_25_column_32_ast_id_69
+PUSHINT 240
+PUSHINT 190
+PUSHINT 150
+PUSHINT 120
+PUSHINT 100
 PUSHINT 0
 NEWDICT
 PUSHINT 5
@@ -2024,10 +1970,10 @@ PUSHINT 486956038
 LEQ
 IFJMPREF {
 	DUP
-	PUSHINT 61058519
+	PUSHINT 199491363
 	EQUAL
 	IFJMPREF {
-		CALL $destruct$
+		CALL $_destroy$
 	}
 	DUP
 	PUSHINT 422560606

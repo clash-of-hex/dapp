@@ -115,9 +115,8 @@
 			]
 		},
 		{
-			"name": "destruct",
+			"name": "_destroy",
 			"inputs": [
-				{"name":"dest_addr","type":"address"}
 			],
 			"outputs": [
 			]
@@ -134,8 +133,8 @@
 		{"name":"_constructorFlag","type":"bool"},
 		{"components":[{"name":"x","type":"int64"},{"name":"y","type":"int64"},{"name":"z","type":"int64"}],"name":"_coord","type":"tuple"},
 		{"name":"_costPerLevel","type":"uint64[]"},
-		{"name":"_energyPerLevel","type":"uint64[]"},
-		{"name":"_energyPerLevelMax","type":"uint64[]"},
+		{"name":"_farmPerLevel","type":"uint64[]"},
+		{"name":"_energyMax","type":"uint64"},
 		{"name":"_router","type":"address"},
 		{"name":"_owner","type":"address"},
 		{"name":"_speed","type":"uint64"},
