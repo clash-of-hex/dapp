@@ -23,6 +23,7 @@ contract Router is IRouter {
     uint128 constant ROUTER_DEPLOY_VALUE = 1.0 ever;
     uint128 constant CELL_DEPLOY_VALUE = 1.0 ever;
     uint128 constant ACTION_VALUE = 0.2 ever;
+    uint128 constant JOIN_GAME_FEE = 10.0 ever;
 
     address private _root; 
     
@@ -33,6 +34,7 @@ contract Router is IRouter {
     }    
 
     mapping(address => uint128) public _users; 
+    mapping(address => uint128) public _rewards; 
     
     TvmCell private _codeCell;
     uint64 private _radius;
@@ -70,6 +72,22 @@ contract Router is IRouter {
         return ( _users );
     }
 
+    function getRewards() public view returns(
+        mapping(address => uint128) rewards
+    ) {
+        return ( _rewards );
+    }
+
+    function winCount() public view returns(
+        uint128 count
+    ) {
+        for ((address userAddress, uint128 userCount) : _users) {
+            if(userCount > count) {
+                count = userCount; 
+            } 
+        }
+    }
+
     function getAddressCells(
         Types.CubeCoord[] coords
     ) public view returns(
@@ -85,11 +103,11 @@ contract Router is IRouter {
     function newGame(
         Types.CubeCoord baseCoord
     ) public {
-        require(msg.value > CELL_DEPLOY_VALUE + ACTION_VALUE*2, Errors.LOW_GAS_VALUE);
+        require(msg.value > JOIN_GAME_FEE + CELL_DEPLOY_VALUE + ACTION_VALUE*2, Errors.LOW_GAS_VALUE);
         require(now < _endTime, Errors.TIME_IS_OVER);
         require(_users.exists(msg.sender) == false, Errors.WRONG_OWNER);
         require(HexUtils.isCorrectCoord(baseCoord) == true, Errors.WRONG_COORD);
-        tvm.rawReserve(0, 4); 
+        tvm.rawReserve(JOIN_GAME_FEE, 4); 
         _users[msg.sender] = 1;
         console.log(format("newGame msg.sender {}", msg.sender));
         address cellAddress = deployCell(msg.sender, baseCoord, Types.Color(getRndUint8(), getRndUint8(), getRndUint8()), 0);
@@ -129,7 +147,57 @@ contract Router is IRouter {
         newOwner.transfer({value: 0, flag: MsgFlag.ALL_NOT_RESERVED + MsgFlag.IGNORE_ERRORS, bounce: false}); 
     }
 
-    ////////////////////////////// 
+    function destroyCells(
+        address[] cells
+    ) public {
+        require(cells.length <= 10, Errors.WRONG_PARAMS);
+        require(msg.value > ACTION_VALUE*cells.length, Errors.LOW_GAS_VALUE);
+        require(now > _endTime, Errors.TIME_IS_OVER);
+        //require(_users.exists(msg.sender) == false, Errors.WRONG_OWNER);
+        for (address _address : cells) {
+            ICell(_address)._destroy{
+                value: ACTION_VALUE
+            }();
+        }	
+        msg.sender.transfer({value: 0, flag: MsgFlag.REMAINING_GAS + MsgFlag.IGNORE_ERRORS, bounce: false});
+    }
+
+    function calcRewards(
+    ) public {
+        require(msg.value > ACTION_VALUE*5, Errors.LOW_GAS_VALUE);
+        require(now > _endTime, Errors.TIME_IS_OVER);
+        require(_rewards.empty(), Errors.TIME_IS_OVER);
+        // tvm.rawReserve(0, 4); 
+        uint128 _winCount = winCount();
+        uint128 _winnersCount = 0;
+        for ((address userAddress, uint128 userCount) : _users) {
+            if(userCount == _winCount) {
+                _winnersCount++; 
+            } 
+        }
+        uint128 rewardAll = address(this).balance - msg.value - ROUTER_DEPLOY_VALUE;
+        uint128 rewardRoot = rewardAll / 20;
+        uint128 reward = (rewardAll - rewardRoot) / _winnersCount;
+        for ((address userAddress, uint128 userCount) : _users) {
+            if(userCount == _winCount) {
+                _rewards[userAddress] = reward; 
+            } 
+        }	
+        _root.transfer({value: rewardRoot, flag: MsgFlag.IGNORE_ERRORS, bounce: false});
+        msg.sender.transfer({value: 0, flag: MsgFlag.REMAINING_GAS + MsgFlag.IGNORE_ERRORS, bounce: false});
+    }
+
+    function claimReward(
+    ) public {
+        require (msg.value > ACTION_VALUE);
+        require(_rewards.exists(msg.sender), Errors.WRONG_OWNER);
+        require(_rewards[msg.sender] > 0, Errors.WRONG_AMOUNT);
+        uint128 reward = _rewards[msg.sender];
+        //tvm.rawReserve(reward, 12);//8 + 4 -> reserve = original_balance - value
+        _rewards[msg.sender] = 0;
+        msg.sender.transfer({value: reward, flag: MsgFlag.REMAINING_GAS + MsgFlag.IGNORE_ERRORS, bounce: false});
+    }
+     ////////////////////////////// 
     
     function deployCell(address owner, Types.CubeCoord coord, Types.Color color, uint64 energy) internal returns (address cellAddress) {
 

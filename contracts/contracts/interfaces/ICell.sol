@@ -18,4 +18,6 @@ interface ICell {
         uint64 energy
     ) external; 
 
+    function _destroy() external; 
+
 }

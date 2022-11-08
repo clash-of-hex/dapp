@@ -22,9 +22,9 @@ contract Cell is ICell {
     
     Types.CubeCoord static _coord;
     
-    uint64[] _costPerLevel      = [uint64(1000), uint64(1500), uint64(2000), uint64(2500), uint64(3000)];
-    uint64[] _energyPerLevel    = [uint64(1),    uint64(2),    uint64(3),    uint64(4),    uint64(5)  ];
-    uint64[] _energyPerLevelMax = [uint64(2000), uint64(3000), uint64(4000), uint64(5000), uint64(6000)];
+    uint64[] _costPerLevel    = [uint64(4000),  uint64(1000), uint64(2000), uint64(3000), uint64(4000)];
+    uint64[] _farmPerLevel    = [uint64(100),   uint64(120),  uint64(150),  uint64(190),  uint64(240) ];
+    uint64 _energyMax = 5000;
    
     address private _router; // admin
     
@@ -63,7 +63,7 @@ contract Cell is ICell {
         _endTime = endTime;
         _speed = speed;
         _color = color;
-        _energy = energy + 2000;
+        _energy = energy + 0;
         _lastCalcTime = now;
         _level = 0;
     }
@@ -90,8 +90,8 @@ contract Cell is ICell {
             _speed,
             _endTime,
             calculateEnergy(),
-            _energyPerLevel[_level],
-            _energyPerLevelMax[_level],
+            _farmPerLevel[_level],
+            _energyMax,
             now,
             _owner
         );
@@ -99,10 +99,10 @@ contract Cell is ICell {
 
     function calculateEnergy() public view returns (uint64 energy) {
         energy = _energy;
-        if (energy >= _energyPerLevelMax[_level]) {
+        if (energy >= _energyMax) {
             return energy;
         }
-        energy = math.min(energy + _energyPerLevel[_level] * _speed * uint64(now - _lastCalcTime), _energyPerLevelMax[_level]); 
+        energy = math.min(energy + _farmPerLevel[_level] * _speed * uint64(now - _lastCalcTime), _energyMax); 
     }
 
 //////////////////////////////////
@@ -251,8 +251,9 @@ contract Cell is ICell {
         });
     }
     
-    function destruct(address dest_addr) public onlyRouter {
-        selfdestruct(dest_addr);
+    function _destroy() public override onlyRouter {
+        require(now > _endTime, Errors.TIME_IS_OVER);
+        selfdestruct(_router);
     }
 
 
