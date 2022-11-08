@@ -36,7 +36,7 @@ describe(`Test Router contract (BASE)`, async function() {
     // const { account: _owner } = await locklift.factory.accounts.addNewAccount({
       // publicKey: signer.publicKey,
       // type: WalletTypes.WalletV3,
-      // value: toNano(100),
+      // value: toNano(1000),
     // });
     const _owner = await locklift.factory.accounts.addExistingAccount({
       publicKey: signer.publicKey,
@@ -109,7 +109,7 @@ describe(`Test Router contract (BASE)`, async function() {
     let _nonceNewRouter = locklift.utils.getRandomNonce().toString();
     try {
       let res = await locklift.tracing.trace(gameroot.methods.newRouter({
-          roundTime: 300,
+          roundTime: 60,
           radius: 5,
           speed: 1,
           name: 'Test location radius:5 speed:1',
@@ -190,7 +190,7 @@ describe(`Test Cell contract (BASE)`, async function() {
         baseCoord: cellCoord1
     }).send({
         from: owner.address.toString(),
-        amount: toNano(2),
+        amount: toNano(12),
     }));
 
     let details
@@ -215,7 +215,7 @@ describe(`Test Cell contract (BASE)`, async function() {
     
     let res = await locklift.tracing.trace(cell1.methods.markCell({
         targetCoord: cellCoord2,
-        energy: 1000
+        energy: 4000
     }).send({
         from: owner.address.toString(),
         amount: toNano(2),
@@ -287,7 +287,7 @@ describe(`Test Cell contract (BASE)`, async function() {
         baseCoord: cellCoord3
     }).send({
         from: owner2.address.toString(),
-        amount: toNano(2),
+        amount: toNano(12),
     }));
 
     let details
