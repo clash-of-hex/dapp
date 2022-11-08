@@ -171,12 +171,12 @@ async function getRoutersAction() {
 }
 
 async function getLiderBoard() {
-    clearTblRows('tblLiders', 1);
     console.log('getLiderBoard')
     const providerState = await ever.getProviderState();
     let details = await routerLiders();
     let users = details.users.map(el => el.toString())
     console.log('users', users);
+    clearTblRows('tblLiders', 1);
     for (let i = 0; i < users.length; i++) {
         let usr = users[i].split(',');
         let row, cell
@@ -244,15 +244,6 @@ async function checkConnect() {
     } else {
         // INFO for transactionsFound and contractStateChanged need permissions
         const providerState = await ever.getProviderState();
-        (await ever.subscribe('transactionsFound', {
-            address: contractAddress(providerState.selectedConnection),
-        })).on('data', (event) => {
-            console.log(':', {
-                address: event.address,
-                transactions: event.transactions,
-                info: event.info,
-            });
-        });
         (await ever.subscribe('contractStateChanged', {
             address: contractAddress(providerState.selectedConnection),
         })).on('data', (event) => {
@@ -270,6 +261,9 @@ async function checkConnect() {
         behavior('disconnectAction', elem => elem.onclick = disconnectAction);
         behavior('getRoutersAction', elem => elem.onclick = getRoutersAction);
         behavior('addRouterAction', elem => elem.onclick = addRouterAction);
+        behavior('calcRewardsAction', elem => elem.onclick = calcRewardsAction);
+        behavior('claimRewardAction', elem => elem.onclick = claimRewardAction);
+        behavior('destroyCellsAction', elem => elem.onclick = destroyCellsAction);
         
         console.log('endpoint:', Config[network].endpoint);
         everClient = createClient(Config[network].endpoint);
@@ -421,6 +415,12 @@ export async function routerLiders() {
 export async function subscribeAllCellState(arrAcc) {
 
   try {
+    const providerState = await ever.getProviderState();
+    (await ever.subscribe('contractStateChanged', {
+        address: contractAddress(providerState.selectedConnection),
+    })).on('data', (event) => {
+      getLiderBoard();
+    });
     
     await subscribeAcc.free();  
     await subscribeAcc.subscribe("accounts", {
@@ -433,7 +433,6 @@ export async function subscribeAllCellState(arrAcc) {
       if (hex) {
         hex.details = await getDetailsCell(msg.id, msg.boc);
       }        
-      getLiderBoard();
     }, 
     async (msg) => {
       console.log(`onError:`, msg);
@@ -481,7 +480,7 @@ export async function newGame(cellCoord) {
         baseCoord: cellCoord
     }).send({
         from: account.address.toString(),
-        amount: '2000000000',
+        amount: '12000000000',
     });
     console.log('newGame', res);
 
@@ -700,6 +699,139 @@ export async function getDetailsRouter(address, boc = null) {
   }
 
 }
+
+async function calcRewardsAction () {
+  await calcRewards();
+  await getRewards();
+}
+  
+async function claimRewardAction () {
+  claimReward();
+}
+
+async function destroyCellsAction () {
+  destroyCells();
+}
+  
+export async function destroyCells() {
+
+  const providerState = await ever.getProviderState();
+  const permissions = providerState.permissions;
+  if (!permissions.accountInteraction) return;
+  const account = permissions.accountInteraction;
+
+  const router = new ever.Contract(routerAbi, contractAddress(providerState.selectedConnection, 'router'));
+  
+  let addreses = []
+  for (const hex of currentMap) {
+    if (hex.details) {
+      addreses.push(hex.address)
+    }
+  }
+  console.log('addreses', addreses);
+  if (!addreses.length) return
+  let accs = await getAccArr(addreses);
+  let accDestroy = []
+  for (let i = 0; i < accs.length; i++) {
+    if (accs[i].boc) {
+      accDestroy.push(accs[i].id)
+      if (accDestroy.length >= 100) break;       
+    }
+  }
+  
+  if (!accDestroy.length) return
+  try {
+    console.log('destroyCells', 1);
+    let res = await router.methods.destroyCells({
+      cells: accDestroy
+    }).send({
+        from: account.address.toString(),
+        amount: '1000000000',
+    });
+    console.log('destroyCells', res);
+
+  } catch (e) {
+    console.error(e);
+    if (e instanceof TvmException) {
+      console.error(e.code);
+    }
+  }
+
+}
+
+export async function calcRewards() {
+
+  const providerState = await ever.getProviderState();
+  const permissions = providerState.permissions;
+  if (!permissions.accountInteraction) return;
+  const account = permissions.accountInteraction;
+
+  const router = new ever.Contract(routerAbi, contractAddress(providerState.selectedConnection, 'router'));
+
+  try {
+    console.log('calcRewards', 1);
+    let res = await router.methods.calcRewards({
+    }).send({
+        from: account.address.toString(),
+        amount: '2000000000',
+    });
+    console.log('calcRewards', res);
+
+  } catch (e) {
+    console.error(e);
+    if (e instanceof TvmException) {
+      console.error(e.code);
+    }
+  }
+
+}
+
+export async function claimReward() {
+
+  const providerState = await ever.getProviderState();
+  const permissions = providerState.permissions;
+  if (!permissions.accountInteraction) return;
+  const account = permissions.accountInteraction;
+
+  const router = new ever.Contract(routerAbi, contractAddress(providerState.selectedConnection, 'router'));
+
+  try {
+    console.log('claimReward', 1);
+    let res = await router.methods.claimReward({
+    }).send({
+        from: account.address.toString(),
+        amount: '1000000000',
+    });
+    console.log('claimReward', res);
+
+  } catch (e) {
+    console.error(e);
+    if (e instanceof TvmException) {
+      console.error(e.code);
+    }
+  }
+
+}
+
+export async function getRewards() {
+
+  const providerState = await ever.getProviderState();
+  const router = new ever.Contract(routerAbi, contractAddress(providerState.selectedConnection, 'router'));
+
+  try {
+    let details
+    details = await router.methods.getRewards({}).call();
+    console.log('getRewards router', details);
+    return details.rewards
+  } catch (e) {
+    console.error(e);
+    if (e instanceof TvmException) {
+      console.error(e.code);
+    }
+  }
+
+}
+
 
 export async function subscribePermissionsChanged() {
   await ever.subscribe('permissionsChanged').on('data', permissions => {

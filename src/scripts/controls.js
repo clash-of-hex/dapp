@@ -51,6 +51,21 @@ export function initiateControls() {
                     DISPLAY.camera.y += 5
                 }, 10)
                 break
+            case "Digit1":
+                document.querySelector('input[id="energy20"]').checked = true
+                break
+            case "Digit2":
+                document.querySelector('input[id="energy40"]').checked = true
+                break
+            case "Digit3":
+                document.querySelector('input[id="energy60"]').checked = true
+                break
+            case "Digit4":
+                document.querySelector('input[id="energy80"]').checked = true
+                break
+            case "Digit5":
+                document.querySelector('input[id="energy100"]').checked = true
+                break
         }
     })
 }

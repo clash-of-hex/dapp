@@ -66,11 +66,11 @@ function recalcEnergy() {
       if (!hex.details) continue
       calculateEnergy(hex);
     }
-    setTimeout(recalcEnergy, 1000);
+    setTimeout(recalcEnergy, 200);
 }
   
 function calculateEnergy(hex) {
-    let dateNow = Math.round(Date.now()/1000);
+    let dateNow = Date.now()/1000;
     if (1*hex.details.energy >= 1*hex.details.energyMax || 1*hex.details.lastCalcTime >= dateNow) {
         return;
     }
@@ -79,7 +79,7 @@ function calculateEnergy(hex) {
         1*hex.details.energyMax
     ); 
     hex.details.lastCalcTime = dateNow;
-    hex.details.energy = energy
+    hex.details.energy = Math.floor(energy)
 }
   
 export function zoomUpdate() {
@@ -251,7 +251,8 @@ animCanvas.addEventListener('dblclick', async ({
       await PROVIDER.upgradeCell(tHex.address);
     } else {
       if (!isNeighborHex(hHex, tHex)) return;
-      let energy = 1000;
+      let energy = getEnegry(hHex);
+      console.log('energy', energy)
       if (!tHex.details) {
         await PROVIDER.markCell(hHex.address, cellCoord, energy);
       } else if (colorIsEqual(hHex.details.color, tHex.details.color)) { // переписать условие по владельцу ячейки и цвета
@@ -262,6 +263,12 @@ animCanvas.addEventListener('dblclick', async ({
     }
 
 })
+
+function getEnegry(hex) {
+    if (!hex.details) return 0;
+    let percent = document.querySelector('input[name="energy"]:checked').value
+    return Math.floor(hex.details.energy * percent / 100)
+}
 
 function colorIsEqual(color1, color2) {
     return color1.r == color2.r && color1.g == color2.g && color1.b == color2.b
