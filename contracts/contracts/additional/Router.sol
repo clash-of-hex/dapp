@@ -110,7 +110,7 @@ contract Router is IRouter {
         tvm.rawReserve(JOIN_GAME_FEE, 4); 
         _users[msg.sender] = 1;
         console.log(format("newGame msg.sender {}", msg.sender));
-        address cellAddress = deployCell(msg.sender, baseCoord, Types.Color(getRndUint8(), getRndUint8(), getRndUint8()), 0);
+        address cellAddress = deployCell(msg.sender, baseCoord, Types.Color(getRndUint8(), getRndUint8(), getRndUint8()), 2000);
     }
 
     function _newCell(

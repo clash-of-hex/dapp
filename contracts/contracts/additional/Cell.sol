@@ -22,9 +22,9 @@ contract Cell is ICell {
     
     Types.CubeCoord static _coord;
     
-    uint64[] _costPerLevel    = [uint64(4000),  uint64(1000), uint64(2000), uint64(3000), uint64(4000)];
-    uint64[] _farmPerLevel    = [uint64(100),   uint64(120),  uint64(150),  uint64(190),  uint64(240) ];
-    uint64 _energyMax = 5000;
+    uint64[] _costPerLevel    = [uint64(4000),  uint64(2000), uint64(3000) ];
+    uint64[] _maxEPerLevel    = [uint64(5000),  uint64(7000), uint64(10000)];
+    uint64[] _farmPerLevel    = [uint64(100),   uint64(150),  uint64(200)  ];
     uint64 _deboost = 100;
    
     address private _router; // admin
@@ -92,7 +92,7 @@ contract Cell is ICell {
             _endTime,
             calculateEnergy(),
             _farmPerLevel[_level],
-            _energyMax,
+            _maxEPerLevel[_level],
             now,
             _owner
         );
@@ -100,6 +100,7 @@ contract Cell is ICell {
 
     function calculateEnergy() public view returns (uint64 energy) {
         energy = _energy;
+        uint64 _energyMax = _maxEPerLevel[_level];
         if (energy > _energyMax) {
           uint64 val = _deboost * _speed * uint64(now - _lastCalcTime);
           if (energy - _energyMax > val) {
@@ -222,6 +223,7 @@ contract Cell is ICell {
     ) public onlyOwner {
         require(now < _endTime, Errors.TIME_IS_OVER);
         require(msg.value > ACTION_VALUE, Errors.LOW_GAS_VALUE);
+        require(_level + 1 < _costPerLevel.length, Errors.WRONG_PARAMS);
         require(_costPerLevel[_level+1] <= calculateEnergy(), Errors.NOT_ENOUGH_ENERGY);
         tvm.rawReserve(0, 4); 
         startProcess(0, _costPerLevel[_level+1]);
