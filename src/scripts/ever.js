@@ -100,7 +100,7 @@ const runLocal = async (abi, address, functionName, input = {}, log = true, boc 
 
     return response.decoded.output;
   } catch (error) {
-      console.error(error);
+      console.error(error, functionName, input);
   }
 }
 

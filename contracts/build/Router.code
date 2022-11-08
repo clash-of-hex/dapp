@@ -1949,6 +1949,41 @@ PUSHCONT {
 IF
 THROW 0
 
+.globl	console_with_obj_log_41304fac
+.type	console_with_obj_log_41304fac, @function
+CALL $console_with_obj_log_41304fac_macro$
+
+.macro console_with_obj_log_41304fac_macro
+.loc ../node_modules/locklift/src/console.sol, 10
+DUP
+PUSHREFSLICE {
+	.blob xc600fffffffffffffffffffffffffffffffffffffffffffffffffe2468acf13579bc0000000000000000000000000903f4294_
+}
+NEWC
+STSLICE
+STREF
+ENDC
+PUSHINT 0
+SENDRAWMSG
+.loc ../node_modules/locklift/src/console.sol, 0
+
+.globl	console_no_obj_log_41304fac
+.type	console_no_obj_log_41304fac, @function
+CALL $console_no_obj_log_41304fac_macro$
+
+.macro console_no_obj_log_41304fac_macro
+.loc ../node_modules/locklift/src/console.sol, 10
+PUSHREFSLICE {
+	.blob xc600fffffffffffffffffffffffffffffffffffffffffffffffffe2468acf13579bc0000000000000000000000000903f4294_
+}
+NEWC
+STSLICE
+STREF
+ENDC
+PUSHINT 0
+SENDRAWMSG
+.loc ../node_modules/locklift/src/console.sol, 0
+
 .globl	HexUtils_with_obj_isCorrectCoord_3e33fe95
 .type	HexUtils_with_obj_isCorrectCoord_3e33fe95, @function
 CALL $HexUtils_with_obj_isCorrectCoord_3e33fe95_macro$
@@ -2011,41 +2046,6 @@ CALLREF {
 }
 EQINT 1
 .loc ../contracts/utils/HexUtils.sol, 0
-
-.globl	console_with_obj_log_41304fac
-.type	console_with_obj_log_41304fac, @function
-CALL $console_with_obj_log_41304fac_macro$
-
-.macro console_with_obj_log_41304fac_macro
-.loc ../node_modules/locklift/src/console.sol, 10
-DUP
-PUSHREFSLICE {
-	.blob xc600fffffffffffffffffffffffffffffffffffffffffffffffffe2468acf13579bc0000000000000000000000000903f4294_
-}
-NEWC
-STSLICE
-STREF
-ENDC
-PUSHINT 0
-SENDRAWMSG
-.loc ../node_modules/locklift/src/console.sol, 0
-
-.globl	console_no_obj_log_41304fac
-.type	console_no_obj_log_41304fac, @function
-CALL $console_no_obj_log_41304fac_macro$
-
-.macro console_no_obj_log_41304fac_macro
-.loc ../node_modules/locklift/src/console.sol, 10
-PUSHREFSLICE {
-	.blob xc600fffffffffffffffffffffffffffffffffffffffffffffffffe2468acf13579bc0000000000000000000000000903f4294_
-}
-NEWC
-STSLICE
-STREF
-ENDC
-PUSHINT 0
-SENDRAWMSG
-.loc ../node_modules/locklift/src/console.sol, 0
 
 .globl	HexUtils_with_obj_cube_distance_527ce867
 .type	HexUtils_with_obj_cube_distance_527ce867, @function

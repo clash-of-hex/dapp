@@ -78,10 +78,12 @@ function calculateEnergy(hex) {
     let energyMax = 1*hex.details.energyMax;
     
     if (energy > energyMax) {
-      energy = Math.max(
-        energy - 100 * hex.details.speed * (dateNow - hex.details.lastCalcTime),
-        energyMax
-      ); 
+      let val = 100 * hex.details.speed * (dateNow - hex.details.lastCalcTime)
+      if (energy - val > energyMax) {
+        energy = energy - val; 
+      } else {
+        energy = energyMax;
+      }
     } else if (energy < energyMax) {
       energy = Math.min(
         energy + hex.details.energySec * hex.details.speed * (dateNow - hex.details.lastCalcTime),

@@ -101,7 +101,12 @@ contract Cell is ICell {
     function calculateEnergy() public view returns (uint64 energy) {
         energy = _energy;
         if (energy > _energyMax) {
-          energy = math.max(energy - _deboost * _speed * uint64(now - _lastCalcTime), _energyMax); 
+          uint64 val = _deboost * _speed * uint64(now - _lastCalcTime);
+          if (energy - val > _energyMax) {
+            energy = energy - val;
+          } else {
+            energy = _energyMax;
+          }
         } else if (energy < _energyMax) {
           energy = math.min(energy + _farmPerLevel[_level] * _speed * uint64(now - _lastCalcTime), _energyMax); 
         }
