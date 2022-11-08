@@ -25,6 +25,7 @@ contract Cell is ICell {
     uint64[] _costPerLevel    = [uint64(4000),  uint64(1000), uint64(2000), uint64(3000), uint64(4000)];
     uint64[] _farmPerLevel    = [uint64(100),   uint64(120),  uint64(150),  uint64(190),  uint64(240) ];
     uint64 _energyMax = 5000;
+    uint64 _deboost = 100;
    
     address private _router; // admin
     
@@ -99,10 +100,11 @@ contract Cell is ICell {
 
     function calculateEnergy() public view returns (uint64 energy) {
         energy = _energy;
-        if (energy >= _energyMax) {
-            return energy;
+        if (energy > _energyMax) {
+          energy = math.max(energy - _deboost * _speed * uint64(now - _lastCalcTime), _energyMax); 
+        } else if (energy < _energyMax) {
+          energy = math.min(energy + _farmPerLevel[_level] * _speed * uint64(now - _lastCalcTime), _energyMax); 
         }
-        energy = math.min(energy + _farmPerLevel[_level] * _speed * uint64(now - _lastCalcTime), _energyMax); 
     }
 
 //////////////////////////////////

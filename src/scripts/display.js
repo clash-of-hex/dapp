@@ -71,13 +71,23 @@ function recalcEnergy() {
   
 function calculateEnergy(hex) {
     let dateNow = Date.now()/1000;
-    if (1*hex.details.energy >= 1*hex.details.energyMax || 1*hex.details.lastCalcTime >= dateNow) {
-        return;
+    if (1*hex.details.lastCalcTime >= dateNow) {
+      return;
     }
-    let energy = Math.min(
-        1*hex.details.energy + hex.details.energySec * hex.details.speed * (dateNow - hex.details.lastCalcTime),
-        1*hex.details.energyMax
-    ); 
+    let energy = 1*hex.details.energy;
+    let energyMax = 1*hex.details.energyMax;
+    
+    if (energy > energyMax) {
+      energy = Math.max(
+        energy - 100 * hex.details.speed * (dateNow - hex.details.lastCalcTime),
+        energyMax
+      ); 
+    } else if (energy < energyMax) {
+      energy = Math.min(
+        energy + hex.details.energySec * hex.details.speed * (dateNow - hex.details.lastCalcTime),
+        energyMax
+      ); 
+    }
     hex.details.lastCalcTime = dateNow;
     hex.details.energy = Math.floor(energy)
 }

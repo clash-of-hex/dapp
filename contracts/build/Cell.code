@@ -31,38 +31,38 @@ TRIPLE
 SWAP
 LDU 64
 ENDS
-.loc ../contracts/additional/Cell.sol, 59
+.loc ../contracts/additional/Cell.sol, 60
 GETPARAM 7
 FIRST
 PUSHINT 1000000000
 GREATER
 THROWIFNOT 1060
-.loc ../contracts/additional/Cell.sol, 60
-ACCEPT
 .loc ../contracts/additional/Cell.sol, 61
-ROLL 5
-SETGLOB 14
+ACCEPT
 .loc ../contracts/additional/Cell.sol, 62
-ROLL 4
+ROLL 5
 SETGLOB 15
 .loc ../contracts/additional/Cell.sol, 63
-ROLL 3
-SETGLOB 20
-.loc ../contracts/additional/Cell.sol, 64
-ROT
+ROLL 4
 SETGLOB 16
-.loc ../contracts/additional/Cell.sol, 65
-SWAP
+.loc ../contracts/additional/Cell.sol, 64
+ROLL 3
 SETGLOB 21
+.loc ../contracts/additional/Cell.sol, 65
+ROT
+SETGLOB 17
 .loc ../contracts/additional/Cell.sol, 66
-UFITS 64
-SETGLOB 18
+SWAP
+SETGLOB 22
 .loc ../contracts/additional/Cell.sol, 67
-NOW
+UFITS 64
 SETGLOB 19
 .loc ../contracts/additional/Cell.sol, 68
+NOW
+SETGLOB 20
+.loc ../contracts/additional/Cell.sol, 69
 PUSHINT 0
-SETGLOB 17
+SETGLOB 18
 .loc ../contracts/additional/Cell.sol, 0
 CALLREF {
 	CALL $c7_to_c4$
@@ -78,7 +78,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Cell.sol, 71
+.loc ../contracts/additional/Cell.sol, 72
 ENDS
 .loc ../contracts/additional/Cell.sol, 0
 CALLREF {
@@ -120,8 +120,8 @@ THROW 0
 CALL $getRouter_b0f479a1_internal_macro$
 
 .macro getRouter_b0f479a1_internal_macro
-.loc ../contracts/additional/Cell.sol, 72
-GETGLOB 14
+.loc ../contracts/additional/Cell.sol, 73
+GETGLOB 15
 .loc ../contracts/additional/Cell.sol, 0
 
 .macro getDetails
@@ -133,7 +133,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Cell.sol, 75
+.loc ../contracts/additional/Cell.sol, 76
 ENDS
 .loc ../contracts/additional/Cell.sol, 0
 CALLREF {
@@ -197,16 +197,16 @@ THROW 0
 CALL $getDetails_fbbf93a0_internal_macro$
 
 .macro getDetails_fbbf93a0_internal_macro
-.loc ../contracts/additional/Cell.sol, 86
+.loc ../contracts/additional/Cell.sol, 87
 GETGLOB 10
-GETGLOB 21
+GETGLOB 22
+GETGLOB 18
 GETGLOB 17
-GETGLOB 16
-GETGLOB 20
+GETGLOB 21
 CALLREF {
 	CALL $calculateEnergy_b832a134_internal_macro$
 }
-GETGLOB 17
+GETGLOB 18
 GETGLOB 12
 SECOND
 PUSHINT 32
@@ -215,7 +215,7 @@ THROWIFNOT 50
 PLDU 64
 GETGLOB 13
 NOW
-GETGLOB 15
+GETGLOB 16
 .loc ../contracts/additional/Cell.sol, 0
 
 .macro calculateEnergy
@@ -227,7 +227,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Cell.sol, 100
+.loc ../contracts/additional/Cell.sol, 101
 ENDS
 .loc ../contracts/additional/Cell.sol, 0
 CALLREF {
@@ -265,34 +265,60 @@ THROW 0
 CALL $calculateEnergy_b832a134_internal_macro$
 
 .macro calculateEnergy_b832a134_internal_macro
-.loc ../contracts/additional/Cell.sol, 101
-GETGLOB 18
 .loc ../contracts/additional/Cell.sol, 102
+GETGLOB 19
+.loc ../contracts/additional/Cell.sol, 103
 DUP
 GETGLOB 13
-GEQ
-IFRET
-.loc ../contracts/additional/Cell.sol, 105
-GETGLOB 17
-GETGLOB 12
-SECOND
-PUSHINT 32
-DICTUGET
-THROWIFNOT 50
-PLDU 64
-GETGLOB 16
-MUL
-UFITS 64
-NOW
-GETGLOB 19
-SUB
-UFITS 64
-MUL
-UFITS 64
-ADD
-UFITS 64
-GETGLOB 13
-MIN
+GREATER
+PUSHCONT {
+	.loc ../contracts/additional/Cell.sol, 104
+	GETGLOB 14
+	GETGLOB 17
+	MUL
+	UFITS 64
+	NOW
+	GETGLOB 20
+	SUB
+	UFITS 64
+	MUL
+	UFITS 64
+	SUB
+	UFITS 64
+	GETGLOB 13
+	MAX
+}
+PUSHCONT {
+	DUP
+	GETGLOB 13
+	LESS
+	PUSHCONT {
+		.loc ../contracts/additional/Cell.sol, 106
+		GETGLOB 18
+		GETGLOB 12
+		SECOND
+		PUSHINT 32
+		DICTUGET
+		THROWIFNOT 50
+		PLDU 64
+		GETGLOB 17
+		MUL
+		UFITS 64
+		NOW
+		GETGLOB 20
+		SUB
+		UFITS 64
+		MUL
+		UFITS 64
+		ADD
+		UFITS 64
+		GETGLOB 13
+		MIN
+		.loc ../contracts/additional/Cell.sol, 0
+	}
+	IF
+}
+IFELSE
 .loc ../contracts/additional/Cell.sol, 0
 
 .globl	startProcess_4f2dd1fa_internal
@@ -300,7 +326,7 @@ MIN
 CALL $startProcess_4f2dd1fa_internal_macro$
 
 .macro startProcess_4f2dd1fa_internal_macro
-.loc ../contracts/additional/Cell.sol, 110
+.loc ../contracts/additional/Cell.sol, 112
 CALLREF {
 	CALL $calculateEnergy_b832a134_internal_macro$
 }
@@ -309,10 +335,10 @@ ADD
 UFITS 64
 SUBR
 UFITS 64
-SETGLOB 18
-.loc ../contracts/additional/Cell.sol, 111
-NOW
 SETGLOB 19
+.loc ../contracts/additional/Cell.sol, 113
+NOW
+SETGLOB 20
 .loc ../contracts/additional/Cell.sol, 0
 
 .macro markCell
@@ -324,7 +350,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Cell.sol, 116
+.loc ../contracts/additional/Cell.sol, 118
 OVER
 PUSHCONT {
 	LDI 64
@@ -358,18 +384,18 @@ THROW 0
 CALL $markCell_4cebe32d_internal_macro$
 
 .macro markCell_4cebe32d_internal_macro
-.loc ../contracts/additional/Cell.sol, 39
-GETGLOB 15
+.loc ../contracts/additional/Cell.sol, 40
+GETGLOB 16
 GETGLOB 9
 SDEQ
 THROWIFNOT 100
-.loc ../contracts/additional/Cell.sol, 120
+.loc ../contracts/additional/Cell.sol, 122
 PUSHINT 3030
 NOW
-GETGLOB 20
+GETGLOB 21
 LESS
 THROWANYIFNOT
-.loc ../contracts/additional/Cell.sol, 121
+.loc ../contracts/additional/Cell.sol, 123
 DEPTH
 ADDCONST -2
 PICK
@@ -379,7 +405,7 @@ ADD
 UFITS 128
 GREATER
 THROWIFNOT 2000
-.loc ../contracts/additional/Cell.sol, 122
+.loc ../contracts/additional/Cell.sol, 124
 PUSHINT 3010
 OVER
 PUSHINT 0
@@ -401,7 +427,7 @@ PUSHCONT {
 }
 IF
 THROWANYIFNOT
-.loc ../contracts/additional/Cell.sol, 123
+.loc ../contracts/additional/Cell.sol, 125
 PUSHINT 3000
 PUSH S2
 CALLREF {
@@ -410,7 +436,7 @@ CALLREF {
 TRUE
 EQUAL
 THROWANYIFNOT
-.loc ../contracts/additional/Cell.sol, 124
+.loc ../contracts/additional/Cell.sol, 126
 PUSHINT 3000
 GETGLOB 10
 PUSH S3
@@ -420,17 +446,17 @@ CALLREF {
 TRUE
 EQUAL
 THROWANYIFNOT
-.loc ../contracts/additional/Cell.sol, 125
+.loc ../contracts/additional/Cell.sol, 127
 PUSHINT 0
 PUSHINT 4
 RAWRESERVE
-.loc ../contracts/additional/Cell.sol, 126
+.loc ../contracts/additional/Cell.sol, 128
 PUSHINT 0
 OVER
 CALLREF {
 	CALL $startProcess_4f2dd1fa_internal_macro$
 }
-.loc ../contracts/additional/Cell.sol, 127
+.loc ../contracts/additional/Cell.sol, 129
 PUSHINT 0
 GETGLOB 11
 SECOND
@@ -440,11 +466,11 @@ THROWIFNOT 50
 PLDU 64
 SUB
 UFITS 64
-GETGLOB 21
+GETGLOB 22
 ROT
 GETGLOB 10
+GETGLOB 16
 GETGLOB 15
-GETGLOB 14
 NEWC
 STSLICECONST x62_
 STSLICE
@@ -491,7 +517,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Cell.sol, 134
+.loc ../contracts/additional/Cell.sol, 136
 OVER
 PUSHCONT {
 	LDI 64
@@ -525,18 +551,18 @@ THROW 0
 CALL $helpCell_00b9f90b_internal_macro$
 
 .macro helpCell_00b9f90b_internal_macro
-.loc ../contracts/additional/Cell.sol, 39
-GETGLOB 15
+.loc ../contracts/additional/Cell.sol, 40
+GETGLOB 16
 GETGLOB 9
 SDEQ
 THROWIFNOT 100
-.loc ../contracts/additional/Cell.sol, 138
+.loc ../contracts/additional/Cell.sol, 140
 PUSHINT 3030
 NOW
-GETGLOB 20
+GETGLOB 21
 LESS
 THROWANYIFNOT
-.loc ../contracts/additional/Cell.sol, 139
+.loc ../contracts/additional/Cell.sol, 141
 DEPTH
 ADDCONST -2
 PICK
@@ -544,7 +570,7 @@ PUSHINT 400000000
 UFITS 128
 GREATER
 THROWIFNOT 2000
-.loc ../contracts/additional/Cell.sol, 140
+.loc ../contracts/additional/Cell.sol, 142
 PUSHINT 3010
 OVER
 CALLREF {
@@ -552,7 +578,7 @@ CALLREF {
 }
 LEQ
 THROWANYIFNOT
-.loc ../contracts/additional/Cell.sol, 141
+.loc ../contracts/additional/Cell.sol, 143
 PUSHINT 3000
 PUSH S2
 CALLREF {
@@ -561,7 +587,7 @@ CALLREF {
 TRUE
 EQUAL
 THROWANYIFNOT
-.loc ../contracts/additional/Cell.sol, 142
+.loc ../contracts/additional/Cell.sol, 144
 PUSHINT 3000
 GETGLOB 10
 PUSH S3
@@ -571,20 +597,20 @@ CALLREF {
 TRUE
 EQUAL
 THROWANYIFNOT
-.loc ../contracts/additional/Cell.sol, 143
+.loc ../contracts/additional/Cell.sol, 145
 PUSHINT 0
 PUSHINT 4
 RAWRESERVE
-.loc ../contracts/additional/Cell.sol, 144
+.loc ../contracts/additional/Cell.sol, 146
 PUSHINT 0
 OVER
 CALLREF {
 	CALL $startProcess_4f2dd1fa_internal_macro$
 }
-.loc ../contracts/additional/Cell.sol, 145
-GETGLOB 21
+.loc ../contracts/additional/Cell.sol, 147
+GETGLOB 22
 GETGLOB 10
-GETGLOB 15
+GETGLOB 16
 ROLL 4
 CALLREF {
 	CALL $_resolveCell_4321abcf_internal_macro$
@@ -626,7 +652,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Cell.sol, 151
+.loc ../contracts/additional/Cell.sol, 153
 OVER
 PUSHCONT {
 	LDREF
@@ -660,19 +686,19 @@ CALLREF {
 THROW 0
 
 .macro _helpCell_4e89beb3_internal_macro
-.loc ../contracts/additional/Cell.sol, 157
+.loc ../contracts/additional/Cell.sol, 159
 DEPTH
 ADDCONST -2
 PICK
 PUSHINT 200000000
 GREATER
 THROWIFNOT 2000
-.loc ../contracts/additional/Cell.sol, 158
+.loc ../contracts/additional/Cell.sol, 160
 ROLL 3
-GETGLOB 15
+GETGLOB 16
 SDEQ
 THROWIFNOT 1010
-.loc ../contracts/additional/Cell.sol, 159
+.loc ../contracts/additional/Cell.sol, 161
 GETGLOB 9
 PUSH S3
 CALLREF {
@@ -680,7 +706,7 @@ CALLREF {
 }
 SDEQ
 THROWIFNOT 1020
-.loc ../contracts/additional/Cell.sol, 160
+.loc ../contracts/additional/Cell.sol, 162
 PUSHINT 3000
 PUSH S3
 CALLREF {
@@ -689,7 +715,7 @@ CALLREF {
 TRUE
 EQUAL
 THROWANYIFNOT
-.loc ../contracts/additional/Cell.sol, 161
+.loc ../contracts/additional/Cell.sol, 163
 PUSHINT 3000
 GETGLOB 10
 ROLL 4
@@ -699,18 +725,18 @@ CALLREF {
 TRUE
 EQUAL
 THROWANYIFNOT
-.loc ../contracts/additional/Cell.sol, 162
+.loc ../contracts/additional/Cell.sol, 164
 PUSHINT 0
 PUSHINT 4
 RAWRESERVE
-.loc ../contracts/additional/Cell.sol, 163
+.loc ../contracts/additional/Cell.sol, 165
 PUSHINT 0
 CALLREF {
 	CALL $startProcess_4f2dd1fa_internal_macro$
 }
-.loc ../contracts/additional/Cell.sol, 164
+.loc ../contracts/additional/Cell.sol, 166
 DROP
-GETGLOB 15
+GETGLOB 16
 NEWC
 STSLICECONST x42_
 STSLICE
@@ -732,7 +758,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Cell.sol, 169
+.loc ../contracts/additional/Cell.sol, 171
 OVER
 PUSHCONT {
 	LDI 64
@@ -766,18 +792,18 @@ THROW 0
 CALL $attkCell_a6a68b1e_internal_macro$
 
 .macro attkCell_a6a68b1e_internal_macro
-.loc ../contracts/additional/Cell.sol, 39
-GETGLOB 15
+.loc ../contracts/additional/Cell.sol, 40
+GETGLOB 16
 GETGLOB 9
 SDEQ
 THROWIFNOT 100
-.loc ../contracts/additional/Cell.sol, 173
+.loc ../contracts/additional/Cell.sol, 175
 PUSHINT 3030
 NOW
-GETGLOB 20
+GETGLOB 21
 LESS
 THROWANYIFNOT
-.loc ../contracts/additional/Cell.sol, 174
+.loc ../contracts/additional/Cell.sol, 176
 DEPTH
 ADDCONST -2
 PICK
@@ -785,7 +811,7 @@ PUSHINT 800000000
 UFITS 128
 GREATER
 THROWIFNOT 2000
-.loc ../contracts/additional/Cell.sol, 175
+.loc ../contracts/additional/Cell.sol, 177
 PUSHINT 3010
 OVER
 CALLREF {
@@ -793,7 +819,7 @@ CALLREF {
 }
 LEQ
 THROWANYIFNOT
-.loc ../contracts/additional/Cell.sol, 176
+.loc ../contracts/additional/Cell.sol, 178
 PUSHINT 3000
 PUSH S2
 CALLREF {
@@ -802,7 +828,7 @@ CALLREF {
 TRUE
 EQUAL
 THROWANYIFNOT
-.loc ../contracts/additional/Cell.sol, 177
+.loc ../contracts/additional/Cell.sol, 179
 PUSHINT 3000
 GETGLOB 10
 PUSH S3
@@ -812,20 +838,20 @@ CALLREF {
 TRUE
 EQUAL
 THROWANYIFNOT
-.loc ../contracts/additional/Cell.sol, 178
+.loc ../contracts/additional/Cell.sol, 180
 PUSHINT 0
 PUSHINT 4
 RAWRESERVE
-.loc ../contracts/additional/Cell.sol, 179
+.loc ../contracts/additional/Cell.sol, 181
 PUSHINT 0
 OVER
 CALLREF {
 	CALL $startProcess_4f2dd1fa_internal_macro$
 }
-.loc ../contracts/additional/Cell.sol, 180
-GETGLOB 21
+.loc ../contracts/additional/Cell.sol, 182
+GETGLOB 22
 GETGLOB 10
-GETGLOB 15
+GETGLOB 16
 ROLL 4
 CALLREF {
 	CALL $_resolveCell_4321abcf_internal_macro$
@@ -867,7 +893,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Cell.sol, 186
+.loc ../contracts/additional/Cell.sol, 188
 OVER
 PUSHCONT {
 	LDREF
@@ -901,7 +927,7 @@ CALLREF {
 THROW 0
 
 .macro _attkCell_e6264f07_internal_macro
-.loc ../contracts/additional/Cell.sol, 192
+.loc ../contracts/additional/Cell.sol, 194
 DEPTH
 ADDCONST -2
 PICK
@@ -909,12 +935,12 @@ PUSHINT 600000000
 UFITS 128
 GREATER
 THROWIFNOT 2000
-.loc ../contracts/additional/Cell.sol, 193
+.loc ../contracts/additional/Cell.sol, 195
 PUSH S3
-GETGLOB 15
+GETGLOB 16
 SDEQ
 THROWIF 1010
-.loc ../contracts/additional/Cell.sol, 194
+.loc ../contracts/additional/Cell.sol, 196
 GETGLOB 9
 PUSH S3
 CALLREF {
@@ -922,7 +948,7 @@ CALLREF {
 }
 SDEQ
 THROWIFNOT 1020
-.loc ../contracts/additional/Cell.sol, 195
+.loc ../contracts/additional/Cell.sol, 197
 PUSHINT 3000
 PUSH S3
 CALLREF {
@@ -931,7 +957,7 @@ CALLREF {
 TRUE
 EQUAL
 THROWANYIFNOT
-.loc ../contracts/additional/Cell.sol, 196
+.loc ../contracts/additional/Cell.sol, 198
 PUSHINT 3000
 GETGLOB 10
 ROLL 4
@@ -941,29 +967,29 @@ CALLREF {
 TRUE
 EQUAL
 THROWANYIFNOT
-.loc ../contracts/additional/Cell.sol, 197
+.loc ../contracts/additional/Cell.sol, 199
 PUSHINT 0
 PUSHINT 4
 RAWRESERVE
-.loc ../contracts/additional/Cell.sol, 198
+.loc ../contracts/additional/Cell.sol, 200
 CALLREF {
 	CALL $calculateEnergy_b832a134_internal_macro$
 }
-.loc ../contracts/additional/Cell.sol, 199
+.loc ../contracts/additional/Cell.sol, 201
 DUP2
 LEQ
 PUSHCONT {
-	.loc ../contracts/additional/Cell.sol, 200
+	.loc ../contracts/additional/Cell.sol, 202
 	PUSHINT 0
 	PUSH S2
 }
 PUSHCONT {
-	.loc ../contracts/additional/Cell.sol, 202
+	.loc ../contracts/additional/Cell.sol, 204
 	PUSH S3
-	GETGLOB 15
+	GETGLOB 16
 	PUSHINT 400000000
 	UFITS 128
-	GETGLOB 14
+	GETGLOB 15
 	NEWC
 	STSLICECONST x62_
 	STSLICE
@@ -983,13 +1009,13 @@ PUSHCONT {
 	ENDC
 	PUSHINT 0
 	SENDRAWMSG
-	.loc ../contracts/additional/Cell.sol, 206
-	PUSH S3
-	SETGLOB 15
-	.loc ../contracts/additional/Cell.sol, 207
-	PUSH S2
-	SETGLOB 21
 	.loc ../contracts/additional/Cell.sol, 208
+	PUSH S3
+	SETGLOB 16
+	.loc ../contracts/additional/Cell.sol, 209
+	PUSH S2
+	SETGLOB 22
+	.loc ../contracts/additional/Cell.sol, 210
 	DUP2
 	SUB
 	UFITS 64
@@ -999,7 +1025,7 @@ IFELSE
 CALLREF {
 	CALL $startProcess_4f2dd1fa_internal_macro$
 }
-.loc ../contracts/additional/Cell.sol, 210
+.loc ../contracts/additional/Cell.sol, 212
 BLKDROP 3
 NEWC
 STSLICECONST x42_
@@ -1022,7 +1048,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Cell.sol, 214
+.loc ../contracts/additional/Cell.sol, 216
 ENDS
 .loc ../contracts/additional/Cell.sol, 0
 CALLREF {
@@ -1039,27 +1065,27 @@ THROW 0
 CALL $upgradeCell_504495bc_internal_macro$
 
 .macro upgradeCell_504495bc_internal_macro
-.loc ../contracts/additional/Cell.sol, 39
-GETGLOB 15
+.loc ../contracts/additional/Cell.sol, 40
+GETGLOB 16
 GETGLOB 9
 SDEQ
 THROWIFNOT 100
-.loc ../contracts/additional/Cell.sol, 216
+.loc ../contracts/additional/Cell.sol, 218
 PUSHINT 3030
 NOW
-GETGLOB 20
+GETGLOB 21
 LESS
 THROWANYIFNOT
-.loc ../contracts/additional/Cell.sol, 217
+.loc ../contracts/additional/Cell.sol, 219
 DEPTH
 ADDCONST -2
 PICK
 PUSHINT 200000000
 GREATER
 THROWIFNOT 2000
-.loc ../contracts/additional/Cell.sol, 218
+.loc ../contracts/additional/Cell.sol, 220
 PUSHINT 3010
-GETGLOB 17
+GETGLOB 18
 INC
 UFITS 64
 GETGLOB 11
@@ -1073,13 +1099,13 @@ CALLREF {
 }
 LEQ
 THROWANYIFNOT
-.loc ../contracts/additional/Cell.sol, 219
+.loc ../contracts/additional/Cell.sol, 221
 PUSHINT 0
 PUSHINT 4
 RAWRESERVE
-.loc ../contracts/additional/Cell.sol, 220
+.loc ../contracts/additional/Cell.sol, 222
 PUSHINT 0
-GETGLOB 17
+GETGLOB 18
 INC
 UFITS 64
 GETGLOB 11
@@ -1091,12 +1117,12 @@ PLDU 64
 CALLREF {
 	CALL $startProcess_4f2dd1fa_internal_macro$
 }
-.loc ../contracts/additional/Cell.sol, 221
-GETGLOB 17
+.loc ../contracts/additional/Cell.sol, 223
+GETGLOB 18
 INC
 UFITS 64
-SETGLOB 17
-.loc ../contracts/additional/Cell.sol, 222
+SETGLOB 18
+.loc ../contracts/additional/Cell.sol, 224
 TUPLE 0
 NEWC
 PUSHSLICE x7570677261646543656c6c20
@@ -1116,8 +1142,8 @@ CALLREF {
 CALLREF {
 	CALL $console_no_obj_log_41304fac_macro$
 }
-.loc ../contracts/additional/Cell.sol, 223
-GETGLOB 15
+.loc ../contracts/additional/Cell.sol, 225
+GETGLOB 16
 NEWC
 STSLICECONST x42_
 STSLICE
@@ -1139,7 +1165,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Cell.sol, 227
+.loc ../contracts/additional/Cell.sol, 229
 OVER
 PUSHCONT {
 	LDI 64
@@ -1197,19 +1223,19 @@ THROW 0
 CALL $_resolveCell_4321abcf_internal_macro$
 
 .macro _resolveCell_4321abcf_internal_macro
-.loc ../contracts/additional/Cell.sol, 230
-GETGLOB 14
+.loc ../contracts/additional/Cell.sol, 232
+GETGLOB 15
 CALLREF {
 	CALL $_buildCellCode_b82b0578_internal_macro$
 }
-.loc ../contracts/additional/Cell.sol, 231
+.loc ../contracts/additional/Cell.sol, 233
 SWAP
 CALLREF {
 	CALL $_buildCellState_56197829_internal_macro$
 }
-.loc ../contracts/additional/Cell.sol, 232
+.loc ../contracts/additional/Cell.sol, 234
 HASHCU
-.loc ../contracts/additional/Cell.sol, 233
+.loc ../contracts/additional/Cell.sol, 235
 MYADDR
 PARSEMSGADDR
 THIRD
@@ -1219,7 +1245,7 @@ STI 8
 STU 256
 ENDC
 CTOS
-.loc ../contracts/additional/Cell.sol, 234
+.loc ../contracts/additional/Cell.sol, 236
 TUPLE 0
 NEWC
 PUSHSLICE x7265736f6c766543656c6c203220
@@ -1243,10 +1269,10 @@ CALLREF {
 CALL $_buildCellCode_b82b0578_internal_macro$
 
 .macro _buildCellCode_b82b0578_internal_macro
-.loc ../contracts/additional/Cell.sol, 239
+.loc ../contracts/additional/Cell.sol, 241
 NEWC
 STSLICE
-.loc ../contracts/additional/Cell.sol, 240
+.loc ../contracts/additional/Cell.sol, 242
 MYCODE
 CTOS
 SWAP
@@ -1363,7 +1389,7 @@ CALLREF {
 CALL $_buildCellState_56197829_internal_macro$
 
 .macro _buildCellState_56197829_internal_macro
-.loc ../contracts/additional/Cell.sol, 247
+.loc ../contracts/additional/Cell.sol, 249
 PUSHINT 0
 NEWC
 STU 256
@@ -1405,7 +1431,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Cell.sol, 254
+.loc ../contracts/additional/Cell.sol, 256
 ENDS
 .loc ../contracts/additional/Cell.sol, 0
 CALLREF {
@@ -1422,19 +1448,19 @@ THROW 0
 CALL $_destroy_b4c298ca_internal_macro$
 
 .macro _destroy_b4c298ca_internal_macro
-.loc ../contracts/additional/Cell.sol, 32
-GETGLOB 14
+.loc ../contracts/additional/Cell.sol, 33
+GETGLOB 15
 GETGLOB 9
 SDEQ
 THROWIFNOT 100
-.loc ../contracts/additional/Cell.sol, 255
+.loc ../contracts/additional/Cell.sol, 257
 PUSHINT 3030
 NOW
-GETGLOB 20
+GETGLOB 21
 GREATER
 THROWANYIFNOT
-.loc ../contracts/additional/Cell.sol, 256
-GETGLOB 14
+.loc ../contracts/additional/Cell.sol, 258
+GETGLOB 15
 NEWC
 STSLICECONST x42_
 STSLICE
@@ -1469,6 +1495,7 @@ ROTREV
 PAIR
 SWAP
 LDU 64
+LDU 64
 LDREF
 ENDS
 CTOS
@@ -1492,6 +1519,7 @@ ROLLREV 3
 TRIPLE
 SWAP
 ENDS
+SETGLOB 22
 SETGLOB 21
 SETGLOB 20
 SETGLOB 19
@@ -1539,6 +1567,7 @@ IFREFELSEREF
 	PAIR
 	DUP
 	PUSHINT 0
+	DUP
 	PUSHREFSLICE {
 		.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 	}
@@ -1546,6 +1575,7 @@ IFREFELSEREF
 	PUSHINT 0
 	BLKPUSH 7, 0
 	TRIPLE
+	SETGLOB 22
 	SETGLOB 21
 	SETGLOB 20
 	SETGLOB 19
@@ -1577,12 +1607,15 @@ IFREFELSEREF
 	SETGLOB 12
 	PUSHINT 5000
 	SETGLOB 13
+	PUSHINT 100
+	SETGLOB 14
 }
 IFREFELSE {
 	CALL $c4_to_c7$
 }
 
 .macro c7_to_c4
+GETGLOB 22
 GETGLOB 21
 GETGLOB 20
 GETGLOB 19
@@ -1617,6 +1650,7 @@ UNPAIR
 XCHG S2
 STU 32
 STDICT
+STU 64
 STU 64
 ROLLREV 8
 NEWC
@@ -1752,41 +1786,6 @@ CALLREF {
 }
 THROW 60
 
-.globl	console_with_obj_log_41304fac
-.type	console_with_obj_log_41304fac, @function
-CALL $console_with_obj_log_41304fac_macro$
-
-.macro console_with_obj_log_41304fac_macro
-.loc ../node_modules/locklift/src/console.sol, 10
-DUP
-PUSHREFSLICE {
-	.blob xc600fffffffffffffffffffffffffffffffffffffffffffffffffe2468acf13579bc0000000000000000000000000903f4294_
-}
-NEWC
-STSLICE
-STREF
-ENDC
-PUSHINT 0
-SENDRAWMSG
-.loc ../node_modules/locklift/src/console.sol, 0
-
-.globl	console_no_obj_log_41304fac
-.type	console_no_obj_log_41304fac, @function
-CALL $console_no_obj_log_41304fac_macro$
-
-.macro console_no_obj_log_41304fac_macro
-.loc ../node_modules/locklift/src/console.sol, 10
-PUSHREFSLICE {
-	.blob xc600fffffffffffffffffffffffffffffffffffffffffffffffffe2468acf13579bc0000000000000000000000000903f4294_
-}
-NEWC
-STSLICE
-STREF
-ENDC
-PUSHINT 0
-SENDRAWMSG
-.loc ../node_modules/locklift/src/console.sol, 0
-
 .globl	HexUtils_with_obj_isCorrectCoord_3e33fe95
 .type	HexUtils_with_obj_isCorrectCoord_3e33fe95, @function
 CALL $HexUtils_with_obj_isCorrectCoord_3e33fe95_macro$
@@ -1917,6 +1916,41 @@ FITS 64
 MAX
 MAX
 .loc ../contracts/utils/HexUtils.sol, 0
+
+.globl	console_with_obj_log_41304fac
+.type	console_with_obj_log_41304fac, @function
+CALL $console_with_obj_log_41304fac_macro$
+
+.macro console_with_obj_log_41304fac_macro
+.loc ../node_modules/locklift/src/console.sol, 10
+DUP
+PUSHREFSLICE {
+	.blob xc600fffffffffffffffffffffffffffffffffffffffffffffffffe2468acf13579bc0000000000000000000000000903f4294_
+}
+NEWC
+STSLICE
+STREF
+ENDC
+PUSHINT 0
+SENDRAWMSG
+.loc ../node_modules/locklift/src/console.sol, 0
+
+.globl	console_no_obj_log_41304fac
+.type	console_no_obj_log_41304fac, @function
+CALL $console_no_obj_log_41304fac_macro$
+
+.macro console_no_obj_log_41304fac_macro
+.loc ../node_modules/locklift/src/console.sol, 10
+PUSHREFSLICE {
+	.blob xc600fffffffffffffffffffffffffffffffffffffffffffffffffe2468acf13579bc0000000000000000000000000903f4294_
+}
+NEWC
+STSLICE
+STREF
+ENDC
+PUSHINT 0
+SENDRAWMSG
+.loc ../node_modules/locklift/src/console.sol, 0
 
 .macro inline_array_line_24_column_32_ast_id_45
 PUSHINT 4000

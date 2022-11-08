@@ -135,6 +135,7 @@
 		{"name":"_costPerLevel","type":"uint64[]"},
 		{"name":"_farmPerLevel","type":"uint64[]"},
 		{"name":"_energyMax","type":"uint64"},
+		{"name":"_deboost","type":"uint64"},
 		{"name":"_router","type":"address"},
 		{"name":"_owner","type":"address"},
 		{"name":"_speed","type":"uint64"},
