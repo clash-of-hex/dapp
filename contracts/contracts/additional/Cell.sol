@@ -102,7 +102,7 @@ contract Cell is ICell {
         energy = _energy;
         if (energy > _energyMax) {
           uint64 val = _deboost * _speed * uint64(now - _lastCalcTime);
-          if (energy - val > _energyMax) {
+          if (energy - _energyMax > val) {
             energy = energy - val;
           } else {
             energy = _energyMax;

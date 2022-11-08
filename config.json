@@ -1,8 +1,8 @@
 {
  "testnet": {
-  "router": "0:93e97af0979f72c3ae6eea3a7d07e437aee4c5c6a1fc8cdebd3c7227942607f8",
-  "gameroot": "0:ade105e62c8cfaa92093edb601cbed7868d09b713fd9407dec860f76e6ef0a5e",
-  "codeHash": "29f453b44439d6e5fc4ea38ed7128674574facdc4300f9a03f61e189e24b95c1",
+  "router": "0:db7740ba28f42eee7097d3fd02162db019c52e39ea4d55744fe2e2493f7c92a2",
+  "gameroot": "0:66e6c7d33534775c15ae2b39a1367d74a30e39ecbe8ea7b7ec0930aec9da1fec",
+  "codeHash": "b840419f4e1967076c96b4a2cdb71868275efd83224470b52c36d944459963ef",
   "endpoint": "https://devnet.evercloud.dev/4b0e77393fba46759305e30cea4aaa95/graphql"
  },
  "localnet": {
