@@ -11,7 +11,7 @@ crypto.createHash = algorithm => crypto_orig_createHash(algorithm == "md4" ? "sh
 
 const config = {
     output: {
-        publicPath: './v1/',
+        publicPath: '/v1/',
         filename: 'main.[contenthash].js',
         path: path.resolve(__dirname, 'dist')
     },
