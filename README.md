@@ -25,6 +25,12 @@ npm install
 npm run build
 ```
 
+## Serve
+
+```shell
+npm run serve
+```
+
 ## Deploy
 
 ```shell
