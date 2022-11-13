@@ -3,12 +3,14 @@
   "version": "1.0.0",
   "description": "A GameFi dApp that allows players to compete with capture the most cells on an hex battlefield.",
   "scripts": {
-    "postinstall": "run-p build-asset deps-app-v1",
+    "postinstall": "run-p build-asset deps-app-v1 deps-app-v2",
     "deps-app-v1": "cd src/app-v1 && npm i",
+    "deps-app-v2": "cd src/app-v2 && npm i",
     "gh-pages": "gh-pages -d dist -r $(git remote get-url gh-pages) -b main -m \"deploy ref:$(git log -n 1 --pretty=format:%h)\"",
-    "build": "run-p --max-parallel 1 build-app-v1",
+    "build": "run-p deps-app-v1 build-app-v2",
     "build-asset": "pwa-asset-generator src/asset/logo.svg public --favicon --type png --padding 0 --background transparent --opaque false --log false",
-    "build-app-v1": "mkdir -p dist && cd src/app-v1 && npm run build && mv dist ../../dist/v1",
+    "build-app-v1": "mkdir -p dist/v1 && cd src/app-v1 && npm run build && cp -r dist/ ../../dist/v1/",
+    "build-app-v2": "mkdir -p dist && cd src/app-v2 && npm run build && cp -r dist/ ../../dist/",
     "deploy": "run-p --max-parallel 1 build gh-pages"
   },
   "repository": {
@@ -23,6 +25,7 @@
   },
   "homepage": "https://github.com/hex-battle-game/dapp#readme",
   "devDependencies": {
+    "gh-pages": "^4.0.0",
     "npm-run-all": "^4.1.5",
     "pwa-asset-generator": "^6.2.0"
   }
