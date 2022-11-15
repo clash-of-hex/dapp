@@ -1,6 +1,7 @@
 import type { RouteRecordRaw } from "vue-router";
 import { createRouter, createWebHistory } from "vue-router";
 import NProgress from "nprogress";
+const isProduction = process.env.NODE_ENV == 'production';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -20,7 +21,7 @@ const routes: RouteRecordRaw[] = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(isProduction ? '/v2/' : '/'),
   routes,
 });
 router.beforeEach(() => {

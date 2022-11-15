@@ -30,6 +30,7 @@ export default defineConfig({
       // https://vuejs.org/guide/extras/reactivity-transform.html
       // Reactivity Transform
       reactivityTransform: true,
+      isProduction: isProduction,
     }),
     // https://github.com/antfu/unplugin-auto-import
     AutoImport({
