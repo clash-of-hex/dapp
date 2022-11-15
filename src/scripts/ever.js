@@ -735,7 +735,7 @@ export async function destroyCells() {
   for (let i = 0; i < accs.length; i++) {
     if (accs[i].boc) {
       accDestroy.push(accs[i].id)
-      if (accDestroy.length >= 100) break;       
+      if (accDestroy.length >= 10) break;       
     }
   }
   
@@ -746,7 +746,7 @@ export async function destroyCells() {
       cells: accDestroy
     }).send({
         from: account.address.toString(),
-        amount: '1000000000',
+        amount: '10000000000',
     });
     console.log('destroyCells', res);
 
