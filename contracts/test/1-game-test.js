@@ -112,6 +112,7 @@ describe(`Test Router contract (BASE)`, async function() {
           roundTime: 60,
           radius: 5,
           speed: 1,
+          userCount: 0,
           name: 'Test location radius:5 speed:1',
           nonce: _nonceNewRouter
       }).send({
@@ -154,6 +155,7 @@ describe(`Test Router contract (BASE)`, async function() {
         roundTime: 3600,
         radius: 3,
         speed: 2,
+        userCount: 0,
         name: 'Test location radius:3 speed:2',
         nonce: _nonceNewRouter
     }).send({

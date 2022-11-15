@@ -37,10 +37,11 @@ async function main() {
   
   let _nonceNewRouter = locklift.utils.getRandomNonce().toString();
   let res = gameroot.methods.newRouter({
-      roundTime: 3600,
+      roundTime: 600,
       radius: 5,
       speed: 1,
-      name: 'Test location radius:10 speed:1',
+      userCount: 3,
+      name: 'Test location userCount:3 radius:5 speed:1',
       nonce: _nonceNewRouter
   }).send({
       from: owner.address.toString(),
