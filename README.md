@@ -25,10 +25,10 @@ npm install
 npm run build
 ```
 
-## Serve
+## Preview
 
 ```shell
-npm run serve
+npm start
 ```
 
 ## Deploy
