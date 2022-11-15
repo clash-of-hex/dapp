@@ -3,11 +3,13 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import Components from "unplugin-vue-components/vite";
 import AutoImport from "unplugin-auto-import/vite";
+const isProduction = process.argv.includes('production');
 const rootPath = resolve(__dirname);
 const assetPath = path.join(resolve(join(rootPath, '..')), "asset")
 // https://vitejs.dev/config/
 // @ts-ignore
 export default defineConfig({
+  base: isProduction ? '/v2/' : '/',
   build: {
     rollupOptions: {
       input: {

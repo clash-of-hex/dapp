@@ -9,9 +9,9 @@
   ],
   "main": "src/App.ts",
   "scripts": {
-    "start": "vite",
-    "preview": "vite preview",
-    "build": "vite build",
+    "start": "vite --mode localhost",
+    "preview": "vite preview --mode localhost",
+    "build": "vite build --mode production",
     "postinstall": "run-p build-asset",
     "build-asset": "pwa-asset-generator ../asset/logo.svg public --favicon --type png --padding 0 --background transparent --opaque false --log false",
     "lint-type": "vue-tsc --noEmit",
