@@ -38,32 +38,6 @@ SWAP
 SETGLOB 12
 .loc ../contracts/GameRoot.sol, 39
 SETGLOB 13
-.loc ../contracts/GameRoot.sol, 40
-TUPLE 0
-NEWC
-PUSHSLICE x636f6e7374727563746f72206d73672e7075626b657920
-CALLREF {
-	CALL $storeStringInBuilders_macro$
-}
-GETGLOB 5
-DUP
-ISNULL
-PUSHCONT {
-	DROP
-	PUSHINT 0
-}
-IF
-PUSHINT 0
-BLKPUSH 2, 0
-CALLREF {
-	CALL $convertIntToDecStr_macro$
-}
-CALLREF {
-	CALL $assembleList_macro$
-}
-CALLREF {
-	CALL $console_no_obj_log_41304fac_macro$
-}
 .loc ../contracts/GameRoot.sol, 0
 CALLREF {
 	CALL $c7_to_c4$
@@ -150,12 +124,13 @@ PUSHCONT {
 IFELSE
 LDU 64
 LDU 64
+LDU 64
 LDREF
 LDU 16
 ENDS
 .loc ../contracts/GameRoot.sol, 0
 CALLREF {
-	CALL $newRouter_a38c59e6_internal_macro$
+	CALL $newRouter_adbdda04_internal_macro$
 }
 DROP
 CALLREF {
@@ -163,12 +138,12 @@ CALLREF {
 }
 THROW 0
 
-.globl	newRouter_a38c59e6_internal
-.type	newRouter_a38c59e6_internal, @function
-CALL $newRouter_a38c59e6_internal_macro$
+.globl	newRouter_adbdda04_internal
+.type	newRouter_adbdda04_internal, @function
+CALL $newRouter_adbdda04_internal_macro$
 
-.macro newRouter_a38c59e6_internal_macro
-.loc ../contracts/GameRoot.sol, 58
+.macro newRouter_adbdda04_internal_macro
+.loc ../contracts/GameRoot.sol, 59
 DEPTH
 ADDCONST -2
 PICK
@@ -179,23 +154,23 @@ ADD
 UFITS 128
 GREATER
 THROWIFNOT 2000
-.loc ../contracts/GameRoot.sol, 59
+.loc ../contracts/GameRoot.sol, 60
 GETGLOB 9
 PARSEMSGADDR
 INDEX 3
 PLDU 256
 THROWIFNOT 1010
-.loc ../contracts/GameRoot.sol, 60
+.loc ../contracts/GameRoot.sol, 61
+PUSHINT 3020
+PUSH S5
+LESSINT 11
+THROWANYIFNOT
+.loc ../contracts/GameRoot.sol, 62
 PUSHINT 3020
 PUSH S4
 LESSINT 11
 THROWANYIFNOT
-.loc ../contracts/GameRoot.sol, 61
-PUSHINT 3020
-PUSH S3
-LESSINT 11
-THROWANYIFNOT
-.loc ../contracts/GameRoot.sol, 62
+.loc ../contracts/GameRoot.sol, 63
 PUSHINT 3020
 PUSH S2
 PUSHPOW2DEC 32
@@ -206,34 +181,17 @@ RSHIFT 3
 PUSHPOW2 7
 LESS
 THROWANYIFNOT
-.loc ../contracts/GameRoot.sol, 63
+.loc ../contracts/GameRoot.sol, 64
 PUSHINT 0
 PUSHINT 4
 RAWRESERVE
-.loc ../contracts/GameRoot.sol, 65
-TUPLE 0
-NEWC
-PUSHSLICE x726f6f74206e6577526f75746572206d73672e73656e64657220
-CALLREF {
-	CALL $storeStringInBuilders_macro$
-}
-GETGLOB 9
-CALLREF {
-	CALL $convertAddressToHexString_macro$
-}
-CALLREF {
-	CALL $assembleList_macro$
-}
-CALLREF {
-	CALL $console_no_obj_log_41304fac_macro$
-}
-.loc ../contracts/GameRoot.sol, 66
-GETGLOB 9
-BLKSWAP 4, 2
-CALLREF {
-	CALL $deployRouter_8b5b1a03_internal_macro$
-}
 .loc ../contracts/GameRoot.sol, 67
+GETGLOB 9
+BLKSWAP 5, 2
+CALLREF {
+	CALL $deployRouter_98181eac_internal_macro$
+}
+.loc ../contracts/GameRoot.sol, 68
 SWAP
 PUSHSLICE xc00000000000000000000000005b26a9cb
 NEWC
@@ -245,24 +203,24 @@ PUSHINT 0
 SENDRAWMSG
 .loc ../contracts/GameRoot.sol, 0
 
-.globl	deployRouter_8b5b1a03_internal
-.type	deployRouter_8b5b1a03_internal, @function
-CALL $deployRouter_8b5b1a03_internal_macro$
+.globl	deployRouter_98181eac_internal
+.type	deployRouter_98181eac_internal, @function
+CALL $deployRouter_98181eac_internal_macro$
 
-.macro deployRouter_8b5b1a03_internal_macro
-.loc ../contracts/GameRoot.sol, 74
+.macro deployRouter_98181eac_internal_macro
+.loc ../contracts/GameRoot.sol, 75
 MYADDR
 CALLREF {
 	CALL $_buildRouterCode_b2ae5b71_internal_macro$
 }
-.loc ../contracts/GameRoot.sol, 75
+.loc ../contracts/GameRoot.sol, 76
 CALLREF {
 	CALL $_buildRouterState_a601c8bd_internal_macro$
 }
-.loc ../contracts/GameRoot.sol, 76
-REVERSE 5, 0
+.loc ../contracts/GameRoot.sol, 77
+REVERSE 6, 0
 GETGLOB 13
-ROLL 5
+ROLL 6
 DUP
 HASHCU
 NEWC
@@ -270,12 +228,12 @@ STSLICECONST x801_
 STU 256
 ENDC
 CTOS
-ROLLREV 6
+ROLLREV 7
 PUSHINT 1000000000
 PUSHINT 200000000
 ADD
 UFITS 128
-PUSH S7
+PUSH S8
 NEWC
 STSLICECONST x62_
 STSLICE
@@ -308,10 +266,11 @@ CALLREF {
 }
 STREF
 STSLICECONST 1
-ROLLREV 5
+ROLLREV 6
 NEWC
-STSLICECONST x58c30186
+STSLICECONST x2664142d
 STREF
+STU 64
 STU 64
 STU 64
 STU 64
@@ -320,7 +279,7 @@ STBREFR
 ENDC
 PUSHINT 0
 SENDRAWMSG
-.loc ../contracts/GameRoot.sol, 87
+.loc ../contracts/GameRoot.sol, 89
 SWAP
 NEWC
 STSLICECONST x42_
@@ -339,10 +298,10 @@ SENDRAWMSG
 CALL $_buildRouterCode_b2ae5b71_internal_macro$
 
 .macro _buildRouterCode_b2ae5b71_internal_macro
-.loc ../contracts/GameRoot.sol, 93
+.loc ../contracts/GameRoot.sol, 95
 NEWC
 STSLICE
-.loc ../contracts/GameRoot.sol, 94
+.loc ../contracts/GameRoot.sol, 96
 GETGLOB 12
 CTOS
 SWAP
@@ -459,7 +418,7 @@ CALLREF {
 CALL $_buildRouterState_a601c8bd_internal_macro$
 
 .macro _buildRouterState_a601c8bd_internal_macro
-.loc ../contracts/GameRoot.sol, 100
+.loc ../contracts/GameRoot.sol, 102
 PUSHINT 0
 NEWC
 STU 256
@@ -496,45 +455,13 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/GameRoot.sol, 108
+.loc ../contracts/GameRoot.sol, 110
 PLDU 32
-.loc ../contracts/GameRoot.sol, 109
-DUP
-PUSHINT 1489174918
+.loc ../contracts/GameRoot.sol, 111
+PUSHINT 644092973
 EQUAL
-PUSHCONT {
-	.loc ../contracts/GameRoot.sol, 110
-	TUPLE 0
-	NEWC
-	PUSHSLICE x6f6e426f756e636520526f7574657220636f6e7374727563746f7220
-	CALLREF {
-		CALL $storeStringInBuilders_macro$
-	}
-	GETGLOB 9
-	CALLREF {
-		CALL $convertAddressToHexString_macro$
-	}
-	PUSHSLICE x20
-	CALLREF {
-		CALL $storeStringInBuilders_macro$
-	}
-	PUSH S2
-	PUSHINT 0
-	BLKPUSH 2, 0
-	CALLREF {
-		CALL $convertIntToDecStr_macro$
-	}
-	CALLREF {
-		CALL $assembleList_macro$
-	}
-	CALLREF {
-		CALL $console_no_obj_log_41304fac_macro$
-	}
-	.loc ../contracts/GameRoot.sol, 0
-}
-IF
-.loc ../contracts/GameRoot.sol, 0
 DROP
+.loc ../contracts/GameRoot.sol, 0
 CALLREF {
 	CALL $c7_to_c4$
 }
@@ -544,10 +471,10 @@ CALLREF {
 CALL $getRndUint32_0d51ea7a_internal_macro$
 
 .macro getRndUint32_0d51ea7a_internal_macro
-.loc ../contracts/GameRoot.sol, 115
+.loc ../contracts/GameRoot.sol, 117
 LTIME
 ADDRAND
-.loc ../contracts/GameRoot.sol, 116
+.loc ../contracts/GameRoot.sol, 118
 PUSHPOW2DEC 32
 RAND
 .loc ../contracts/GameRoot.sol, 0
@@ -974,52 +901,11 @@ CALLREF {
 }
 THROW 60
 
-.globl	console_with_obj_log_41304fac
-.type	console_with_obj_log_41304fac, @function
-CALL $console_with_obj_log_41304fac_macro$
-
-.macro console_with_obj_log_41304fac_macro
-.loc ../node_modules/locklift/src/console.sol, 10
-DUP
-PUSHREFSLICE {
-	.blob xc600fffffffffffffffffffffffffffffffffffffffffffffffffe2468acf13579bc0000000000000000000000000903f4294_
-}
-NEWC
-STSLICE
-STREF
-ENDC
-PUSHINT 0
-SENDRAWMSG
-.loc ../node_modules/locklift/src/console.sol, 0
-
-.globl	console_no_obj_log_41304fac
-.type	console_no_obj_log_41304fac, @function
-CALL $console_no_obj_log_41304fac_macro$
-
-.macro console_no_obj_log_41304fac_macro
-.loc ../node_modules/locklift/src/console.sol, 10
-PUSHREFSLICE {
-	.blob xc600fffffffffffffffffffffffffffffffffffffffffffffffffe2468acf13579bc0000000000000000000000000903f4294_
-}
-NEWC
-STSLICE
-STREF
-ENDC
-PUSHINT 0
-SENDRAWMSG
-.loc ../node_modules/locklift/src/console.sol, 0
-
 .macro public_function_selector
 DUP
-PUSHINT 1482330212
+PUSHINT 1812082892
 LEQ
 IFJMPREF {
-	DUP
-	PUSHINT 234466298
-	EQUAL
-	IFJMPREF {
-		CALL $newRouter$
-	}
 	DUP
 	PUSHINT 1226587748
 	EQUAL
@@ -1038,16 +924,22 @@ IFJMPREF {
 	IFJMPREF {
 		CALL $transferOwnership$
 	}
+	DUP
+	PUSHINT 1812082892
+	EQUAL
+	IFJMPREF {
+		CALL $getDetails$
+	}
 }
 DUP
 PUSHINT 2013012156
 LEQ
 IFJMPREF {
 	DUP
-	PUSHINT 1812082892
+	PUSHINT 1857400774
 	EQUAL
 	IFJMPREF {
-		CALL $getDetails$
+		CALL $newRouter$
 	}
 	DUP
 	PUSHINT 2013012156

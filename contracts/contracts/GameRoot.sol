@@ -4,7 +4,7 @@ pragma AbiHeader expire;
 pragma AbiHeader time;
 pragma AbiHeader pubkey;
 
-import "locklift/src/console.sol";
+// import "locklift/src/console.sol";
 
 import './abstract/OwnableExternal.sol';
 import './libraries/MsgFlag.sol';
@@ -37,7 +37,7 @@ contract GameRoot is OwnableExternal {
         tvm.accept();
         _codeRouter = codeRouter;
         _codeCell = codeCell;
-        console.log(format("constructor msg.pubkey {}", msg.pubkey()));
+        // console.log(format("constructor msg.pubkey {}", msg.pubkey()));
     }
 
     function getDetails() public view returns(
@@ -52,6 +52,7 @@ contract GameRoot is OwnableExternal {
         uint64 roundTime,
         uint64 radius,
         uint64 speed,
+        uint64 userCount,
         string name,
         uint16 nonce
     ) public {
@@ -62,14 +63,14 @@ contract GameRoot is OwnableExternal {
         require(name.byteLength() < 128, Errors.WRONG_PARAMS);
         tvm.rawReserve(0, 4); 
 
-        console.log(format("root newRouter msg.sender {}", msg.sender));
-        address routerAddress = deployRouter(msg.sender, roundTime, radius, speed, name);
+        // console.log(format("root newRouter msg.sender {}", msg.sender));
+        address routerAddress = deployRouter(msg.sender, roundTime, radius, speed, userCount, name);
         emit RouterCreated(nonce, routerAddress);
     }
 
     ////////////////////////////// 
     
-    function deployRouter(address sendGasTo, uint64 roundTime, uint64 radius, uint64 speed, string name) internal returns (address routerAddress) {
+    function deployRouter(address sendGasTo, uint64 roundTime, uint64 radius, uint64 speed, uint64 userCount, string name) internal returns (address routerAddress) {
 
         TvmCell code = _buildRouterCode(address(this));
         TvmCell state = _buildRouterState(code);
@@ -82,6 +83,7 @@ contract GameRoot is OwnableExternal {
             roundTime,
             radius,
             speed,
+            userCount,
             name
         ); 
         sendGasTo.transfer({value: 0, flag: MsgFlag.ALL_NOT_RESERVED + MsgFlag.IGNORE_ERRORS, bounce: false}); 
@@ -107,7 +109,7 @@ contract GameRoot is OwnableExternal {
     onBounce(TvmSlice slice) external {
         uint32 functionId = slice.decode(uint32);
         if (functionId == tvm.functionId(Router)) {
-          console.log(format("onBounce Router constructor {} {}", msg.sender, functionId));
+          // console.log(format("onBounce Router constructor {} {}", msg.sender, functionId));
         }
     }
 

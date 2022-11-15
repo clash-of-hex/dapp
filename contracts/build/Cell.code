@@ -1162,26 +1162,6 @@ GETGLOB 18
 INC
 UFITS 64
 SETGLOB 18
-.loc ../contracts/additional/Cell.sol, 231
-TUPLE 0
-NEWC
-PUSHSLICE x7570677261646543656c6c20
-CALLREF {
-	CALL $storeStringInBuilders_macro$
-}
-PUSHREF {
-	.blob x4f4b
-}
-CTOS
-CALLREF {
-	CALL $storeStringInBuilders_macro$
-}
-CALLREF {
-	CALL $assembleList_macro$
-}
-CALLREF {
-	CALL $console_no_obj_log_41304fac_macro$
-}
 .loc ../contracts/additional/Cell.sol, 232
 GETGLOB 16
 NEWC
@@ -1285,23 +1265,6 @@ STI 8
 STU 256
 ENDC
 CTOS
-.loc ../contracts/additional/Cell.sol, 243
-TUPLE 0
-NEWC
-PUSHSLICE x7265736f6c766543656c6c203220
-CALLREF {
-	CALL $storeStringInBuilders_macro$
-}
-PUSH S2
-CALLREF {
-	CALL $convertAddressToHexString_macro$
-}
-CALLREF {
-	CALL $assembleList_macro$
-}
-CALLREF {
-	CALL $console_no_obj_log_41304fac_macro$
-}
 .loc ../contracts/additional/Cell.sol, 0
 
 .globl	_buildCellCode_b82b0578_internal
@@ -1640,17 +1603,17 @@ IFREFELSEREF
 	SETGLOB 3
 	PUSHINT 3
 	PUSHREF
-	.compute $inline_array_line_24_column_32_ast_id_37$
+	.compute $inline_array_line_24_column_32_ast_id_36$
 	PAIR
 	SETGLOB 11
 	PUSHINT 3
 	PUSHREF
-	.compute $inline_array_line_25_column_32_ast_id_53$
+	.compute $inline_array_line_25_column_32_ast_id_52$
 	PAIR
 	SETGLOB 12
 	PUSHINT 3
 	PUSHREF
-	.compute $inline_array_line_26_column_32_ast_id_69$
+	.compute $inline_array_line_26_column_32_ast_id_68$
 	PAIR
 	SETGLOB 13
 	PUSHINT 100
@@ -1836,79 +1799,6 @@ CALLREF {
 }
 THROW 60
 
-.globl	console_with_obj_log_41304fac
-.type	console_with_obj_log_41304fac, @function
-CALL $console_with_obj_log_41304fac_macro$
-
-.macro console_with_obj_log_41304fac_macro
-.loc ../node_modules/locklift/src/console.sol, 10
-DUP
-PUSHREFSLICE {
-	.blob xc600fffffffffffffffffffffffffffffffffffffffffffffffffe2468acf13579bc0000000000000000000000000903f4294_
-}
-NEWC
-STSLICE
-STREF
-ENDC
-PUSHINT 0
-SENDRAWMSG
-.loc ../node_modules/locklift/src/console.sol, 0
-
-.globl	console_no_obj_log_41304fac
-.type	console_no_obj_log_41304fac, @function
-CALL $console_no_obj_log_41304fac_macro$
-
-.macro console_no_obj_log_41304fac_macro
-.loc ../node_modules/locklift/src/console.sol, 10
-PUSHREFSLICE {
-	.blob xc600fffffffffffffffffffffffffffffffffffffffffffffffffe2468acf13579bc0000000000000000000000000903f4294_
-}
-NEWC
-STSLICE
-STREF
-ENDC
-PUSHINT 0
-SENDRAWMSG
-.loc ../node_modules/locklift/src/console.sol, 0
-
-.globl	HexUtils_with_obj_isCorrectCoord_3e33fe95
-.type	HexUtils_with_obj_isCorrectCoord_3e33fe95, @function
-CALL $HexUtils_with_obj_isCorrectCoord_3e33fe95_macro$
-
-.macro HexUtils_with_obj_isCorrectCoord_3e33fe95_macro
-.loc ../contracts/utils/HexUtils.sol, 44
-DUP
-FIRST
-OVER
-SECOND
-ADD
-FITS 64
-OVER
-THIRD
-ADD
-FITS 64
-EQINT 0
-.loc ../contracts/utils/HexUtils.sol, 0
-
-.globl	HexUtils_no_obj_isCorrectCoord_3e33fe95
-.type	HexUtils_no_obj_isCorrectCoord_3e33fe95, @function
-CALL $HexUtils_no_obj_isCorrectCoord_3e33fe95_macro$
-
-.macro HexUtils_no_obj_isCorrectCoord_3e33fe95_macro
-.loc ../contracts/utils/HexUtils.sol, 44
-DUP
-FIRST
-OVER
-SECOND
-ADD
-FITS 64
-SWAP
-THIRD
-ADD
-FITS 64
-EQINT 0
-.loc ../contracts/utils/HexUtils.sol, 0
-
 .globl	HexUtils_with_obj_isNeighborCoord_8b5853ae
 .type	HexUtils_with_obj_isNeighborCoord_8b5853ae, @function
 CALL $HexUtils_with_obj_isNeighborCoord_8b5853ae_macro$
@@ -2002,7 +1892,45 @@ MAX
 MAX
 .loc ../contracts/utils/HexUtils.sol, 0
 
-.macro inline_array_line_24_column_32_ast_id_37
+.globl	HexUtils_with_obj_isCorrectCoord_3e33fe95
+.type	HexUtils_with_obj_isCorrectCoord_3e33fe95, @function
+CALL $HexUtils_with_obj_isCorrectCoord_3e33fe95_macro$
+
+.macro HexUtils_with_obj_isCorrectCoord_3e33fe95_macro
+.loc ../contracts/utils/HexUtils.sol, 44
+DUP
+FIRST
+OVER
+SECOND
+ADD
+FITS 64
+OVER
+THIRD
+ADD
+FITS 64
+EQINT 0
+.loc ../contracts/utils/HexUtils.sol, 0
+
+.globl	HexUtils_no_obj_isCorrectCoord_3e33fe95
+.type	HexUtils_no_obj_isCorrectCoord_3e33fe95, @function
+CALL $HexUtils_no_obj_isCorrectCoord_3e33fe95_macro$
+
+.macro HexUtils_no_obj_isCorrectCoord_3e33fe95_macro
+.loc ../contracts/utils/HexUtils.sol, 44
+DUP
+FIRST
+OVER
+SECOND
+ADD
+FITS 64
+SWAP
+THIRD
+ADD
+FITS 64
+EQINT 0
+.loc ../contracts/utils/HexUtils.sol, 0
+
+.macro inline_array_line_24_column_32_ast_id_36
 PUSHINT 3000
 PUSHINT 2000
 PUSHINT 4000
@@ -2023,7 +1951,7 @@ PUSHCONT {
 REPEAT
 NIP
 
-.macro inline_array_line_25_column_32_ast_id_53
+.macro inline_array_line_25_column_32_ast_id_52
 PUSHINT 10000
 PUSHINT 7000
 PUSHINT 5000
@@ -2044,7 +1972,7 @@ PUSHCONT {
 REPEAT
 NIP
 
-.macro inline_array_line_26_column_32_ast_id_69
+.macro inline_array_line_26_column_32_ast_id_68
 PUSHINT 200
 PUSHINT 150
 PUSHINT 100

@@ -28,6 +28,7 @@
 				{"name":"roundTime","type":"uint64"},
 				{"name":"radius","type":"uint64"},
 				{"name":"speed","type":"uint64"},
+				{"name":"userCount","type":"uint64"},
 				{"name":"name","type":"string"},
 				{"name":"nonce","type":"uint16"}
 			],
