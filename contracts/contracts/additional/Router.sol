@@ -120,7 +120,7 @@ contract Router is IRouter {
           _endTime = now + _roundTime;
         }
         // console.log(format("newGame msg.sender {}", msg.sender));
-        address cellAddress = deployCell(msg.sender, baseCoord, Types.Color(getRndUint8(), getRndUint8(), getRndUint8()), 2000);
+        address cellAddress = deployCell(msg.sender, baseCoord, Types.Color(getRndUint8(), getRndUint8(), getRndUint8()), 5000);
     }
 
     function _newCell(
