@@ -625,7 +625,7 @@ CALLREF {
 	CALL $getRndUint8_27059573_internal_macro$
 }
 TRIPLE
-PUSHINT 2000
+PUSHINT 5000
 CALLREF {
 	CALL $deployCell_9a6b28d1_internal_macro$
 }

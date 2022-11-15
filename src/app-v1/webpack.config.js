@@ -22,7 +22,9 @@ const config = {
     devtool: 'eval-cheap-source-map',
     devServer: {
         port: 8080,
-        directory: path.join(__dirname, 'public'),
+        static: {
+          directory: path.join(__dirname, 'public'),
+        },
         hot: true
     },
     module: {
