@@ -150,19 +150,21 @@ async function getRoutersAction() {
           cell = row.insertCell(1);
           cell.innerHTML = details.radius;
           cell = row.insertCell(2);
-          cell.innerHTML = details.speed;
+          cell.innerHTML = details.userCount;
           cell = row.insertCell(3);
-          cell.innerHTML = date.customFormat( "#DD#-#MM#-#YYYY# #hh#:#mm#:#ss#" );
+          cell.innerHTML = details.speed;
           cell = row.insertCell(4);
+          cell.innerHTML = date.customFormat( "#DD#-#MM#-#YYYY# #hh#:#mm#:#ss#" );
+          cell = row.insertCell(5);
           var btn = document.createElement('button');
           btn.textContent = "Set";
           btn.setAttribute('type', 'button');
           btn.setAttribute("addr", accs[i].id);
           btn.onclick = setRouter
           cell.appendChild(btn);
-          cell = row.insertCell(5);
+          cell = row.insertCell(6);
           cell.innerHTML = accs[i].id;
-          cell.style  = "visibility: hidden";
+          cell.style  = "visibility: hidden; width: 0px";
           // cell.colSpan = "4"
           // cell.style="text-align:left;"
         }
@@ -212,10 +214,11 @@ async function setRouter(el) {
 async function addRouterAction() {
     let name = document.getElementById('router_name').value;
     let radius = document.getElementById('router_radius').value;
+    let users = document.getElementById('router_users').value;
     let speed = document.getElementById('router_speed').value;
     let time = document.getElementById('router_time').value;
     console.log('addRouterAction', name, radius, speed, time)
-    const providerState = await newRouter(name, radius, speed, time);
+    const providerState = await newRouter(name, radius, users, speed, time);
     await getRoutersAction();
 }
 
@@ -608,7 +611,7 @@ export async function attkCell(address, cellCoord, energy) {
 
 }
 
-export async function newRouter(name, radius, speed, time) {
+export async function newRouter(name, radius, users, speed, time) {
 
   const providerState = await ever.getProviderState();
   const permissions = providerState.permissions;
@@ -623,6 +626,7 @@ export async function newRouter(name, radius, speed, time) {
         roundTime: time,
         radius: radius,
         speed: speed,
+        userCount: users,
         name: name,
         nonce: '0'
     }).send({
