@@ -1,0 +1,2 @@
+Standards: W3C
+Components: Everscale, Vue.js

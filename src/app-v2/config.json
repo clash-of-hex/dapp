@@ -1,0 +1,14 @@
+{
+ "testnet": {
+  "router": "0:f30cd23aaae8c304ca74ab83e6dcbe9e8c8f2b8efdddd478ff708a7b45e238cf",
+  "gameroot": "0:b888e00251dcf9ff1dd7e3c6a0dcd703fb4cfef914b8bcd862cf77730532f557",
+  "codeHash": "e5d55e1ca6348a7da5153bfc86ea5db6a808f37c291ebe8a13170e8a894e102c",
+  "endpoint": "https://devnet.evercloud.dev/4b0e77393fba46759305e30cea4aaa95/graphql"
+ },
+ "localnet": {
+  "router": "0:5e1f3f2989356edbf5c0956dafea1e07166dc7d1b9abc05110d4f8957f5a6bcb",
+  "gameroot": "0:a1314918b104b346e87345cdeeb1907514237e1c289bcfb82429b7aea5f796ec",
+  "codeHash": "108dae863892542898ecea0e32999ca2b60c68e133d676fce69b713a7ea6968b",
+  "endpoint": "http://localhost/graphql"
+ }
+}

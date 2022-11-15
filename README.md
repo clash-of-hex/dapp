@@ -25,6 +25,12 @@ npm install
 npm run build
 ```
 
+## Preview
+
+```shell
+npm start
+```
+
 ## Deploy
 
 ```shell

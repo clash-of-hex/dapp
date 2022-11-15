@@ -7,7 +7,6 @@ on:
     paths:
       - 'src/*'
       - 'package*'
-      - 'webpack.config.js'
       - 'config.json'
 
 jobs:

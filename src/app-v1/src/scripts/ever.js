@@ -7,10 +7,10 @@ const { Account } = require("@eversdk/appkit");
 
 TonClient.useBinaryLibrary(libWeb)
 
-const routerAbi = require('../../contracts/build/Router.abi.json');
-const cellAbi = require('../../contracts/build/Cell.abi.json');
-const rootAbi = require('../../contracts/build/GameRoot.abi.json');
-const Config = require("../../config.json");  
+const routerAbi = require('../../../../contracts/build/Router.abi.json');
+const cellAbi = require('../../../../contracts/build/Cell.abi.json');
+const rootAbi = require('../../../../contracts/build/GameRoot.abi.json');
+const Config = require('../../../../config.json');
 
 let currentMap = [];
 let onRoumingChange;
