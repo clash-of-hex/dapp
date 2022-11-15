@@ -2,6 +2,7 @@
 node_modules/
 dist/
 *.png
+*.wasm
 
 # Log files
 *.log
