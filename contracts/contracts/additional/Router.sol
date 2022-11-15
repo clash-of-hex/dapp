@@ -4,7 +4,7 @@ pragma AbiHeader expire;
 pragma AbiHeader time;
 pragma AbiHeader pubkey;
 
-import "locklift/src/console.sol";
+// import "locklift/src/console.sol";
 
 import '../libraries/MsgFlag.sol';
 import '../libraries/Errors.sol';
@@ -37,8 +37,10 @@ contract Router is IRouter {
     mapping(address => uint128) public _rewards; 
     
     TvmCell private _codeCell;
+    uint64 private _roundTime;
     uint64 private _radius;
     uint64 private _speed;
+    uint64 private _userCount;
     string private _name;
     uint128 private _endTime;
 
@@ -47,23 +49,28 @@ contract Router is IRouter {
         uint64 roundTime,
         uint64 radius,
         uint64 speed,
+        uint64 userCount,
         string name
     ) public {
         require(address(this).balance > ROUTER_DEPLOY_VALUE, Errors.NOT_ENOUGH_BALANCE);
         tvm.accept();
         _root = msg.sender;
         _codeCell = codeCell;
-        _endTime = now + roundTime;
+        _roundTime = roundTime;
         _radius = radius;
         _speed = speed;
+        _userCount = userCount;
         _name = name;
-        console.log(format("router constructor msg.sender {}", msg.sender));
+        if (_userCount == 0) {
+          _endTime = now + _roundTime;
+        }
+        // console.log(format("router constructor msg.sender {}", msg.sender));
     }
 
     function getDetails() public view returns(
-        uint32 nonce, uint128 endTime, uint64 radius, uint64 speed, string name, address root
+        uint32 nonce, uint128 endTime, uint64 roundTime, uint64 radius, uint64 speed, uint64 userCount, string name, address root
     ) {
-        return ( _nonce, _endTime, _radius, _speed, _name, _root );
+        return ( _nonce, _endTime, _roundTime, _radius, _speed, _userCount, _name, _root );
     }
 
     function getUsers() public view returns(
@@ -109,7 +116,10 @@ contract Router is IRouter {
         require(HexUtils.isCorrectCoord(baseCoord) == true, Errors.WRONG_COORD);
         tvm.rawReserve(JOIN_GAME_FEE, 4); 
         _users[msg.sender] = 1;
-        console.log(format("newGame msg.sender {}", msg.sender));
+        if (_userCount != 0 && _users.keys().length ==  uint128(_userCount)) {
+          _endTime = now + _roundTime;
+        }
+        // console.log(format("newGame msg.sender {}", msg.sender));
         address cellAddress = deployCell(msg.sender, baseCoord, Types.Color(getRndUint8(), getRndUint8(), getRndUint8()), 2000);
     }
 
@@ -249,7 +259,7 @@ contract Router is IRouter {
     onBounce(TvmSlice slice) external {
         uint32 functionId = slice.decode(uint32);
         if (functionId == tvm.functionId(Cell)) {
-          console.log(format("onBounce Cell constructor {} {}", msg.sender, functionId));
+          // console.log(format("onBounce Cell constructor {} {}", msg.sender, functionId));
         }
     }
 

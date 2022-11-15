@@ -4,7 +4,7 @@ pragma AbiHeader expire;
 pragma AbiHeader time;
 pragma AbiHeader pubkey;
 
-import "locklift/src/console.sol";
+// import "locklift/src/console.sol";
 
 import '../libraries/MsgFlag.sol';
 import '../libraries/Errors.sol';
@@ -228,7 +228,7 @@ contract Cell is ICell {
         tvm.rawReserve(0, 4); 
         startProcess(0, _costPerLevel[_level+1]);
         _level++;
-        console.log(format("upgradeCell {}", "OK"));
+        // console.log(format("upgradeCell {}", "OK"));
         _owner.transfer({value: 0, flag: MsgFlag.ALL_NOT_RESERVED + MsgFlag.IGNORE_ERRORS, bounce: false}); 
     }
 ////////////////////////////////////
@@ -240,7 +240,7 @@ contract Cell is ICell {
         TvmCell state = _buildCellState(code, coord);
         uint256 hashState = tvm.hash(state);
         cellAddress = address.makeAddrStd(address(this).wid, hashState);
-        console.log(format("resolveCell 2 {}", cellAddress));
+        // console.log(format("resolveCell 2 {}", cellAddress));
     }
 
     function _buildCellCode(address router) internal view returns (TvmCell) {

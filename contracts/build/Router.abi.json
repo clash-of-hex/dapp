@@ -10,6 +10,7 @@
 				{"name":"roundTime","type":"uint64"},
 				{"name":"radius","type":"uint64"},
 				{"name":"speed","type":"uint64"},
+				{"name":"userCount","type":"uint64"},
 				{"name":"name","type":"string"}
 			],
 			"outputs": [
@@ -22,8 +23,10 @@
 			"outputs": [
 				{"name":"nonce","type":"uint32"},
 				{"name":"endTime","type":"uint128"},
+				{"name":"roundTime","type":"uint64"},
 				{"name":"radius","type":"uint64"},
 				{"name":"speed","type":"uint64"},
+				{"name":"userCount","type":"uint64"},
 				{"name":"name","type":"string"},
 				{"name":"root","type":"address"}
 			]
@@ -161,8 +164,10 @@
 		{"name":"_users","type":"map(address,uint128)"},
 		{"name":"_rewards","type":"map(address,uint128)"},
 		{"name":"_codeCell","type":"cell"},
+		{"name":"_roundTime","type":"uint64"},
 		{"name":"_radius","type":"uint64"},
 		{"name":"_speed","type":"uint64"},
+		{"name":"_userCount","type":"uint64"},
 		{"name":"_name","type":"string"},
 		{"name":"_endTime","type":"uint128"}
 	]
