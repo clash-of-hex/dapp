@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "npm run build && serve dist",
     "dev": "webpack --mode=development serve",
     "build": "run-p --max-parallel 1 build-webpack build-cp build-wasm",
     "build-cp": "cp ../../public/*.png dist/",
