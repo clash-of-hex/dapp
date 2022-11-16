@@ -1,4 +1,4 @@
-import { Text, TextStyle, Graphics, Container } from 'pixi.js'
+import { Text, Graphics, Container } from 'pixi.js'
 import { theme } from '../theme'
 import { ITextStyle } from '@pixi/text'
 
@@ -51,12 +51,9 @@ export class Button extends Container {
     if (prop.y) {
       this.y = prop.y
     }
-    if (prop.text) {
-      this.text = new Text(prop.text, prop.style)
-      this.text.x = 20
-      this.text.y = 10
-    }
-    
+    this.text = new Text(prop.text || '', prop.style)
+    this.text.x = 20
+    this.text.y = 10
     this.button = new Graphics()
     this.button.beginFill(prop.color || 0xffffff)
     this.button.drawRoundedRect(
