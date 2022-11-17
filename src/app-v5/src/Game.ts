@@ -1,19 +1,33 @@
-import { Application, Container, Graphics, InteractionEvent } from 'pixi.js'
+import { Loader, Application, Container, Graphics, InteractionEvent } from 'pixi.js'
+import { WebfontLoaderPlugin } from 'pixi-webfont-loader'
+
 import { defineHex, Grid, rectangle, Hex } from 'honeycomb-grid'
 import { GameConfig } from './GameConfig'
+import { buttonDefault, buttonSecond } from './ui/Button'
 
 export class Game {
   private static app: Application
   
   static setup(config: GameConfig) {
+    Loader.registerPlugin(WebfontLoaderPlugin)
     Game.app = new Application({
-      resolution: window.devicePixelRatio || 1,
+      resolution: 2,//window.devicePixelRatio || 1,
       autoDensity: true,
       backgroundColor: config.backgroundColor,
       width: window.innerWidth,
       height: window.innerHeight,
     })
-    
+    Loader.shared.add({
+      name: 'JetBrains Mono',
+      url: 'jetbrains-mono-all-800-normal.woff',
+    })
+    Loader.shared.onComplete.once(() => {
+      Game.init()
+    })
+    Loader.shared.load()
+  }
+  
+  static init() {
     const Hex = defineHex({ dimensions: 50, origin: 'topLeft' })
     const grid = new Grid(Hex, rectangle({
       width: 15,
@@ -44,13 +58,23 @@ export class Game {
         console.log(e.target)
       })
       div.addChild(graphics)
+      
     }
     grid.forEach(renderCanvas)
     div.x = window.innerWidth / 2 - div.height / 2
     div.y = window.innerHeight / 2 - div.width / 2
     const zoom = 1
     div.scale = { x: zoom, y: zoom }
+    
     Game.app.stage.addChild(div)
+    const btn1 = buttonDefault('Connect Wallet')
+    btn1.x = window.innerWidth / 2 - btn1.width / 2
+    btn1.y = window.innerHeight / 2 - btn1.height / 2
+    const btn2 = buttonSecond('ok')
+    btn2.x = 50
+    btn2.y = window.innerHeight / 2 - btn2.height / 2
+    Game.app.stage.addChild(btn1)
+    Game.app.stage.addChild(btn2)
   }
   
   private static get instance() {
