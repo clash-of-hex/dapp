@@ -1,0 +1,467 @@
+<script lang="ts">
+import { defineHex, Grid, spiral, hexToPoint } from "honeycomb-grid";
+import * as EVER from "../services/ever.js";
+const Hex = defineHex({
+  dimensions: 52,
+  orientation: "FLAT",
+  origin: { x: -500, y: -400 },
+  highlight: false,
+});
+let grid = new Grid(Hex);
+let currentMap = [];
+let PROVIDER = EVER;
+export default {
+  data() {
+    return {
+      camera: {
+        x: 0,
+        y: 0,
+        zoom: 1,
+      },
+      mainCanvas: null,
+      animCanvas: null,
+      mainCtx: null,
+      scales: 0,
+      hexSize: 0,
+      halfCanvasWidth: 0,
+      halfCanvasHeight: 0,
+      isdblclick: false,
+      a_full: 0,
+      b_full: 0,
+      c_full: 0,
+      a_hex: 0,
+      b_hex: 0,
+      c_hex: 0,
+    };
+  },
+  async mounted() {
+    this.mainCanvas = document.querySelector(
+      "#mainCanvas"
+    ) as HTMLCanvasElement;
+    this.animCanvas = document.querySelector(
+      "#animationCanvas"
+    ) as HTMLCanvasElement;
+    this.mainCtx = this.mainCanvas.getContext("2d");
+    window.addEventListener("resize", () => {
+      this.windowResizeUpdate();
+      this.zoomUpdate();
+    });
+
+    await this.initiateMap(PROVIDER);
+
+    //Hex Highlighting
+    this.animCanvas.addEventListener("click", async ({ offsetX, offsetY }) => {
+      await this.sleep(500);
+      if (this.isdblclick) {
+        return;
+      }
+      offsetX += this.camera.x - this.mainCanvas.width / 2;
+      offsetY += this.camera.y - this.mainCanvas.height / 2;
+      const hexCoordinates = grid.pointToHex({ x: offsetX, y: offsetY });
+      for (let hex of currentMap) {
+        if (hex.x == hexCoordinates.x && hex.y == hexCoordinates.y) {
+          hex.highlight = !hex.highlight;
+        } else {
+          hex.highlight = false;
+        }
+      }
+    });
+
+    this.animCanvas.addEventListener(
+      "dblclick",
+      async ({ offsetX, offsetY }) => {
+        this.isdblclick = true;
+        await this.sleep(500);
+        this.isdblclick = false;
+        offsetX += this.camera.x - this.mainCanvas.width / 2;
+        offsetY += this.camera.y - this.mainCanvas.height / 2;
+        const hexCoordinates = grid.pointToHex({ x: offsetX, y: offsetY });
+        let hHex;
+        let tHex;
+        for (let hex of currentMap) {
+          if (hex.highlight) {
+            hHex = hex;
+          }
+          if (hex.x == hexCoordinates.x && hex.y == hexCoordinates.y) {
+            tHex = hex;
+          }
+        }
+        if (!tHex) return;
+        if (hHex && !hHex.details) return;
+        console.log("hHex", hHex);
+        console.log("tHex", tHex);
+        let cellCoord = {
+          x: hexCoordinates.q,
+          y: hexCoordinates.r,
+          z: hexCoordinates.s,
+        };
+        if (!hHex) {
+          if (!tHex.details) {
+            await PROVIDER.newGame(cellCoord);
+          }
+        } else if (hHex.address.toString() == tHex.address.toString()) {
+          await PROVIDER.upgradeCell(tHex.address);
+        } else {
+          if (!this.isNeighborHex(hHex, tHex)) return;
+          let energy = this.getEnegry(hHex);
+          console.log("energy", energy);
+          if (!tHex.details) {
+            await PROVIDER.markCell(hHex.address, cellCoord, energy);
+          } else if (
+            this.colorIsEqual(hHex.details.color, tHex.details.color)
+          ) {
+            // переписать условие по владельцу ячейки и цвета
+            await PROVIDER.helpCell(hHex.address, cellCoord, energy);
+          } else {
+            await PROVIDER.attkCell(hHex.address, cellCoord, energy);
+          }
+        }
+      }
+    );
+  },
+  methods: {
+    async sleep(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    },
+
+    getMap(radius) {
+      let map = new Grid(Hex, spiral({ radius: 1 * radius }));
+      return map;
+    },
+
+    async initiateMap() {
+      await PROVIDER.init((radius) => {
+        currentMap = this.getMap(radius);
+        console.log(currentMap, 'elekwleklk')
+        PROVIDER.setMap(currentMap);
+      })
+      // await PROVIDER.init();
+      // currentMap = this.getMap(50);
+      // PROVIDER.setMap(currentMap);
+      console.log(currentMap, 'currentMap')
+      let mainCanvas = this.mainCanvas;
+      let animCanvas = this.animCanvas;
+      mainCanvas.width = window.innerWidth;
+      mainCanvas.height = window.innerHeight;
+      animCanvas.width = window.innerWidth;
+      animCanvas.height = window.innerHeight;
+      this.calculateHexDimensions();
+      this.windowResizeUpdate();
+      this.zoomUpdate();
+      this.drawMap();
+      requestAnimationFrame(this.drawMap);
+      this.camera.x = this.halfCanvasWidth;
+      this.camera.y = this.halfCanvasHeight;
+
+      this.recalcEnergy();
+    },
+    recalcEnergy() {
+      for (let hex of currentMap) {
+        if (!hex.details) continue;
+        this.calculateEnergy(hex);
+      }
+      setTimeout(this.recalcEnergy, 200);
+    },
+
+    calculateEnergy(hex) {
+      let dateNow = Date.now() / 1000;
+      if (1 * hex.details.lastCalcTime >= dateNow) {
+        return;
+      }
+      let energy = 1 * hex.details.energy;
+      let energyMax = 1 * hex.details.energyMax;
+
+      if (energy > energyMax) {
+        let val =
+          100 * hex.details.speed * (dateNow - hex.details.lastCalcTime);
+        if (energy - val > energyMax) {
+          energy = energy - val;
+        } else {
+          energy = energyMax;
+        }
+      } else if (energy < energyMax) {
+        energy = Math.min(
+          energy +
+            hex.details.energySec *
+              hex.details.speed *
+              (dateNow - hex.details.lastCalcTime),
+          energyMax
+        );
+      }
+      hex.details.lastCalcTime = dateNow;
+      hex.details.energy = Math.floor(energy);
+    },
+
+    zoomUpdate() {
+      const hex = grid.pointToHex({ x: this.camera.x, y: this.camera.y });
+      const x = hex.x;
+      const y = hex.y;
+      this.hexSize = this.scales;
+      this.calculateHexDimensions();
+      let replacementMap = new Grid(Hex, spiral({ radius: currentMap.radius }));
+      for (let i = 0; i < currentMap.length; i++) {
+        currentMap[i].size = replacementMap[i].size;
+        if (currentMap[i].x === x && currentMap[i].y === y) {
+          this.camera.x = Math.round(
+            hexToPoint(currentMap[i]).x + this.b_full + this.hexSize / 2
+          );
+          this.camera.y = Math.round(hexToPoint(currentMap[i]).y + this.c_full);
+        }
+      }
+    },
+
+    //Private functions
+    drawMap() {
+      //Clearing
+      this.mainCtx.setTransform(1, 0, 0, 1, 0, 0);
+      this.mainCtx.fillStyle = "black";
+      this.mainCtx.fillRect(
+        0,
+        0,
+        this.mainCanvas.width,
+        this.mainCanvas.height
+      );
+      //Positioning the camera
+      this.mainCtx.translate(
+        -this.camera.x + this.halfCanvasWidth,
+        -this.camera.y + this.halfCanvasHeight
+      );
+
+      // this.drawGrid(this.mainCanvas.width, this.mainCanvas.height);
+
+      for (let hex of currentMap) {
+        //Hex is ignored if it wasn't seen yet
+        //if (hex.visibility === 'unseen') continue
+        let x = hexToPoint(hex).x,
+          y = hexToPoint(hex).y;
+
+        //Checking if hex is visible within canvas
+        if (
+          Math.abs(x - this.camera.x) > this.halfCanvasWidth + this.hexSize ||
+          Math.abs(y - this.camera.y) > this.halfCanvasHeight + this.hexSize
+        )
+          continue;
+
+        //Drawing highlight around hex
+        if (hex.highlight) {
+          this.mainCtx.strokeStyle = "white";
+          this.mainCtx.beginPath();
+          this.mainCtx.moveTo(x + this.a_full, y - this.c_full);
+          this.mainCtx.lineTo(x + this.b_full, y);
+          this.mainCtx.lineTo(x + this.a_full, y + this.c_full);
+          this.mainCtx.lineTo(x - this.a_full, y + this.c_full);
+          this.mainCtx.lineTo(x - this.b_full, y);
+          this.mainCtx.lineTo(x - this.a_full, y - this.c_full);
+          this.mainCtx.closePath();
+          this.mainCtx.stroke();
+        }
+
+        //Drawing the hex
+        let color = "#001D37";
+        this.mainCtx.fillStyle = color;
+        this.mainCtx.strokeStyle = "#0095A7";
+        this.mainCtx.beginPath();
+        this.mainCtx.moveTo(x + this.a_hex, y - this.c_hex);
+        this.mainCtx.lineTo(x + this.b_hex, y);
+        this.mainCtx.lineTo(x + this.a_hex, y + this.c_hex);
+        this.mainCtx.lineTo(x - this.a_hex, y + this.c_hex);
+        this.mainCtx.lineTo(x - this.b_hex, y);
+        this.mainCtx.lineTo(x - this.a_hex, y - this.c_hex);
+        this.mainCtx.closePath();
+        this.mainCtx.stroke();
+        this.mainCtx.fill();
+
+        this.setText(
+          this.mainCtx,
+          x,
+          y - this.hexSize / 2,
+          `${hex.q};${hex.r}`
+        );
+        if (hex.details) {
+          this.setText(this.mainCtx, x, y, `${hex.details.energy}`);
+          this.setText(
+            this.mainCtx,
+            x,
+            y + this.hexSize / 2,
+            `lvl: ${1 * hex.details.level + 1}`
+          );
+        }
+      }
+    },
+    drawGrid(width, height) {
+      const a = (2 * Math.PI) / 6;
+      const r = 50;
+      for (
+        let i = 0, y = r;
+        y + r * Math.sin(a) < height;
+        y += r * Math.sin(a) ** i++
+      ) {
+        for (
+          let x = r, j = 0;
+          x + r * (1 + Math.cos(a)) < width;
+          x += r * (1 + Math.cos(a)), y += (-1) ** j++ * r * Math.sin(a)
+        ) {
+          currentMap.push({
+            coords: [i, j],
+            energy: 5000,
+            color: "inherit",
+            lvl: 1,
+          });
+          this.drawHexagon(x, y);
+        }
+      }
+    },
+
+    drawHexagon(x, y) {
+      const a = (2 * Math.PI) / 6;
+      const r = 50;
+      this.mainCtx.strokeStyle = "#0095A7";
+      this.mainCtx.beginPath();
+      for (let i = 0; i < 6; i++) {
+        this.mainCtx.lineTo(x + r * Math.cos(a * i), y + r * Math.sin(a * i));
+      }
+      this.mainCtx.closePath();
+      this.mainCtx.stroke();
+      this.setText(this.mainCtx, x, y - this.hexSize / 2, 5000);
+    },
+
+    setText(ctx, x, y, txt, fontSize = 10, style = "white", align = "center") {
+      let _font = `${fontSize * (this.camera.zoom + 1)}px Georgia`;
+      ctx.font = _font;
+      ctx.fillStyle = style;
+      ctx.textAlign = align;
+      ctx.fillText(txt, x, y, this.hexSize);
+    },
+
+    calculateHexDimensions() {
+      this.a_full = this.hexSize / 2;
+      this.b_full = this.hexSize;
+      this.c_full = (this.hexSize / 2) * Math.sqrt(3);
+      this.a_hex = this.a_full * 0.95;
+      this.b_hex = this.b_full * 0.95;
+      this.c_hex = this.c_full * 0.95;
+    },
+
+    windowResizeUpdate() {
+      this.mainCanvas.width = window.innerWidth;
+      this.mainCanvas.height = window.innerHeight;
+      this.animCanvas.width = window.innerWidth;
+      this.animCanvas.height = window.innerHeight;
+      this.halfCanvasWidth = this.mainCanvas.width / 2;
+      this.halfCanvasHeight = this.mainCanvas.height / 2;
+      const min = Math.min(this.halfCanvasWidth, this.halfCanvasHeight);
+      this.scales = min / 7;
+    },
+
+    getEnegry(hex) {
+      if (!hex.details) return 0;
+      let percent = document.querySelector(
+        'input[name="energy"]:checked'
+      ).value;
+      return Math.floor((hex.details.energy * percent) / 100);
+    },
+
+    colorIsEqual(color1, color2) {
+      return (
+        color1.r == color2.r && color1.g == color2.g && color1.b == color2.b
+      );
+    },
+
+    isNeighborHex(hex1, hex2) {
+      return this.cube_distance(hex1, hex2) == 1;
+    },
+
+    cube_distance(hex1, hex2) {
+      return Math.max(
+        Math.abs(hex1.q - hex2.q),
+        Math.abs(hex1.r - hex2.r),
+        Math.abs(hex1.s - hex2.s)
+      );
+    },
+  },
+};
+
+// 1. Create a hex class:
+// const Tile = defineHex({ dimensions: 30 })
+
+// 2. Create a grid by passing the class and a "traverser" for a rectangular-shaped grid:
+// const grid = new Grid(Tile, rectangle({ width: 10, height: 10 }))
+
+// 3. Iterate over the grid to log each hex:
+// grid.forEach(console.log)
+</script>
+
+<template>
+  <div>
+    <canvas id="mainCanvas"></canvas>
+    <canvas id="animationCanvas"></canvas>
+  </div>
+   <!-- <table style="position: absolute; right: 0px;">
+     <tbody>
+     <tr>
+       <td></td>
+       <td><button id="camera_up">- Y ⬆️</button></td>
+       <td></td>
+     </tr>
+     <tr>
+       <td><button id="camera_left">- X ⬅️</button></td>
+       <td>📷</td>
+       <td><button id="camera_right">+ X ➡️</button></td>
+     </tr>
+     <tr>
+       <td><button id="zoom_out">- Zoom</button></td>
+       <td><button id="camera_down">+ Y ⬇️</button></td>
+       <td><button id="zoom_in">+ Zoom</button></td>
+     </tr>
+     <tr>
+       <td>network</td>
+       <td colspan=2><div><p data-behavior="network"></p></div></td>
+     </tr>
+     <tr data-behavior="extension" style="display: none">
+       <td colspan=3>
+         <div>Need <a href="https://l1.broxus.com/everscale/wallet">EVER Wallet</a></div>
+       </td>
+     </tr>
+     <tr data-behavior="login" style="display: none">
+       <td colspan=3>
+         <button type="button" data-behavior="connect">Connect</button>
+       </td>
+     </tr>
+     <tr data-behavior="main" style="display: none">
+       <td>address</td>
+       <td colspan=2><div><p data-behavior="address"></p></div></td>
+     </tr>
+     <tr data-behavior="main" style="display: none">
+       <td>pubkey</td>
+       <td colspan=2><div><p data-behavior="publicKey"></p></div></td>
+     </tr>
+     <tr data-behavior="main" style="display: none">
+       <td colspan=3><button type="button" data-behavior="disconnectAction">Disconnect</button></td>
+     </tr>
+     </tbody>
+   </table>
+   <canvas id="mainCanvas"></canvas>
+   <canvas id="animationCanvas"></canvas> -->
+</template>
+
+<style scoped>
+table {
+  margin: auto;
+  z-index: 1;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+tr td {
+  color: lawngreen;
+  font-size: 20px;
+}
+tr td div p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+</style>

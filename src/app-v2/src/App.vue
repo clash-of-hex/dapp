@@ -2,7 +2,6 @@
 import { logLabeled } from "./util/logger";
 import Navbar from "./component/Navbar.vue";
 import Footer from "./component/Footer.vue";
-logLabeled("I'm ready!  ⸜(๑'ᵕ'๑)⸝⋆*", "log", "", "color: #66ccff");
 </script>
 
 <template>

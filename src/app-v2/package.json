@@ -12,6 +12,7 @@
     "start": "vite --mode localhost",
     "preview": "vite preview --mode localhost",
     "build": "vite build --mode production",
+    "build-wasm": "cp node_modules/nekoton-wasm/nekoton_wasm_bg.wasm dist && cp ../../public/*.wasm dist/",
     "postinstall": "run-p build-asset",
     "build-asset": "pwa-asset-generator ../asset/logo.svg public --favicon --type png --padding 0 --background transparent --opaque false --log false",
     "lint-type": "vue-tsc --noEmit",
@@ -85,7 +86,10 @@
     "pinia": "^2.0.23",
     "sass": "^1.56.0",
     "vue": "^3.2.41",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.1.6",
+    "@eversdk/appkit": "^0.3.2",
+    "@eversdk/core": "^1.38.0",
+    "@eversdk/lib-web": "^1.38.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.2.0",

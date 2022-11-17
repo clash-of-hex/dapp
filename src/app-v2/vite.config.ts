@@ -17,6 +17,12 @@ export default defineConfig({
         404: join(rootPath, "404.html"),
       },
     },
+    target: [ 'es2020' ],
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      target: 'es2020'
+    }
   },
   server: {
     host: "localhost",
@@ -67,7 +73,7 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         additionalData: `
-      @import "@/style/variables.scss";
+      @import "src/style/variables.scss";
     `,
         javascriptEnabled: true,
       },

@@ -7,12 +7,12 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/",
     name: "Main",
-    component: () => import("@/view/MainPage.vue"),
+    component: () => import("./view/MainPage.vue"),
   },
   {
     path: "/how-it-work",
     name: "HowItWork",
-    component: () => import("@/view/HowItWorkPage.vue"),
+    component: () => import("./view/HowItWorkPage.vue"),
   },
   {
     path: "/:pathMatch(.*)*",

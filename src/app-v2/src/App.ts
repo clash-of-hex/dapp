@@ -4,10 +4,10 @@ import { createPinia } from "pinia";
 import router from "./router";
 
 import { registerStore } from "./store";
-import App from "@/App.vue";
+import App from "./App.vue";
 
-import "@/style/tailwind.css";
-import "@/style/main.scss";
+import "./style/tailwind.css";
+import "./style/main.scss";
 
 const app = createApp(App);
 
