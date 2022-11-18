@@ -111,7 +111,8 @@ contract Router is IRouter {
         Types.CubeCoord baseCoord
     ) public {
         require(msg.value > JOIN_GAME_FEE + CELL_DEPLOY_VALUE + ACTION_VALUE*2, Errors.LOW_GAS_VALUE);
-        require(now < _endTime, Errors.TIME_IS_OVER);
+        require((_userCount == 0 && now < _endTime) || _endTime == 0, Errors.TIME_IS_OVER);
+        require(_userCount == 0 || _users.keys().length <  uint128(_userCount), Errors.TIME_IS_OVER);
         require(_users.exists(msg.sender) == false, Errors.WRONG_OWNER);
         require(HexUtils.isCorrectCoord(baseCoord) == true, Errors.WRONG_COORD);
         tvm.rawReserve(JOIN_GAME_FEE, 4); 
