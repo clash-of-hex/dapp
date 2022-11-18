@@ -170,7 +170,7 @@
 export default {
   data(){
     return {
-      showControls: false
+      showControls: true,
     }
   }
 }
@@ -183,6 +183,7 @@ export default {
   height: 50px;
   width: 480px;
   z-index: 2;
+  background: rgba(0, 4, 11, 0.9);
 }
 input[type="text"],
 input[type="number"] {
@@ -199,10 +200,10 @@ input[type="number"] {
   padding-bottom: 10px;
 }
 .controls {
-  background: rgba(0, 4, 11, 0.9);
   color: white;
   font-family: "JetBrains Mono";
   width: 480px;
   height: 100%;
+  background: rgba(0, 4, 11, 0.9);
 }
 </style>

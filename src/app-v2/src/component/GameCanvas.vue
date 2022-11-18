@@ -86,6 +86,7 @@ export default {
           if (hex.x == hexCoordinates.x && hex.y == hexCoordinates.y) {
             tHex = hex;
           }
+          // hex.color = "pink";
         }
         if (!tHex) return;
         if (hHex && !hHex.details) return;
@@ -140,7 +141,6 @@ export default {
       this.windowResizeUpdate();
       this.zoomUpdate();
       this.drawMap();
-      requestAnimationFrame(this.drawMap);
       this.camera.x = this.halfCanvasWidth;
       this.camera.y = this.halfCanvasHeight;
 
@@ -235,7 +235,7 @@ export default {
 
         //Drawing highlight around hex
         if (hex.highlight) {
-          this.mainCtx.strokeStyle = "white";
+          this.mainCtx.strokeStyle = "#00E4FF";
           this.mainCtx.beginPath();
           this.mainCtx.moveTo(x + this.a_full, y - this.c_full);
           this.mainCtx.lineTo(x + this.b_full, y);
@@ -278,6 +278,8 @@ export default {
           );
         }
       }
+
+      requestAnimationFrame(this.drawMap);
     },
     drawGrid(width, height) {
       const a = (2 * Math.PI) / 6;
@@ -285,8 +287,9 @@ export default {
       for (
         let i = 0, y = r;
         y + r * Math.sin(a) < height;
-        y += r * Math.sin(a) ** i++
+        y += r * Math.sin(a)
       ) {
+        i++;
         for (
           let x = r, j = 0;
           x + r * (1 + Math.cos(a)) < width;
