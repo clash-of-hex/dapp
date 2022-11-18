@@ -1,6 +1,7 @@
 import { Text, Graphics, Container } from 'pixi.js'
-import { theme } from '../theme'
 import { ITextStyle } from '@pixi/text'
+import { IPointData } from '@pixi/math'
+import { color } from '../color'
 import { Prop } from './Prop'
 
 export interface ButtonProp extends Prop {
@@ -10,22 +11,46 @@ export interface ButtonProp extends Prop {
 }
 
 
-export function buttonSecond(text: string) {
+export function buttonA(text: string, position?: IPointData) {
   return new Button({
+    position,
     text,
-    color: theme.colorSecond,
+    color: color.orange,
     style: {
-      fill: 0xffffff,
+      fill: color.darkBlue,
     },
   })
 }
 
-export function buttonDefault(text: string) {
+export function buttonB(text: string, position?: IPointData) {
   return new Button({
+    position,
     text,
-    color: theme.colorDefault,
+    color: 0x001D37,
     style: {
-      fill: 0x001D37,
+      fill: color.white,
+    },
+  })
+}
+
+export function buttonC(text: string, position?: IPointData) {
+  return new Button({
+    position,
+    text,
+    color: 0x204472,
+    style: {
+      fill: color.white,
+    },
+  })
+}
+
+export function buttonD(text: string, position?: IPointData) {
+  return new Button({
+    position,
+    text,
+    color: 0xa08420,
+    style: {
+      fill: 0x202f3c,
     },
   })
 }
@@ -37,11 +62,9 @@ export class Button extends Container {
   
   constructor(prop: ButtonProp) {
     super()
-    if (prop.x) {
-      this.x = prop.x
-    }
-    if (prop.y) {
-      this.y = prop.y
+    if (prop.position) {
+      this.x = prop.position.x
+      this.y = prop.position.y
     }
     this.text = new Text(prop.text || '', {
       fontWeight: '800',

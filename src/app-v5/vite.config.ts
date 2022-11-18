@@ -29,6 +29,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         index: join(rootPath, 'index.html'),
+        ui: join(rootPath, 'ui.html'),
         404: join(rootPath, '404.html'),
       },
     },

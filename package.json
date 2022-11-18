@@ -15,7 +15,7 @@
     "build-app-v1": "mkdir -p dist && cd src/app-v1 && npm run build && cp -r dist/* ../../dist/",
     "build-app-v2": "mkdir -p dist/v2 && cd src/app-v2 && npm run build && cp -r dist/* ../../dist/v2/",
     "build-app-v4": "mkdir -p dist/v4 && cd src/app-v4 && npm run build && cp -r dist/* ../../dist/v4/",
-    "build-off-app-v5": "mkdir -p dist/v5 && cd src/app-v5 && npm run build && cp -r dist/* ../../dist/v5/",
+    "build-app-v5": "mkdir -p dist/v5 && cd src/app-v5 && npm run build && cp -r dist/* ../../dist/v5/",
     "start": "npm run build && serve dist",
     "deploy": "run-p --max-parallel 1 build gh-pages"
   },

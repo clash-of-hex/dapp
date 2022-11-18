@@ -1,4 +1,5 @@
+import { IPointData } from '@pixi/math'
+
 export interface Prop {
-  x?: number
-  y?: number
+  position?: IPointData
 }
