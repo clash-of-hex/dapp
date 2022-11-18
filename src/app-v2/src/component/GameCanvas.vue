@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
 import { defineHex, Grid, spiral, hexToPoint } from "honeycomb-grid";
 import * as EVER from "../services/ever.js";
 const Hex = defineHex({
@@ -10,6 +10,11 @@ const Hex = defineHex({
 let grid = new Grid(Hex);
 let currentMap = [];
 let PROVIDER = EVER;
+function getMap(radius) {
+  let map = new Grid(Hex, spiral({ radius: 1 * radius }));
+
+  return map;
+}
 export default {
   data() {
     return {
@@ -35,19 +40,15 @@ export default {
     };
   },
   async mounted() {
-    this.mainCanvas = document.querySelector(
-      "#mainCanvas"
-    ) as HTMLCanvasElement;
-    this.animCanvas = document.querySelector(
-      "#animationCanvas"
-    ) as HTMLCanvasElement;
+    this.mainCanvas = document.querySelector("#mainCanvas");
+    this.animCanvas = document.querySelector("#animationCanvas");
     this.mainCtx = this.mainCanvas.getContext("2d");
     window.addEventListener("resize", () => {
       this.windowResizeUpdate();
       this.zoomUpdate();
     });
-
-    await this.initiateMap(PROVIDER);
+    this.initiateControls();
+    this.initiateMap(PROVIDER);
 
     //Hex Highlighting
     this.animCanvas.addEventListener("click", async ({ offsetX, offsetY }) => {
@@ -124,21 +125,11 @@ export default {
       return new Promise((resolve) => setTimeout(resolve, ms));
     },
 
-    getMap(radius) {
-      let map = new Grid(Hex, spiral({ radius: 1 * radius }));
-      return map;
-    },
-
     async initiateMap() {
       await PROVIDER.init((radius) => {
-        currentMap = this.getMap(radius);
-        console.log(currentMap, 'elekwleklk')
+        currentMap = getMap(radius);
         PROVIDER.setMap(currentMap);
-      })
-      // await PROVIDER.init();
-      // currentMap = this.getMap(50);
-      // PROVIDER.setMap(currentMap);
-      console.log(currentMap, 'currentMap')
+      });
       let mainCanvas = this.mainCanvas;
       let animCanvas = this.animCanvas;
       mainCanvas.width = window.innerWidth;
@@ -378,6 +369,66 @@ export default {
         Math.abs(hex1.s - hex2.s)
       );
     },
+    initiateControls() {
+      //Camera position controls
+      let timer = null;
+      document.addEventListener("mouseup", () => {
+        clearInterval(timer);
+      });
+      document.addEventListener("keyup", () => {
+        clearInterval(timer);
+      });
+
+      //Keyboard controls
+      document.addEventListener("keydown", (e) => {
+        console.log("e.code", e.code);
+        switch (e.code) {
+          case "ArrowUp":
+          case "KeyW":
+            clearInterval(timer);
+            timer = setInterval(() => {
+              this.camera.y -= 5;
+            }, 10);
+            break;
+          case "ArrowLeft":
+          case "KeyA":
+            clearInterval(timer);
+            timer = setInterval(() => {
+              this.camera.x -= 5;
+            }, 10);
+            break;
+          case "ArrowRight":
+          case "KeyD":
+            clearInterval(timer);
+            timer = setInterval(() => {
+              this.camera.x += 5;
+            }, 10);
+            break;
+          case "ArrowDown":
+          case "KeyS":
+            clearInterval(timer);
+            timer = setInterval(() => {
+              this.camera.y += 5;
+            }, 10);
+            break;
+          // case "Digit1":
+          //   document.querySelector('input[id="energy20"]').checked = true;
+          //   break;
+          // case "Digit2":
+          //   document.querySelector('input[id="energy40"]').checked = true;
+          //   break;
+          // case "Digit3":
+          //   document.querySelector('input[id="energy60"]').checked = true;
+          //   break;
+          // case "Digit4":
+          //   document.querySelector('input[id="energy80"]').checked = true;
+          //   break;
+          // case "Digit5":
+          //   document.querySelector('input[id="energy100"]').checked = true;
+          //   break;
+        }
+      });
+    },
   },
 };
 
@@ -396,7 +447,7 @@ export default {
     <canvas id="mainCanvas"></canvas>
     <canvas id="animationCanvas"></canvas>
   </div>
-   <!-- <table style="position: absolute; right: 0px;">
+  <!-- <table style="position: absolute; right: 0px;">
      <tbody>
      <tr>
        <td></td>

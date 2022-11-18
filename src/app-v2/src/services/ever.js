@@ -165,26 +165,28 @@ async function getRoutersAction() {
       var date = new Date(1000 * details.endTime);
       console.log("date", date);
       row = addTblRow("tblRouters");
-      cell = row.insertCell(0);
-      cell.innerHTML = details.name;
-      cell = row.insertCell(1);
-      cell.innerHTML = details.radius;
-      cell = row.insertCell(2);
-      cell.innerHTML = details.userCount;
-      cell = row.insertCell(3);
-      cell.innerHTML = details.speed;
-      cell = row.insertCell(4);
-      cell.innerHTML = date.customFormat("#DD#-#MM#-#YYYY# #hh#:#mm#:#ss#");
-      cell = row.insertCell(5);
-      var btn = document.createElement("button");
-      btn.textContent = "Set";
-      btn.setAttribute("type", "button");
-      btn.setAttribute("addr", accs[i].id);
-      btn.onclick = setRouter;
-      cell.appendChild(btn);
-      cell = row.insertCell(6);
-      cell.innerHTML = accs[i].id;
-      cell.style = "visibility: hidden; width: 0px";
+      if (row) {
+        cell = row.insertCell(0);
+        cell.innerHTML = details.name;
+        cell = row.insertCell(1);
+        cell.innerHTML = details.userCount;
+        cell = row.insertCell(2);
+        // cell.innerHTML = details.radius;
+        // cell = row.insertCell(3);
+        // cell.innerHTML = details.speed;
+        // cell = row.insertCell(4);
+        // cell.innerHTML = date.customFormat("#DD#-#MM#-#YYYY# #hh#:#mm#:#ss#");
+        // cell = row.insertCell(5);
+        var btn = document.createElement("button");
+        btn.textContent = "Set";
+        btn.setAttribute("type", "button");
+        btn.setAttribute("addr", accs[i].id);
+        btn.onclick = setRouter;
+        cell.appendChild(btn);
+        cell = row.insertCell(3);
+        cell.innerHTML = accs[i].id;
+        cell.style = "visibility: hidden; width: 0px";
+      }
       // cell.colSpan = "4"
       // cell.style="text-align:left;"
     }
@@ -378,7 +380,6 @@ export function setMap(map) {
 
 export async function init(_onRoumingChange) {
   onRoumingChange = _onRoumingChange;
-
   if (await ever.hasProvider()) {
     try {
       await ever.ensureInitialized();
@@ -885,7 +886,7 @@ export async function subscribePermissionsChanged() {
 
 function addTblRow(tblName) {
   var table = document.getElementById(tblName);
-  return table.insertRow(table.rows.length);
+  return table?.insertRow(table.rows.length);
 }
 
 function clearTblRows(tblName, min = 1) {
