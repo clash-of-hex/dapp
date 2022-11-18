@@ -126,10 +126,10 @@ export default {
     },
 
     async initiateMap() {
-      await PROVIDER.init((radius) => {
-        currentMap = getMap(radius);
+      // await PROVIDER.init((radius) => {
+        currentMap = getMap(50);
         PROVIDER.setMap(currentMap);
-      });
+      // });
       let mainCanvas = this.mainCanvas;
       let animCanvas = this.animCanvas;
       mainCanvas.width = window.innerWidth;
