@@ -3,6 +3,7 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import Components from "unplugin-vue-components/vite";
 import AutoImport from "unplugin-auto-import/vite";
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 const isProduction = process.argv.includes('production');
 const rootPath = resolve(__dirname);
 const assetPath = path.join(resolve(join(rootPath, '..')), "asset")
@@ -32,6 +33,14 @@ export default defineConfig({
     proxy: {},
   },
   plugins: [
+    viteStaticCopy({
+      targets: [
+        {
+          src: 'node_modules/@eversdk/lib-web/eversdk.wasm',
+          dest: '.'
+        }
+      ],
+    }),
     vue({
       // https://vuejs.org/guide/extras/reactivity-transform.html
       // Reactivity Transform
