@@ -7,7 +7,7 @@
     "deps-app-v1": "cd src/app-v1 && npm i",
     "deps-app-v2": "cd src/app-v2 && npm i",
     "deps-app-v4": "cd src/app-v4 && npm i",
-    "deps-app-v5": "cd src/app-v5 && npm i",
+    "deps-off-app-v5": "cd src/app-v5 && npm i",
     "gh-pages": "gh-pages -d dist -r $(git remote get-url gh-pages) -b main -m \"deploy ref:$(git describe --tags --always --dirty)\"",
     "build": "run-p --max-parallel 1 build-clean build-app-*",
     "build-asset": "pwa-asset-generator src/asset/logo.svg public --favicon --type png --padding 0 --background transparent --opaque false --log false",

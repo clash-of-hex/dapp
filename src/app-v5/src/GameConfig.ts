@@ -1,3 +1,3 @@
 export interface GameConfig {
-    backgroundColor: number
+  backgroundColor: number
 }
