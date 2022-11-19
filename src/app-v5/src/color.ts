@@ -1,5 +1,24 @@
 // Color styles
-type Color = { [index: string]: number }
+export interface Color {
+  darkBlue: number,
+  darkBlueSecond: number,
+  darkOrange: number,
+  midDarkblue: number,
+  midNightBlue: number,
+  richBlue: number,
+  richYellow: number,
+  blue: number,
+  green: number,
+  secondGreen: number,
+  red: number,
+  orange: number,
+  lightYellow: number,
+  lightBlue: number,
+  lightRed: number,
+  lightGreen: number,
+  white: number,
+}
+
 export const color: Color = {
   darkBlue: 0x00040b,
   darkBlueSecond: 0x1a1e24,

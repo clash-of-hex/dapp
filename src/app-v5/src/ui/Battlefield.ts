@@ -1,12 +1,14 @@
-import { Graphics, Container } from 'pixi.js'
+import { Graphics, Container, InteractionEvent } from 'pixi.js'
 import { Hex, defineHex, Grid, rectangle, RectangleOptions, HexOptions } from 'honeycomb-grid'
 import { Prop } from './Prop'
-import { BattlefieldCell } from './BattlefieldCell'
+import { BattlefieldCell, BattlefieldCellEvent } from './BattlefieldCell'
+import { random } from '../util'
 
 export interface BattlefieldProp extends Prop {
   gep: number
   hex: Partial<HexOptions>
   rectangle: RectangleOptions
+  actionCell?: (e: BattlefieldCellEvent) => void
 }
 
 export class Battlefield extends Container {
@@ -24,12 +26,11 @@ export class Battlefield extends Container {
       const cell = new BattlefieldCell({
         hex,
         gep: prop.gep,
+        energy: random(5000, 500000),
       })
-      cell.addAction((e) => {
-        const el = e.target as Graphics
-        el.destroy()
-        console.log(e)
-      })
+      if (prop.actionCell) {
+        cell.addAction(prop.actionCell)
+      }
       this.addChild(cell)
     }
     this.grid.forEach(render)

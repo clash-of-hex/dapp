@@ -52,6 +52,7 @@ export default {
 
     //Hex Highlighting
     this.animCanvas.addEventListener("click", async ({ offsetX, offsetY }) => {
+      console.log('click', offsetX)
       await this.sleep(500);
       if (this.isdblclick) {
         return;
@@ -71,6 +72,7 @@ export default {
     this.animCanvas.addEventListener(
       "dblclick",
       async ({ offsetX, offsetY }) => {
+        console.log('click2', offsetX)
         this.isdblclick = true;
         await this.sleep(500);
         this.isdblclick = false;

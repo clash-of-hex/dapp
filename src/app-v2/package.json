@@ -81,6 +81,7 @@
     "@headlessui/vue": "^1.7.4",
     "@heroicons/vue": "^2.0.13",
     "@vueuse/core": "^9.4.0",
+    "app-v5": "file:../app-v5",
     "daisyui": "^2.38.1",
     "everscale-inpage-provider": "^0.3.43",
     "everscale-standalone-client": "^2.1.1",

@@ -2,6 +2,7 @@ import { Container, Sprite } from 'pixi.js'
 import { Manager } from '../Manager'
 import { IScene } from './IScene'
 import { Battlefield } from '../ui/Battlefield'
+import { BattlefieldCell } from '../ui/BattlefieldCell'
 
 export class GameScene extends Container implements IScene {
   protected player: Sprite
@@ -15,12 +16,16 @@ export class GameScene extends Container implements IScene {
   
   public draw(): void {
     this.addChild(new Battlefield({
-      position: { x: -50, y: -50 },
+      position: { x: 1150, y: 1150 },
       hex: { dimensions: 50, origin: 'topLeft' },
       rectangle: {
         width: 50,
         height: 50,
       }, gep: 4,
+      actionCell: (e) => {
+        e.cell.destroy()
+        console.log('destroy', e.cell)
+      }
     }))
     this.player = Sprite.from('logo')
     this.player.anchor.set(0.5)

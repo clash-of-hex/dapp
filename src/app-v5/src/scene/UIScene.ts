@@ -11,27 +11,27 @@ export class UIScene extends Container implements IScene {
   }
   
   public draw(): void {
-    const col1 = 50
-    this.addChild(new ColorList({ x: col1, y: 10 }))
-    
-    const col2 = 240
-    this.addChild(buttonA('Connect Wallet', { x: col2, y: 10 }))
-    this.addChild(buttonB('Connect Wallet', { x: col2, y: 60 }))
-    this.addChild(buttonC('Connect Wallet', { x: col2, y: 110 }))
-    this.addChild(buttonD('Connect Wallet', { x: col2, y: 160 }))
-    
-    const col3 = 510
-    this.addChild(buttonJoin({ x: col3, y: 10 }))
-    this.addChild(buttonAdd({ x: col3, y: 40 }))
-    this.addChild(buttonClaim({ x: col3, y: 70 }))
+    // const col1 = 50
+    // this.addChild(new ColorList({ x: col1, y: 10 }))
+    //
+    // const col2 = 240
+    // this.addChild(buttonA('Connect Wallet', { x: col2, y: 10 }))
+    // this.addChild(buttonB('Connect Wallet', { x: col2, y: 60 }))
+    // this.addChild(buttonC('Connect Wallet', { x: col2, y: 110 }))
+    // this.addChild(buttonD('Connect Wallet', { x: col2, y: 160 }))
+    //
+    // const col3 = 510
+    // this.addChild(buttonJoin({ x: col3, y: 10 }))
+    // this.addChild(buttonAdd({ x: col3, y: 40 }))
+    // this.addChild(buttonClaim({ x: col3, y: 70 }))
     
     const col4 = 610
     this.addChild(new Battlefield({
-      position: { x: col4, y: 10 },
-      hex: { dimensions: 50, origin: 'topLeft' },
+      position: { x: col4, y: 510 },
+      hex: { dimensions: 250, origin: { x: 0, y: 0 } },
       rectangle: {
-        width: 1,
-        height: 1,
+        width: 3,
+        height: 3,
       }, gep: 4,
     }))
   }
