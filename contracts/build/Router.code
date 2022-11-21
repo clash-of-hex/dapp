@@ -27,43 +27,43 @@ LDU 64
 LDU 64
 LDREF
 ENDS
-.loc ../contracts/additional/Router.sol, 55
+.loc ../contracts/additional/Router.sol, 56
 GETPARAM 7
 FIRST
 PUSHINT 1000000000
 GREATER
 THROWIFNOT 1060
-.loc ../contracts/additional/Router.sol, 56
-ACCEPT
 .loc ../contracts/additional/Router.sol, 57
+ACCEPT
+.loc ../contracts/additional/Router.sol, 58
 GETGLOB 9
 SETGLOB 11
-.loc ../contracts/additional/Router.sol, 58
-ROLL 5
-SETGLOB 14
 .loc ../contracts/additional/Router.sol, 59
-ROLL 4
+ROLL 5
 SETGLOB 15
 .loc ../contracts/additional/Router.sol, 60
-ROLL 3
+ROLL 4
 SETGLOB 16
 .loc ../contracts/additional/Router.sol, 61
-ROT
+ROLL 3
 SETGLOB 17
 .loc ../contracts/additional/Router.sol, 62
-SWAP
+ROT
 SETGLOB 18
 .loc ../contracts/additional/Router.sol, 63
+SWAP
 SETGLOB 19
 .loc ../contracts/additional/Router.sol, 64
-GETGLOB 18
+SETGLOB 20
+.loc ../contracts/additional/Router.sol, 65
+GETGLOB 19
 PUSHCONT {
-	.loc ../contracts/additional/Router.sol, 65
+	.loc ../contracts/additional/Router.sol, 66
 	NOW
-	GETGLOB 15
+	GETGLOB 16
 	ADD
 	UFITS 64
-	SETGLOB 20
+	SETGLOB 21
 	.loc ../contracts/additional/Router.sol, 0
 }
 IFNOT
@@ -82,7 +82,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Router.sol, 70
+.loc ../contracts/additional/Router.sol, 71
 ENDS
 .loc ../contracts/additional/Router.sol, 0
 CALLREF {
@@ -134,14 +134,14 @@ THROW 0
 CALL $getDetails_fbbf93a0_internal_macro$
 
 .macro getDetails_fbbf93a0_internal_macro
-.loc ../contracts/additional/Router.sol, 73
+.loc ../contracts/additional/Router.sol, 74
 GETGLOB 10
-GETGLOB 20
-GETGLOB 15
+GETGLOB 21
 GETGLOB 16
 GETGLOB 17
 GETGLOB 18
 GETGLOB 19
+GETGLOB 20
 GETGLOB 11
 .loc ../contracts/additional/Router.sol, 0
 
@@ -154,15 +154,15 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Router.sol, 76
+.loc ../contracts/additional/Router.sol, 77
 ENDS
 .loc ../contracts/additional/Router.sol, 0
 CALLREF {
 	CALL $getUsers_00ce8e3e_internal_macro$
 }
-OVER
+PUSH S2
 PUSHCONT {
-	PUSH S3
+	PUSH S4
 	CTOS
 	LDU 2
 	LDMSGADDR
@@ -171,15 +171,18 @@ PUSHCONT {
 	NEWC
 	STSLICECONST xc
 	STSLICE
-	PUSHINT 3283818458
-	STUR 130
+	PUSHINT 98
+	STZEROES
+	REVERSE 2, 1
+	STSLICECONST xac4845bd
+	STDICT
 	STDICT
 	ENDC
 	PUSHINT 0
 	SENDRAWMSG
 }
 PUSHCONT {
-	DROP
+	DROP2
 }
 IFELSE
 IFREF {
@@ -192,8 +195,9 @@ THROW 0
 CALL $getUsers_00ce8e3e_internal_macro$
 
 .macro getUsers_00ce8e3e_internal_macro
-.loc ../contracts/additional/Router.sol, 79
+.loc ../contracts/additional/Router.sol, 80
 GETGLOB 12
+GETGLOB 13
 .loc ../contracts/additional/Router.sol, 0
 
 .macro getRewards
@@ -205,7 +209,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Router.sol, 82
+.loc ../contracts/additional/Router.sol, 83
 ENDS
 .loc ../contracts/additional/Router.sol, 0
 CALLREF {
@@ -243,8 +247,8 @@ THROW 0
 CALL $getRewards_0572b0cc_internal_macro$
 
 .macro getRewards_0572b0cc_internal_macro
-.loc ../contracts/additional/Router.sol, 85
-GETGLOB 13
+.loc ../contracts/additional/Router.sol, 86
+GETGLOB 14
 .loc ../contracts/additional/Router.sol, 0
 
 .macro winCount
@@ -256,7 +260,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Router.sol, 88
+.loc ../contracts/additional/Router.sol, 89
 ENDS
 .loc ../contracts/additional/Router.sol, 0
 CALLREF {
@@ -294,9 +298,9 @@ THROW 0
 CALL $winCount_abad35bc_internal_macro$
 
 .macro winCount_abad35bc_internal_macro
-.loc ../contracts/additional/Router.sol, 88
+.loc ../contracts/additional/Router.sol, 89
 PUSHINT 0
-.loc ../contracts/additional/Router.sol, 91
+.loc ../contracts/additional/Router.sol, 92
 GETGLOB 12
 DUP
 PUSHINT 267
@@ -317,11 +321,11 @@ PUSHCONT {
 	NOT
 }
 PUSHCONT {
-	.loc ../contracts/additional/Router.sol, 92
+	.loc ../contracts/additional/Router.sol, 93
 	PUSH2 S0, S4
 	GREATER
 	PUSHCONT {
-		.loc ../contracts/additional/Router.sol, 93
+		.loc ../contracts/additional/Router.sol, 94
 		DUP
 		POP S5
 		.loc ../contracts/additional/Router.sol, 0
@@ -356,7 +360,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Router.sol, 98
+.loc ../contracts/additional/Router.sol, 99
 LDU 32
 LDDICT
 ROTREV
@@ -403,11 +407,11 @@ THROW 0
 CALL $getAddressCells_0db95feb_internal_macro$
 
 .macro getAddressCells_0db95feb_internal_macro
-.loc ../contracts/additional/Router.sol, 98
+.loc ../contracts/additional/Router.sol, 99
 PUSHINT 0
 NEWDICT
 PAIR
-.loc ../contracts/additional/Router.sol, 103
+.loc ../contracts/additional/Router.sol, 104
 PUSHINT 0
 PUSHCONT {
 	PUSH2 S0, S2
@@ -415,7 +419,7 @@ PUSHCONT {
 	LESS
 }
 PUSHCONT {
-	.loc ../contracts/additional/Router.sol, 104
+	.loc ../contracts/additional/Router.sol, 105
 	DUP2
 	PUSH S4
 	SECOND
@@ -441,13 +445,13 @@ PUSHCONT {
 	DICTUSET
 	PAIR
 	POP S2
-	.loc ../contracts/additional/Router.sol, 103
+	.loc ../contracts/additional/Router.sol, 104
 	INC
 	.loc ../contracts/additional/Router.sol, 0
 }
 WHILE
 DROP
-.loc ../contracts/additional/Router.sol, 106
+.loc ../contracts/additional/Router.sol, 107
 NIP
 .loc ../contracts/additional/Router.sol, 0
 
@@ -460,7 +464,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Router.sol, 110
+.loc ../contracts/additional/Router.sol, 111
 OVER
 PUSHCONT {
 	LDI 64
@@ -493,7 +497,7 @@ THROW 0
 CALL $newGame_0bb0154e_internal_macro$
 
 .macro newGame_0bb0154e_internal_macro
-.loc ../contracts/additional/Router.sol, 113
+.loc ../contracts/additional/Router.sol, 114
 DEPTH
 ADDCONST -2
 PICK
@@ -507,21 +511,21 @@ ADD
 UFITS 128
 GREATER
 THROWIFNOT 2000
-.loc ../contracts/additional/Router.sol, 114
+.loc ../contracts/additional/Router.sol, 115
 PUSHINT 3030
-GETGLOB 18
+GETGLOB 19
 EQINT 0
 NOW
-GETGLOB 20
+GETGLOB 21
 LESS
 AND
-GETGLOB 20
+GETGLOB 21
 EQINT 0
 OR
 THROWANYIFNOT
-.loc ../contracts/additional/Router.sol, 115
+.loc ../contracts/additional/Router.sol, 116
 PUSHINT 3030
-GETGLOB 18
+GETGLOB 19
 EQINT 0
 DUP
 PUSHCONT {
@@ -572,12 +576,12 @@ PUSHCONT {
 	WHILE
 	DROP2
 	FIRST
-	GETGLOB 18
+	GETGLOB 19
 	LESS
 }
 IFNOT
 THROWANYIFNOT
-.loc ../contracts/additional/Router.sol, 116
+.loc ../contracts/additional/Router.sol, 117
 GETGLOB 9
 GETGLOB 12
 PUSHINT 267
@@ -587,7 +591,7 @@ NIP
 FALSE
 EQUAL
 THROWIFNOT 1010
-.loc ../contracts/additional/Router.sol, 117
+.loc ../contracts/additional/Router.sol, 118
 PUSHINT 3000
 OVER
 CALLREF {
@@ -596,22 +600,12 @@ CALLREF {
 TRUE
 EQUAL
 THROWANYIFNOT
-.loc ../contracts/additional/Router.sol, 118
+.loc ../contracts/additional/Router.sol, 119
 PUSHINT 10000000000
 PUSHINT 4
 RAWRESERVE
-.loc ../contracts/additional/Router.sol, 119
-GETGLOB 9
-GETGLOB 12
-PUSHINT 1
-NEWC
-STU 128
-ROTREV
-PUSHINT 267
-DICTSETB
-SETGLOB 12
 .loc ../contracts/additional/Router.sol, 120
-GETGLOB 18
+GETGLOB 19
 NEQINT 0
 DUP
 PUSHCONT {
@@ -662,23 +656,21 @@ PUSHCONT {
 	WHILE
 	DROP2
 	FIRST
-	GETGLOB 18
+	GETGLOB 19
 	EQUAL
 }
 IF
 PUSHCONT {
 	.loc ../contracts/additional/Router.sol, 121
 	NOW
-	GETGLOB 15
+	GETGLOB 16
 	ADD
 	UFITS 64
-	SETGLOB 20
+	SETGLOB 21
 	.loc ../contracts/additional/Router.sol, 0
 }
 IF
-.loc ../contracts/additional/Router.sol, 124
-GETGLOB 9
-SWAP
+.loc ../contracts/additional/Router.sol, 123
 CALLREF {
 	CALL $getRndUint8_27059573_internal_macro$
 }
@@ -689,6 +681,35 @@ CALLREF {
 	CALL $getRndUint8_27059573_internal_macro$
 }
 TRIPLE
+.loc ../contracts/additional/Router.sol, 124
+GETGLOB 9
+GETGLOB 12
+PUSHINT 1
+NEWC
+STU 128
+ROTREV
+PUSHINT 267
+DICTSETB
+SETGLOB 12
+.loc ../contracts/additional/Router.sol, 125
+GETGLOB 9
+GETGLOB 13
+PUSH S2
+CALLREF {
+	UNTRIPLE
+	XCHG S2
+	NEWC
+	STU 8
+	STU 8
+	STU 8
+}
+ROTREV
+PUSHINT 267
+DICTSETB
+SETGLOB 13
+.loc ../contracts/additional/Router.sol, 127
+GETGLOB 9
+ROTREV
 PUSHINT 5000
 CALLREF {
 	CALL $deployCell_9a6b28d1_internal_macro$
@@ -705,7 +726,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Router.sol, 127
+.loc ../contracts/additional/Router.sol, 130
 OVER
 PUSHCONT {
 	LDREF
@@ -772,13 +793,13 @@ CALLREF {
 THROW 0
 
 .macro _newCell_9e71b563_internal_macro
-.loc ../contracts/additional/Router.sol, 134
+.loc ../contracts/additional/Router.sol, 137
 PUSHINT 3030
 NOW
-GETGLOB 20
+GETGLOB 21
 LESS
 THROWANYIFNOT
-.loc ../contracts/additional/Router.sol, 135
+.loc ../contracts/additional/Router.sol, 138
 DEPTH
 ADDCONST -2
 PICK
@@ -789,7 +810,7 @@ ADD
 UFITS 128
 GREATER
 THROWIFNOT 2000
-.loc ../contracts/additional/Router.sol, 136
+.loc ../contracts/additional/Router.sol, 139
 PUSH S4
 GETGLOB 12
 PUSHINT 267
@@ -799,7 +820,7 @@ NIP
 TRUE
 EQUAL
 THROWIFNOT 1010
-.loc ../contracts/additional/Router.sol, 137
+.loc ../contracts/additional/Router.sol, 140
 PUSHINT 3000
 PUSH S4
 CALLREF {
@@ -808,7 +829,7 @@ CALLREF {
 TRUE
 EQUAL
 THROWANYIFNOT
-.loc ../contracts/additional/Router.sol, 138
+.loc ../contracts/additional/Router.sol, 141
 PUSHINT 3000
 PUSH S3
 CALLREF {
@@ -817,7 +838,7 @@ CALLREF {
 TRUE
 EQUAL
 THROWANYIFNOT
-.loc ../contracts/additional/Router.sol, 139
+.loc ../contracts/additional/Router.sol, 142
 PUSHINT 3000
 BLKPUSH 2, 4
 CALLREF {
@@ -826,7 +847,7 @@ CALLREF {
 TRUE
 EQUAL
 THROWANYIFNOT
-.loc ../contracts/additional/Router.sol, 140
+.loc ../contracts/additional/Router.sol, 143
 GETGLOB 9
 ROLL 4
 CALLREF {
@@ -834,11 +855,11 @@ CALLREF {
 }
 SDEQ
 THROWIFNOT 1020
-.loc ../contracts/additional/Router.sol, 141
+.loc ../contracts/additional/Router.sol, 144
 PUSHINT 0
 PUSHINT 4
 RAWRESERVE
-.loc ../contracts/additional/Router.sol, 142
+.loc ../contracts/additional/Router.sol, 145
 PUSH S3
 GETGLOB 12
 DUP2
@@ -857,7 +878,7 @@ ROTREV
 PUSHINT 267
 DICTSETB
 SETGLOB 12
-.loc ../contracts/additional/Router.sol, 143
+.loc ../contracts/additional/Router.sol, 146
 CALLREF {
 	CALL $deployCell_9a6b28d1_internal_macro$
 }
@@ -873,7 +894,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Router.sol, 146
+.loc ../contracts/additional/Router.sol, 149
 OVER
 PUSHCONT {
 	LDREF
@@ -898,20 +919,20 @@ CALLREF {
 THROW 0
 
 .macro onCellOwnerChanged_9d8acede_internal_macro
-.loc ../contracts/additional/Router.sol, 150
+.loc ../contracts/additional/Router.sol, 153
 PUSHINT 3030
 NOW
-GETGLOB 20
+GETGLOB 21
 LESS
 THROWANYIFNOT
-.loc ../contracts/additional/Router.sol, 151
+.loc ../contracts/additional/Router.sol, 154
 DEPTH
 ADDCONST -2
 PICK
 PUSHINT 200000000
 GREATER
 THROWIFNOT 2000
-.loc ../contracts/additional/Router.sol, 153
+.loc ../contracts/additional/Router.sol, 156
 OVER
 GETGLOB 12
 PUSHINT 267
@@ -921,7 +942,7 @@ NIP
 TRUE
 EQUAL
 THROWIFNOT 1010
-.loc ../contracts/additional/Router.sol, 154
+.loc ../contracts/additional/Router.sol, 157
 DUP
 GETGLOB 12
 PUSHINT 267
@@ -931,11 +952,11 @@ NIP
 TRUE
 EQUAL
 THROWIFNOT 1010
-.loc ../contracts/additional/Router.sol, 155
+.loc ../contracts/additional/Router.sol, 158
 PUSHINT 0
 PUSHINT 4
 RAWRESERVE
-.loc ../contracts/additional/Router.sol, 156
+.loc ../contracts/additional/Router.sol, 159
 SWAP
 GETGLOB 12
 DUP2
@@ -955,7 +976,7 @@ PUSHINT 267
 DICTSETB
 DUP
 SETGLOB 12
-.loc ../contracts/additional/Router.sol, 157
+.loc ../contracts/additional/Router.sol, 160
 PUXC S1, S-1
 DUP2
 PUSHINT 267
@@ -973,7 +994,7 @@ ROTREV
 PUSHINT 267
 DICTSETB
 SETGLOB 12
-.loc ../contracts/additional/Router.sol, 158
+.loc ../contracts/additional/Router.sol, 161
 NEWC
 STSLICECONST x42_
 STSLICE
@@ -995,7 +1016,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Router.sol, 161
+.loc ../contracts/additional/Router.sol, 164
 LDU 32
 LDDICT
 ROTREV
@@ -1017,13 +1038,13 @@ THROW 0
 CALL $destroyCells_833f6e3a_internal_macro$
 
 .macro destroyCells_833f6e3a_internal_macro
-.loc ../contracts/additional/Router.sol, 164
+.loc ../contracts/additional/Router.sol, 167
 PUSHINT 3020
 OVER
 FIRST
 LESSINT 11
 THROWANYIFNOT
-.loc ../contracts/additional/Router.sol, 165
+.loc ../contracts/additional/Router.sol, 168
 DEPTH
 ADDCONST -2
 PICK
@@ -1033,13 +1054,13 @@ FIRST
 MUL
 GREATER
 THROWIFNOT 2000
-.loc ../contracts/additional/Router.sol, 166
+.loc ../contracts/additional/Router.sol, 169
 PUSHINT 3030
 NOW
-GETGLOB 20
+GETGLOB 21
 GREATER
 THROWANYIFNOT
-.loc ../contracts/additional/Router.sol, 168
+.loc ../contracts/additional/Router.sol, 171
 SECOND
 PUSHINT 0
 NULL
@@ -1055,7 +1076,7 @@ PUSHCONT {
 	NOT
 }
 PUSHCONT {
-	.loc ../contracts/additional/Router.sol, 169
+	.loc ../contracts/additional/Router.sol, 172
 	DUP
 	NEWC
 	STSLICECONST x62_
@@ -1072,7 +1093,7 @@ PUSHCONT {
 }
 WHILE
 BLKDROP 3
-.loc ../contracts/additional/Router.sol, 173
+.loc ../contracts/additional/Router.sol, 176
 GETGLOB 9
 NEWC
 STSLICECONST x42_
@@ -1095,7 +1116,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Router.sol, 176
+.loc ../contracts/additional/Router.sol, 179
 ENDS
 .loc ../contracts/additional/Router.sol, 0
 CALLREF {
@@ -1112,7 +1133,7 @@ THROW 0
 CALL $calcRewards_818a8ed7_internal_macro$
 
 .macro calcRewards_818a8ed7_internal_macro
-.loc ../contracts/additional/Router.sol, 178
+.loc ../contracts/additional/Router.sol, 181
 DEPTH
 ADDCONST -2
 PICK
@@ -1120,24 +1141,24 @@ PUSHINT 1000000000
 UFITS 128
 GREATER
 THROWIFNOT 2000
-.loc ../contracts/additional/Router.sol, 179
+.loc ../contracts/additional/Router.sol, 182
 PUSHINT 3030
 NOW
-GETGLOB 20
+GETGLOB 21
 GREATER
 THROWANYIFNOT
-.loc ../contracts/additional/Router.sol, 180
+.loc ../contracts/additional/Router.sol, 183
 PUSHINT 3030
-GETGLOB 13
+GETGLOB 14
 DICTEMPTY
 THROWANYIFNOT
-.loc ../contracts/additional/Router.sol, 182
+.loc ../contracts/additional/Router.sol, 185
 CALLREF {
 	CALL $winCount_abad35bc_internal_macro$
 }
-.loc ../contracts/additional/Router.sol, 183
+.loc ../contracts/additional/Router.sol, 186
 PUSHINT 0
-.loc ../contracts/additional/Router.sol, 184
+.loc ../contracts/additional/Router.sol, 187
 GETGLOB 12
 DUP
 PUSHINT 267
@@ -1158,11 +1179,11 @@ PUSHCONT {
 	NOT
 }
 PUSHCONT {
-	.loc ../contracts/additional/Router.sol, 185
+	.loc ../contracts/additional/Router.sol, 188
 	PUSH2 S0, S5
 	EQUAL
 	PUSHCONT {
-		.loc ../contracts/additional/Router.sol, 186
+		.loc ../contracts/additional/Router.sol, 189
 		PUSH S4
 		INC
 		UFITS 128
@@ -1188,7 +1209,7 @@ PUSHCONT {
 }
 WHILE
 BLKDROP 4
-.loc ../contracts/additional/Router.sol, 189
+.loc ../contracts/additional/Router.sol, 192
 GETPARAM 7
 FIRST
 DEPTH
@@ -1199,17 +1220,17 @@ UFITS 128
 PUSHINT 1000000000
 SUB
 UFITS 128
-.loc ../contracts/additional/Router.sol, 190
+.loc ../contracts/additional/Router.sol, 193
 DUP
 PUSHINT 20
 DIV
-.loc ../contracts/additional/Router.sol, 191
+.loc ../contracts/additional/Router.sol, 194
 TUCK
 SUB
 UFITS 128
 ROT
 DIV
-.loc ../contracts/additional/Router.sol, 192
+.loc ../contracts/additional/Router.sol, 195
 GETGLOB 12
 DUP
 PUSHINT 267
@@ -1230,20 +1251,20 @@ PUSHCONT {
 	NOT
 }
 PUSHCONT {
-	.loc ../contracts/additional/Router.sol, 193
+	.loc ../contracts/additional/Router.sol, 196
 	PUSH2 S0, S6
 	EQUAL
 	PUSHCONT {
-		.loc ../contracts/additional/Router.sol, 194
+		.loc ../contracts/additional/Router.sol, 197
 		OVER
-		GETGLOB 13
+		GETGLOB 14
 		PUSH S6
 		NEWC
 		STU 128
 		ROTREV
 		PUSHINT 267
 		DICTSETB
-		SETGLOB 13
+		SETGLOB 14
 		.loc ../contracts/additional/Router.sol, 0
 	}
 	IF
@@ -1265,7 +1286,7 @@ PUSHCONT {
 }
 WHILE
 BLKDROP 5
-.loc ../contracts/additional/Router.sol, 197
+.loc ../contracts/additional/Router.sol, 200
 GETGLOB 11
 NEWC
 STSLICECONST x42_
@@ -1277,7 +1298,7 @@ STZEROES
 ENDC
 PUSHINT 2
 SENDRAWMSG
-.loc ../contracts/additional/Router.sol, 198
+.loc ../contracts/additional/Router.sol, 201
 DROP
 GETGLOB 9
 NEWC
@@ -1301,7 +1322,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Router.sol, 201
+.loc ../contracts/additional/Router.sol, 204
 ENDS
 .loc ../contracts/additional/Router.sol, 0
 CALLREF {
@@ -1318,24 +1339,24 @@ THROW 0
 CALL $claimReward_b88a802f_internal_macro$
 
 .macro claimReward_b88a802f_internal_macro
-.loc ../contracts/additional/Router.sol, 203
+.loc ../contracts/additional/Router.sol, 206
 DEPTH
 ADDCONST -2
 PICK
 PUSHINT 200000000
 GREATER
 THROWIFNOT 100
-.loc ../contracts/additional/Router.sol, 204
+.loc ../contracts/additional/Router.sol, 207
 GETGLOB 9
-GETGLOB 13
+GETGLOB 14
 PUSHINT 267
 DICTGET
 NULLSWAPIFNOT
 NIP
 THROWIFNOT 1010
-.loc ../contracts/additional/Router.sol, 205
+.loc ../contracts/additional/Router.sol, 208
 GETGLOB 9
-GETGLOB 13
+GETGLOB 14
 PUSHINT 267
 DICTGET
 ZEROSWAPIFNOT
@@ -1345,9 +1366,9 @@ PUSHCONT {
 IF
 GTINT 0
 THROWIFNOT 1050
-.loc ../contracts/additional/Router.sol, 206
+.loc ../contracts/additional/Router.sol, 209
 GETGLOB 9
-GETGLOB 13
+GETGLOB 14
 PUSHINT 267
 DICTGET
 ZEROSWAPIFNOT
@@ -1355,17 +1376,17 @@ PUSHCONT {
 	PLDU 128
 }
 IF
-.loc ../contracts/additional/Router.sol, 208
+.loc ../contracts/additional/Router.sol, 211
 GETGLOB 9
-GETGLOB 13
+GETGLOB 14
 PUSHINT 0
 NEWC
 STU 128
 ROTREV
 PUSHINT 267
 DICTSETB
-SETGLOB 13
-.loc ../contracts/additional/Router.sol, 209
+SETGLOB 14
+.loc ../contracts/additional/Router.sol, 212
 GETGLOB 9
 NEWC
 STSLICECONST x42_
@@ -1386,20 +1407,20 @@ SENDRAWMSG
 CALL $deployCell_9a6b28d1_internal_macro$
 
 .macro deployCell_9a6b28d1_internal_macro
-.loc ../contracts/additional/Router.sol, 215
+.loc ../contracts/additional/Router.sol, 218
 MYADDR
 CALLREF {
 	CALL $_buildCellCode_b82b0578_internal_macro$
 }
-.loc ../contracts/additional/Router.sol, 216
+.loc ../contracts/additional/Router.sol, 219
 ROLL 3
 CALLREF {
 	CALL $_buildCellState_56197829_internal_macro$
 }
-.loc ../contracts/additional/Router.sol, 217
+.loc ../contracts/additional/Router.sol, 220
 XCHG S2
-GETGLOB 17
-GETGLOB 20
+GETGLOB 18
+GETGLOB 21
 PUSH S5
 MYADDR
 ROLL 6
@@ -1469,7 +1490,7 @@ STBREFR
 ENDC
 PUSHINT 0
 SENDRAWMSG
-.loc ../contracts/additional/Router.sol, 230
+.loc ../contracts/additional/Router.sol, 233
 SWAP
 NEWC
 STSLICECONST x42_
@@ -1492,7 +1513,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Router.sol, 234
+.loc ../contracts/additional/Router.sol, 237
 OVER
 PUSHCONT {
 	LDI 64
@@ -1550,19 +1571,19 @@ THROW 0
 CALL $_resolveCell_4321abcf_internal_macro$
 
 .macro _resolveCell_4321abcf_internal_macro
-.loc ../contracts/additional/Router.sol, 237
+.loc ../contracts/additional/Router.sol, 240
 MYADDR
 CALLREF {
 	CALL $_buildCellCode_b82b0578_internal_macro$
 }
-.loc ../contracts/additional/Router.sol, 238
+.loc ../contracts/additional/Router.sol, 241
 SWAP
 CALLREF {
 	CALL $_buildCellState_56197829_internal_macro$
 }
-.loc ../contracts/additional/Router.sol, 239
+.loc ../contracts/additional/Router.sol, 242
 HASHCU
-.loc ../contracts/additional/Router.sol, 240
+.loc ../contracts/additional/Router.sol, 243
 MYADDR
 PARSEMSGADDR
 THIRD
@@ -1579,11 +1600,11 @@ CTOS
 CALL $_buildCellCode_b82b0578_internal_macro$
 
 .macro _buildCellCode_b82b0578_internal_macro
-.loc ../contracts/additional/Router.sol, 245
+.loc ../contracts/additional/Router.sol, 248
 NEWC
 STSLICE
-.loc ../contracts/additional/Router.sol, 246
-GETGLOB 14
+.loc ../contracts/additional/Router.sol, 249
+GETGLOB 15
 CTOS
 SWAP
 ENDC
@@ -1699,7 +1720,7 @@ CALLREF {
 CALL $_buildCellState_56197829_internal_macro$
 
 .macro _buildCellState_56197829_internal_macro
-.loc ../contracts/additional/Router.sol, 253
+.loc ../contracts/additional/Router.sol, 256
 PUSHINT 0
 NEWC
 STU 256
@@ -1740,9 +1761,9 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/additional/Router.sol, 261
+.loc ../contracts/additional/Router.sol, 264
 PLDU 32
-.loc ../contracts/additional/Router.sol, 262
+.loc ../contracts/additional/Router.sol, 265
 PUSHINT 1525486756
 EQUAL
 DROP
@@ -1756,10 +1777,10 @@ CALLREF {
 CALL $getRndUint8_27059573_internal_macro$
 
 .macro getRndUint8_27059573_internal_macro
-.loc ../contracts/additional/Router.sol, 268
+.loc ../contracts/additional/Router.sol, 271
 LTIME
 ADDRAND
-.loc ../contracts/additional/Router.sol, 269
+.loc ../contracts/additional/Router.sol, 272
 PUSHPOW2DEC 8
 RAND
 .loc ../contracts/additional/Router.sol, 0
@@ -1775,17 +1796,19 @@ LDU 32
 LDMSGADDR
 LDDICT
 LDDICT
-LDREF
-LDU 64
+LDDICT
 LDREF
 ENDS
 CTOS
+LDREF
+LDU 64
 LDU 64
 LDU 64
 LDU 64
 LDREF
 LDU 128
 ENDS
+SETGLOB 21
 SETGLOB 20
 SETGLOB 19
 SETGLOB 18
@@ -1823,7 +1846,7 @@ PUSHCONT {
 		.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 	}
 	NEWDICT
-	DUP
+	BLKPUSH 2, 0
 	PUSHREF {
 	}
 	PUSHINT 0
@@ -1831,6 +1854,7 @@ PUSHCONT {
 	PUSHREF {
 	}
 	PUSHINT 0
+	SETGLOB 21
 	SETGLOB 20
 	SETGLOB 19
 	SETGLOB 18
@@ -1855,6 +1879,7 @@ IFREFELSE {
 }
 
 .macro c7_to_c4
+GETGLOB 21
 GETGLOB 20
 GETGLOB 19
 GETGLOB 18
@@ -1876,10 +1901,11 @@ STU 32
 STSLICE
 STDICT
 STDICT
+STDICT
+ROLLREV 7
+NEWC
 STREF
 STU 64
-ROLLREV 5
-NEWC
 STU 64
 STU 64
 STU 64
@@ -2023,13 +2049,33 @@ PUSHCONT {
 IF
 THROW 0
 
-.macro _rewards
+.macro _colors
 DROP
 ENDS
 CALLREF {
 	CALL $c4_to_c7$
 }
 GETGLOB 13
+OVER
+PUSHCONT {
+	PUSHSLICE xc0000000000000000000000000fb2ba3d3
+	NEWC
+	STSLICE
+	STDICT
+	ENDC
+	PUSHINT 0
+	SENDRAWMSG
+}
+IF
+THROW 0
+
+.macro _rewards
+DROP
+ENDS
+CALLREF {
+	CALL $c4_to_c7$
+}
+GETGLOB 14
 OVER
 PUSHCONT {
 	PUSHSLICE xc0000000000000000000000000faf6f8f0
@@ -2042,6 +2088,44 @@ PUSHCONT {
 }
 IF
 THROW 0
+
+.globl	HexUtils_with_obj_isCorrectCoord_3e33fe95
+.type	HexUtils_with_obj_isCorrectCoord_3e33fe95, @function
+CALL $HexUtils_with_obj_isCorrectCoord_3e33fe95_macro$
+
+.macro HexUtils_with_obj_isCorrectCoord_3e33fe95_macro
+.loc ../contracts/utils/HexUtils.sol, 44
+DUP
+FIRST
+OVER
+SECOND
+ADD
+FITS 64
+OVER
+THIRD
+ADD
+FITS 64
+EQINT 0
+.loc ../contracts/utils/HexUtils.sol, 0
+
+.globl	HexUtils_no_obj_isCorrectCoord_3e33fe95
+.type	HexUtils_no_obj_isCorrectCoord_3e33fe95, @function
+CALL $HexUtils_no_obj_isCorrectCoord_3e33fe95_macro$
+
+.macro HexUtils_no_obj_isCorrectCoord_3e33fe95_macro
+.loc ../contracts/utils/HexUtils.sol, 44
+DUP
+FIRST
+OVER
+SECOND
+ADD
+FITS 64
+SWAP
+THIRD
+ADD
+FITS 64
+EQINT 0
+.loc ../contracts/utils/HexUtils.sol, 0
 
 .globl	HexUtils_with_obj_isNeighborCoord_8b5853ae
 .type	HexUtils_with_obj_isNeighborCoord_8b5853ae, @function
@@ -2136,44 +2220,6 @@ MAX
 MAX
 .loc ../contracts/utils/HexUtils.sol, 0
 
-.globl	HexUtils_with_obj_isCorrectCoord_3e33fe95
-.type	HexUtils_with_obj_isCorrectCoord_3e33fe95, @function
-CALL $HexUtils_with_obj_isCorrectCoord_3e33fe95_macro$
-
-.macro HexUtils_with_obj_isCorrectCoord_3e33fe95_macro
-.loc ../contracts/utils/HexUtils.sol, 44
-DUP
-FIRST
-OVER
-SECOND
-ADD
-FITS 64
-OVER
-THIRD
-ADD
-FITS 64
-EQINT 0
-.loc ../contracts/utils/HexUtils.sol, 0
-
-.globl	HexUtils_no_obj_isCorrectCoord_3e33fe95
-.type	HexUtils_no_obj_isCorrectCoord_3e33fe95, @function
-CALL $HexUtils_no_obj_isCorrectCoord_3e33fe95_macro$
-
-.macro HexUtils_no_obj_isCorrectCoord_3e33fe95_macro
-.loc ../contracts/utils/HexUtils.sol, 44
-DUP
-FIRST
-OVER
-SECOND
-ADD
-FITS 64
-SWAP
-THIRD
-ADD
-FITS 64
-EQINT 0
-.loc ../contracts/utils/HexUtils.sol, 0
-
 .macro public_function_selector
 DUP
 PUSHINT 727447876
@@ -2209,6 +2255,12 @@ PUSHINT 1311068082
 LEQ
 IFJMPREF {
 	DUP
+	PUSHINT 742933949
+	EQUAL
+	IFJMPREF {
+		CALL $getUsers$
+	}
+	DUP
 	PUSHINT 767649474
 	EQUAL
 	IFJMPREF {
@@ -2219,12 +2271,6 @@ IFJMPREF {
 	EQUAL
 	IFJMPREF {
 		CALL $onCellOwnerChanged$
-	}
-	DUP
-	PUSHINT 1136334810
-	EQUAL
-	IFJMPREF {
-		CALL $getUsers$
 	}
 	DUP
 	PUSHINT 1311068082
@@ -2277,6 +2323,12 @@ IFJMPREF {
 	EQUAL
 	IFJMPREF {
 		CALL $_rewards$
+	}
+	DUP
+	PUSHINT 2066457555
+	EQUAL
+	IFJMPREF {
+		CALL $_colors$
 	}
 	DUP
 	PUSHINT 2125961907

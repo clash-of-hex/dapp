@@ -34,6 +34,7 @@ contract Router is IRouter {
     }    
 
     mapping(address => uint128) public _users; 
+    mapping(address => Types.Color) public _colors; 
     mapping(address => uint128) public _rewards; 
     
     TvmCell private _codeCell;
@@ -74,9 +75,9 @@ contract Router is IRouter {
     }
 
     function getUsers() public view returns(
-        mapping(address => uint128) users
+        mapping(address => uint128) users, mapping(address => Types.Color) colors
     ) {
-        return ( _users );
+        return ( _users, _colors );
     }
 
     function getRewards() public view returns(
@@ -116,12 +117,14 @@ contract Router is IRouter {
         require(_users.exists(msg.sender) == false, Errors.WRONG_OWNER);
         require(HexUtils.isCorrectCoord(baseCoord) == true, Errors.WRONG_COORD);
         tvm.rawReserve(JOIN_GAME_FEE, 4); 
-        _users[msg.sender] = 1;
         if (_userCount != 0 && _users.keys().length ==  uint128(_userCount)) {
           _endTime = now + _roundTime;
         }
+        Types.Color color = Types.Color(getRndUint8(), getRndUint8(), getRndUint8());
+        _users[msg.sender] = 1;
+        _colors[msg.sender] = color;
         // console.log(format("newGame msg.sender {}", msg.sender));
-        address cellAddress = deployCell(msg.sender, baseCoord, Types.Color(getRndUint8(), getRndUint8(), getRndUint8()), 5000);
+        address cellAddress = deployCell(msg.sender, baseCoord, color, 5000);
     }
 
     function _newCell(
