@@ -1799,6 +1799,44 @@ CALLREF {
 }
 THROW 60
 
+.globl	HexUtils_with_obj_isCorrectCoord_3e33fe95
+.type	HexUtils_with_obj_isCorrectCoord_3e33fe95, @function
+CALL $HexUtils_with_obj_isCorrectCoord_3e33fe95_macro$
+
+.macro HexUtils_with_obj_isCorrectCoord_3e33fe95_macro
+.loc ../contracts/utils/HexUtils.sol, 44
+DUP
+FIRST
+OVER
+SECOND
+ADD
+FITS 64
+OVER
+THIRD
+ADD
+FITS 64
+EQINT 0
+.loc ../contracts/utils/HexUtils.sol, 0
+
+.globl	HexUtils_no_obj_isCorrectCoord_3e33fe95
+.type	HexUtils_no_obj_isCorrectCoord_3e33fe95, @function
+CALL $HexUtils_no_obj_isCorrectCoord_3e33fe95_macro$
+
+.macro HexUtils_no_obj_isCorrectCoord_3e33fe95_macro
+.loc ../contracts/utils/HexUtils.sol, 44
+DUP
+FIRST
+OVER
+SECOND
+ADD
+FITS 64
+SWAP
+THIRD
+ADD
+FITS 64
+EQINT 0
+.loc ../contracts/utils/HexUtils.sol, 0
+
 .globl	HexUtils_with_obj_isNeighborCoord_8b5853ae
 .type	HexUtils_with_obj_isNeighborCoord_8b5853ae, @function
 CALL $HexUtils_with_obj_isNeighborCoord_8b5853ae_macro$
@@ -1890,44 +1928,6 @@ ABS
 FITS 64
 MAX
 MAX
-.loc ../contracts/utils/HexUtils.sol, 0
-
-.globl	HexUtils_with_obj_isCorrectCoord_3e33fe95
-.type	HexUtils_with_obj_isCorrectCoord_3e33fe95, @function
-CALL $HexUtils_with_obj_isCorrectCoord_3e33fe95_macro$
-
-.macro HexUtils_with_obj_isCorrectCoord_3e33fe95_macro
-.loc ../contracts/utils/HexUtils.sol, 44
-DUP
-FIRST
-OVER
-SECOND
-ADD
-FITS 64
-OVER
-THIRD
-ADD
-FITS 64
-EQINT 0
-.loc ../contracts/utils/HexUtils.sol, 0
-
-.globl	HexUtils_no_obj_isCorrectCoord_3e33fe95
-.type	HexUtils_no_obj_isCorrectCoord_3e33fe95, @function
-CALL $HexUtils_no_obj_isCorrectCoord_3e33fe95_macro$
-
-.macro HexUtils_no_obj_isCorrectCoord_3e33fe95_macro
-.loc ../contracts/utils/HexUtils.sol, 44
-DUP
-FIRST
-OVER
-SECOND
-ADD
-FITS 64
-SWAP
-THIRD
-ADD
-FITS 64
-EQINT 0
 .loc ../contracts/utils/HexUtils.sol, 0
 
 .macro inline_array_line_24_column_32_ast_id_36
