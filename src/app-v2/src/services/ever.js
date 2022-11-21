@@ -652,14 +652,19 @@ export async function newRouter(name, users) {
     rootAbi,
     Config[providerState.selectedConnection].gameroot
   );
-
+  let time = 600;
+  let radius = 1*users + 1;
+  let speed = 1;
   try {
     console.log("newRouter", 1);
     let res = await gameroot.methods
       .newRouter({
+        roundTime: time,
+        radius: radius,
+        speed: speed,
         userCount: users,
         name: name,
-        nonce: "0",
+        nonce: '0'
       })
       .send({
         from: account.address.toString(),
