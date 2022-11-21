@@ -18,7 +18,7 @@
       Game rooms
       <img
         class="arrow-image"
-        src="public/arrow.svg"
+        src="/arrow.svg"
         :class="[showControls ? 'down' : 'up']"
       />
     </button>
@@ -42,7 +42,7 @@
               />
             </td>
             <td class="flex">
-              <img src="public/users.svg" alt="users" />
+              <img src="/users.svg" alt="users" />
               <div class="users-number">
                 <svg
                   @click="setUsersNumber('up')"
@@ -226,7 +226,7 @@ export default {
   color: #69e0ee;
   font-family: "JetBrains Mono";
   width: 480px;
-  height: 100%;
+  height: 400px;
   overflow-y: scroll;
   table {
     width: 100%;

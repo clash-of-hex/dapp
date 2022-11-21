@@ -357,9 +357,7 @@ export default {
 
     getEnegry(hex) {
       if (!hex.details) return 0;
-      let percent = document.querySelector(
-        'input[name="energy"]:checked'
-      ).value;
+      let percent = 100;
       return Math.floor((hex.details.energy * percent) / 100);
     },
 
