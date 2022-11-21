@@ -36,7 +36,8 @@
 			"inputs": [
 			],
 			"outputs": [
-				{"name":"users","type":"map(address,uint128)"}
+				{"name":"users","type":"map(address,uint128)"},
+				{"components":[{"name":"r","type":"uint8"},{"name":"g","type":"uint8"},{"name":"b","type":"uint8"}],"name":"colors","type":"map(address,tuple)"}
 			]
 		},
 		{
@@ -133,6 +134,14 @@
 			]
 		},
 		{
+			"name": "_colors",
+			"inputs": [
+			],
+			"outputs": [
+				{"components":[{"name":"r","type":"uint8"},{"name":"g","type":"uint8"},{"name":"b","type":"uint8"}],"name":"_colors","type":"map(address,tuple)"}
+			]
+		},
+		{
 			"name": "_rewards",
 			"inputs": [
 			],
@@ -162,6 +171,7 @@
 		{"name":"_nonce","type":"uint32"},
 		{"name":"_root","type":"address"},
 		{"name":"_users","type":"map(address,uint128)"},
+		{"components":[{"name":"r","type":"uint8"},{"name":"g","type":"uint8"},{"name":"b","type":"uint8"}],"name":"_colors","type":"map(address,tuple)"},
 		{"name":"_rewards","type":"map(address,uint128)"},
 		{"name":"_codeCell","type":"cell"},
 		{"name":"_roundTime","type":"uint64"},
