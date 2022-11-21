@@ -1,8 +1,8 @@
-import { counter } from "./counter";
+import * as EVER from "./ever";
 
 const appStore: any = {};
 export const registerStore = () => {
-  appStore.counter = counter();
+  appStore.ever = EVER;
 };
 
 export default appStore;

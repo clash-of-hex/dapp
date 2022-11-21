@@ -14,16 +14,20 @@
       />
       100%
     </div> -->
-    <button class="show-controls" @click="showControls=!showControls">Game rooms</button>
+    <button class="show-controls" @click="showControls = !showControls">
+      Game rooms
+      <img
+        class="arrow-image"
+        src="public/arrow.svg"
+        :class="[showControls ? 'down' : 'up']"
+      />
+    </button>
     <div class="controls" v-show="showControls">
       <table id="tblRouters">
         <tbody data-behavior="main" style="display: none">
-          <tr>
-            <td>Name:</td>
-            <!-- <td>Radius:</td> -->
-            <td>Users:</td>
-            <!-- <td>Speed:</td>
-            <td>End:</td> -->
+          <tr class="routers-heading">
+            <td>Room name:</td>
+            <td>Players:</td>
             <td></td>
           </tr>
           <tr>
@@ -32,51 +36,52 @@
                 type="text"
                 id="router_name"
                 name="name"
-                value="new Location test"
+                placeholder="Room name"
+                class="router-name"
               />
             </td>
-            <!-- <td>
-              <input
-                type="number"
-                id="router_radius"
-                name="radius"
-                min="3"
-                max="10"
-                value="5"
-              />
-            </td> -->
-            <td>
-              <input
-                type="number"
-                id="router_users"
-                name="users"
-                min="2"
-                max="10"
-                step="1"
-                value="3"
-              />
+            <td class="flex">
+              <img src="public/users.svg" alt="users" />
+              <div class="users-number">
+                <svg
+                  @click="setUsersNumber('up')"
+                  width="7"
+                  height="5"
+                  viewBox="0 0 26 26"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="arrow-number up"
+                >
+                  <path
+                    d="M25.1525 21.7346C25.5895 22.5576 25.6143 23.3914 25.2271 24.2358C24.8412 25.0786 24.2448 25.5 23.438 25.5L2.56252 25.5C1.75574 25.5 1.15872 25.0786 0.771462 24.2358C0.385551 23.3914 0.411099 22.5576 0.848107 21.7346L11.2859 1.61112C11.6893 0.870375 12.2607 0.500002 13.0003 0.500002C13.7398 0.500002 14.3113 0.870375 14.7147 1.61112L25.1525 21.7346Z"
+                    fill="#FFC700"
+                  />
+                </svg>
+                <input
+                  type="number"
+                  id="router_users"
+                  name="users"
+                  min="2"
+                  max="10"
+                  step="1"
+                  :value="usersNumber"
+                />
+                <svg
+                  @click="setUsersNumber('down')"
+                  width="7"
+                  height="5"
+                  viewBox="0 0 26 26"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="arrow-number down"
+                >
+                  <path
+                    d="M25.1525 21.7346C25.5895 22.5576 25.6143 23.3914 25.2271 24.2358C24.8412 25.0786 24.2448 25.5 23.438 25.5L2.56252 25.5C1.75574 25.5 1.15872 25.0786 0.771462 24.2358C0.385551 23.3914 0.411099 22.5576 0.848107 21.7346L11.2859 1.61112C11.6893 0.870375 12.2607 0.500002 13.0003 0.500002C13.7398 0.500002 14.3113 0.870375 14.7147 1.61112L25.1525 21.7346Z"
+                    fill="#FFC700"
+                  />
+                </svg>
+              </div>
             </td>
-            <!-- <td>
-              <input
-                type="number"
-                id="router_speed"
-                name="speed"
-                min="1"
-                max="10"
-                value="1"
-              />
-            </td>
-            <td>
-              <input
-                type="number"
-                id="router_time"
-                name="time"
-                min="60"
-                max="2592000"
-                step="60"
-                value="3600"
-              />
-            </td> -->
             <td>
               <button type="button" data-behavior="addRouterAction">Add</button>
             </td>
@@ -168,16 +173,26 @@
 </template>
 <script>
 export default {
-  data(){
+  data() {
     return {
       showControls: true,
-    }
-  }
-}
+      usersNumber: 3,
+    };
+  },
+  methods: {
+    setUsersNumber(direction) {
+      if (direction === "down" && this.usersNumber > 0) {
+        this.usersNumber--;
+      } else if (direction === "up" && this.usersNumber >= 0) {
+        this.usersNumber++;
+      }
+    },
+  },
+};
 </script>
-<style>
+<style lang="scss">
 .controls-wrapper {
-  position: absolute;
+  position: fixed;
   top: 64px;
   left: 0;
   height: 50px;
@@ -185,25 +200,84 @@ export default {
   z-index: 2;
   background: rgba(0, 4, 11, 0.9);
 }
-input[type="text"],
-input[type="number"] {
-  height: 24px;
-  border: 1px solid #0095a7;
-  border-radius: 4px;
-}
 
 .show-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 50px;
   width: 100%;
   font-size: 32px;
   color: #00e4ff;
   padding-bottom: 10px;
 }
+.arrow-image {
+  height: 25px;
+  margin-left: 10px;
+  margin-top: 5px;
+  transition: 0.3s;
+  &.down {
+    transform: rotate(180deg);
+  }
+}
+
 .controls {
-  color: white;
+  color: #69e0ee;
   font-family: "JetBrains Mono";
   width: 480px;
   height: 100%;
   background: rgba(0, 4, 11, 0.9);
+  table {
+    width: 100%;
+    max-width: 480px;
+  }
+
+  .routers-heading {
+    border-top: 2px solid #c27400;
+    border-bottom: 1px solid #c27400;
+    td:first-child {
+      width: 50%;
+      border-right: 1px solid #c27400;
+    }
+  }
+  td {
+    padding: 5px;
+  }
+  .router-name {
+    height: 24px;
+    border: 1px solid #0095a7;
+    border-radius: 4px;
+    background-color: transparent;
+    font-size: 12px;
+    padding: 0px 10px;
+  }
+  .users-number {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    input {
+      width: 50px;
+      height: 24px;
+      text-align: center;
+      background-color: transparent;
+      border: none;
+    }
+    .arrow-number {
+      height: 5px;
+      &.down {
+        transform: rotate(180deg);
+      }
+    }
+  }
+}
+input[type="number"] {
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
 }
 </style>

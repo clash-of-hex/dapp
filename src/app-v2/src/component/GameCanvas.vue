@@ -10,6 +10,7 @@ const Hex = defineHex({
 let grid = new Grid(Hex);
 let currentMap = [];
 let PROVIDER = EVER;
+
 function getMap(radius) {
   let map = new Grid(Hex, spiral({ radius: 1 * radius }));
 
@@ -127,10 +128,10 @@ export default {
     },
 
     async initiateMap() {
-      // await PROVIDER.init((radius) => {
+      await PROVIDER.init((radius) => {
         currentMap = getMap(50);
         PROVIDER.setMap(currentMap);
-      // });
+      });
       let mainCanvas = this.mainCanvas;
       let animCanvas = this.animCanvas;
       mainCanvas.width = window.innerWidth;
@@ -449,53 +450,64 @@ export default {
   <div>
     <canvas id="mainCanvas"></canvas>
     <canvas id="animationCanvas"></canvas>
+    <!-- <table style="position: absolute; right: 0px">
+      <tbody>
+        <tr>
+          <td></td>
+          <td><button id="camera_up">- Y ⬆️</button></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><button id="camera_left">- X ⬅️</button></td>
+          <td>📷</td>
+          <td><button id="camera_right">+ X ➡️</button></td>
+        </tr>
+        <tr>
+          <td><button id="zoom_out">- Zoom</button></td>
+          <td><button id="camera_down">+ Y ⬇️</button></td>
+          <td><button id="zoom_in">+ Zoom</button></td>
+        </tr>
+        <tr>
+          <td>network</td>
+          <td colspan="2">
+            <div><p data-behavior="network"></p></div>
+          </td>
+        </tr>
+        <tr data-behavior="extension" style="display: none">
+          <td colspan="3">
+            <div>
+              Need
+              <a href="https://l1.broxus.com/everscale/wallet">EVER Wallet</a>
+            </div>
+          </td>
+        </tr>
+        <tr data-behavior="login" style="display: none">
+          <td colspan="3">
+            <button type="button" data-behavior="connect">Connect</button>
+          </td>
+        </tr>
+        <tr data-behavior="main" style="display: none">
+          <td>address</td>
+          <td colspan="2">
+            <div><p data-behavior="address"></p></div>
+          </td>
+        </tr>
+        <tr data-behavior="main" style="display: none">
+          <td>pubkey</td>
+          <td colspan="2">
+            <div><p data-behavior="publicKey"></p></div>
+          </td>
+        </tr>
+        <tr data-behavior="main" style="display: none">
+          <td colspan="3">
+            <button type="button" data-behavior="disconnectAction">
+              Disconnect
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table> -->
   </div>
-  <!-- <table style="position: absolute; right: 0px;">
-     <tbody>
-     <tr>
-       <td></td>
-       <td><button id="camera_up">- Y ⬆️</button></td>
-       <td></td>
-     </tr>
-     <tr>
-       <td><button id="camera_left">- X ⬅️</button></td>
-       <td>📷</td>
-       <td><button id="camera_right">+ X ➡️</button></td>
-     </tr>
-     <tr>
-       <td><button id="zoom_out">- Zoom</button></td>
-       <td><button id="camera_down">+ Y ⬇️</button></td>
-       <td><button id="zoom_in">+ Zoom</button></td>
-     </tr>
-     <tr>
-       <td>network</td>
-       <td colspan=2><div><p data-behavior="network"></p></div></td>
-     </tr>
-     <tr data-behavior="extension" style="display: none">
-       <td colspan=3>
-         <div>Need <a href="https://l1.broxus.com/everscale/wallet">EVER Wallet</a></div>
-       </td>
-     </tr>
-     <tr data-behavior="login" style="display: none">
-       <td colspan=3>
-         <button type="button" data-behavior="connect">Connect</button>
-       </td>
-     </tr>
-     <tr data-behavior="main" style="display: none">
-       <td>address</td>
-       <td colspan=2><div><p data-behavior="address"></p></div></td>
-     </tr>
-     <tr data-behavior="main" style="display: none">
-       <td>pubkey</td>
-       <td colspan=2><div><p data-behavior="publicKey"></p></div></td>
-     </tr>
-     <tr data-behavior="main" style="display: none">
-       <td colspan=3><button type="button" data-behavior="disconnectAction">Disconnect</button></td>
-     </tr>
-     </tbody>
-   </table>
-   <canvas id="mainCanvas"></canvas>
-   <canvas id="animationCanvas"></canvas> -->
 </template>
 
 <style scoped>

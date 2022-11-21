@@ -183,9 +183,9 @@ async function getRoutersAction() {
         btn.setAttribute("addr", accs[i].id);
         btn.onclick = setRouter;
         cell.appendChild(btn);
-        cell = row.insertCell(3);
-        cell.innerHTML = accs[i].id;
-        cell.style = "visibility: hidden; width: 0px";
+        // cell = row.insertCell(3);
+        // cell.innerHTML = accs[i].id;
+        // cell.style = "visibility: hidden; width: 0px";
       }
       // cell.colSpan = "4"
       // cell.style="text-align:left;"
@@ -249,6 +249,7 @@ async function connect() {
 }
 
 async function checkConnect() {
+  console.log('checkConnect')
   const providerState = await ever.getProviderState();
   const permissions = providerState.permissions;
   const network = providerState.selectedConnection;

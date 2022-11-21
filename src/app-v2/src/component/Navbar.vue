@@ -24,42 +24,61 @@
       <a
         href="#"
         class="connect-button ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent px-4 py-2 text-base font-medium"
-        :data-behavior="connected ? 'disconnectAction' : 'connect'"
-        >{{ connected ? 'Disconnect' : 'Connect EVER Wallet' }}</a
+        @click="connectWallet"
+        >{{ connected ? "Disconnect" : "Connect EVER Wallet" }}</a
       >
     </div>
   </div>
 </template>
 
-<script>
-import * as EVER from "../services/ever";
+<script lang="ts">
+import * as appStore from "../store";
+
 export default {
-  data(){
+  data() {
     return {
       connected: false,
-    }
+      details: {},
+    };
   },
-  async mounted(){
+  async mounted() {
     try {
-      let details = await EVER.routerDetails()
-      if(details) {
+      this.details = await appStore.ever.routerDetails();
+      if (this.details) {
         this.connected = true;
+      } else {
+        this.details = {};
       }
-    } catch(err){
+    } catch (err) {
       this.connected = false;
     }
-  }
-}
+  },
+  methods: {
+    async connectWallet() {
+      try {
+        if (this.connected) {
+          await appStore.ever.disconnectAction();
+          this.connected = false;
+        } else {
+          await appStore.ever.connect();
+          this.connected = true;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  },
+};
 </script>
 <style>
 .navbar {
   width: 100%;
-  z-index: 2;
+  z-index: 3;
   background-color: #00040b;
   color: white;
   padding: 0 30px;
   font-family: "JetBrains Mono";
-  border-bottom: 2px solid #C27400;
+  border-bottom: 2px solid #c27400;
 }
 
 .logo-title {
@@ -69,8 +88,8 @@ export default {
   font-family: "Roboto";
 }
 .connect-button {
-  background-color: #FFC700;
-  color: #001D37;
+  background-color: #ffc700;
+  color: #001d37;
   font-family: "JetBrains Mono Bold";
 }
 </style>

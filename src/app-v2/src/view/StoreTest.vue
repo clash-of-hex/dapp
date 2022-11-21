@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import appStore from "@/store";
+import appStore from "../store";
 </script>
 
 <template>
@@ -12,9 +12,9 @@ import appStore from "@/store";
             Counter:
           </p>
           <p class="text-4xl font-bold uppercase">
-            {{ appStore.counter.count }}
+            {{ appStore.ever.count }}
           </p>
-          <button type="button" class="btn-primary btn" @click="appStore.counter.increment()">
+          <button type="button" class="btn-primary btn" @click="appStore.ever.increment()">
             increment
           </button>
         </div>
