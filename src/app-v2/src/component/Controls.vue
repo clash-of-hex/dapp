@@ -38,6 +38,7 @@
                 name="name"
                 placeholder="Room name"
                 class="router-name"
+                v-model="roomName"
               />
             </td>
             <td class="flex">
@@ -177,6 +178,7 @@ export default {
     return {
       showControls: true,
       usersNumber: 3,
+      roomName: ''
     };
   },
   methods: {
@@ -195,7 +197,6 @@ export default {
   position: fixed;
   top: 64px;
   left: 0;
-  height: 50px;
   width: 480px;
   z-index: 2;
   background: rgba(0, 4, 11, 0.9);
@@ -226,7 +227,7 @@ export default {
   font-family: "JetBrains Mono";
   width: 480px;
   height: 100%;
-  background: rgba(0, 4, 11, 0.9);
+  overflow-y: scroll;
   table {
     width: 100%;
     max-width: 480px;

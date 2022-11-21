@@ -32,6 +32,7 @@
 </template>
 
 <script lang="ts">
+import * as EVER from "../services/ever.js";
 import * as appStore from "../store";
 
 export default {
@@ -43,24 +44,26 @@ export default {
   },
   async mounted() {
     try {
-      this.details = await appStore.ever.routerDetails();
+      this.details = await EVER.routerDetails();
       if (this.details) {
         this.connected = true;
       } else {
+        this.connected = false;
         this.details = {};
       }
     } catch (err) {
       this.connected = false;
     }
+    console.log(appStore, 'appStore')
   },
   methods: {
     async connectWallet() {
       try {
         if (this.connected) {
-          await appStore.ever.disconnectAction();
+          await EVER.disconnectAction();
           this.connected = false;
         } else {
-          await appStore.ever.connect();
+          await EVER.connect();
           this.connected = true;
         }
       } catch (err) {

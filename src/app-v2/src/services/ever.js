@@ -141,7 +141,7 @@ function requestPermissions() {
   });
 }
 
-async function disconnectAction() {
+export async function disconnectAction() {
   console.log("disconnectAction");
   await ever.disconnect();
 }
@@ -232,17 +232,18 @@ async function setRouter(el) {
 }
 
 async function addRouterAction() {
+  // debugger;
   let name = document.getElementById("router_name").value;
-  let radius = document.getElementById("router_radius").value;
+  // let radius = document.getElementById("router_radius").value;
   let users = document.getElementById("router_users").value;
-  let speed = document.getElementById("router_speed").value;
-  let time = document.getElementById("router_time").value;
-  console.log("addRouterAction", name, radius, speed, time);
-  const providerState = await newRouter(name, radius, users, speed, time);
+  // let speed = document.getElementById("router_speed").value;
+  // let time = document.getElementById("router_time").value;
+  console.log("addRouterAction", name);
+  const providerState = await newRouter(name, users);
   await getRoutersAction();
 }
 
-async function connect() {
+export async function connect() {
   await ever.requestPermissions({
     permissions: ["basic", "accountInteraction"],
   });
@@ -641,7 +642,7 @@ export async function attkCell(address, cellCoord, energy) {
   }
 }
 
-export async function newRouter(name, radius, users, speed, time) {
+export async function newRouter(name, users) {
   const providerState = await ever.getProviderState();
   const permissions = providerState.permissions;
   if (!permissions.accountInteraction) return;
@@ -656,9 +657,6 @@ export async function newRouter(name, radius, users, speed, time) {
     console.log("newRouter", 1);
     let res = await gameroot.methods
       .newRouter({
-        roundTime: time,
-        radius: radius,
-        speed: speed,
         userCount: users,
         name: name,
         nonce: "0",

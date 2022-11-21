@@ -13,7 +13,10 @@ let PROVIDER = EVER;
 
 function getMap(radius) {
   let map = new Grid(Hex, spiral({ radius: 1 * radius }));
-
+  for (let hex of map) {
+        hex.type = "#001D37"
+        hex.highlight = false
+  }
   return map;
 }
 export default {
@@ -41,6 +44,7 @@ export default {
     };
   },
   async mounted() {
+    PROVIDER = EVER;
     this.mainCanvas = document.querySelector("#mainCanvas");
     this.animCanvas = document.querySelector("#animationCanvas");
     this.mainCtx = this.mainCanvas.getContext("2d");
@@ -129,7 +133,7 @@ export default {
 
     async initiateMap() {
       await PROVIDER.init((radius) => {
-        currentMap = getMap(50);
+        currentMap = getMap(radius);
         PROVIDER.setMap(currentMap);
       });
       let mainCanvas = this.mainCanvas;
@@ -249,7 +253,10 @@ export default {
         }
 
         //Drawing the hex
-        let color = "#001D37";
+        // let color = "#001D37";
+        // let color = hex.details ? hex.details.color : hex.type;
+        let color = hex.details ? `${hex.details.color.r}, ${hex.details.color.g}, ${hex.details.color.b}` : hex.type
+        this.mainCtx.fillStyle = `rgba(${color},1)`;
         this.mainCtx.fillStyle = color;
         this.mainCtx.strokeStyle = "#0095A7";
         this.mainCtx.beginPath();
@@ -282,46 +289,46 @@ export default {
 
       requestAnimationFrame(this.drawMap);
     },
-    drawGrid(width, height) {
-      const a = (2 * Math.PI) / 6;
-      const r = 50;
-      for (
-        let i = 0, y = r;
-        y + r * Math.sin(a) < height;
-        y += r * Math.sin(a)
-      ) {
-        i++;
-        for (
-          let x = r, j = 0;
-          x + r * (1 + Math.cos(a)) < width;
-          x += r * (1 + Math.cos(a)), y += (-1) ** j++ * r * Math.sin(a)
-        ) {
-          currentMap.push({
-            coords: [i, j],
-            energy: 5000,
-            color: "inherit",
-            lvl: 1,
-          });
-          this.drawHexagon(x, y);
-        }
-      }
-    },
+    // drawGrid(width, height) {
+    //   const a = (2 * Math.PI) / 6;
+    //   const r = 50;
+    //   for (
+    //     let i = 0, y = r;
+    //     y + r * Math.sin(a) < height;
+    //     y += r * Math.sin(a)
+    //   ) {
+    //     i++;
+    //     for (
+    //       let x = r, j = 0;
+    //       x + r * (1 + Math.cos(a)) < width;
+    //       x += r * (1 + Math.cos(a)), y += (-1) ** j++ * r * Math.sin(a)
+    //     ) {
+    //       currentMap.push({
+    //         coords: [i, j],
+    //         energy: 5000,
+    //         color: "inherit",
+    //         lvl: 1,
+    //       });
+    //       this.drawHexagon(x, y);
+    //     }
+    //   }
+    // },
 
-    drawHexagon(x, y) {
-      const a = (2 * Math.PI) / 6;
-      const r = 50;
-      this.mainCtx.strokeStyle = "#0095A7";
-      this.mainCtx.beginPath();
-      for (let i = 0; i < 6; i++) {
-        this.mainCtx.lineTo(x + r * Math.cos(a * i), y + r * Math.sin(a * i));
-      }
-      this.mainCtx.closePath();
-      this.mainCtx.stroke();
-      this.setText(this.mainCtx, x, y - this.hexSize / 2, 5000);
-    },
+    // drawHexagon(x, y) {
+    //   const a = (2 * Math.PI) / 6;
+    //   const r = 50;
+    //   this.mainCtx.strokeStyle = "#0095A7";
+    //   this.mainCtx.beginPath();
+    //   for (let i = 0; i < 6; i++) {
+    //     this.mainCtx.lineTo(x + r * Math.cos(a * i), y + r * Math.sin(a * i));
+    //   }
+    //   this.mainCtx.closePath();
+    //   this.mainCtx.stroke();
+    //   this.setText(this.mainCtx, x, y - this.hexSize / 2, 5000);
+    // },
 
     setText(ctx, x, y, txt, fontSize = 10, style = "white", align = "center") {
-      let _font = `${fontSize * (this.camera.zoom + 1)}px Georgia`;
+      let _font = `${fontSize * (this.camera.zoom + 1)}px Roboto`;
       ctx.font = _font;
       ctx.fillStyle = style;
       ctx.textAlign = align;

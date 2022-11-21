@@ -996,5 +996,5 @@ export const counter = defineStore("counter", () => {
       .replace("#AMPM#", AMPM);
   };
 
-  return { count, increment };
+  return { setMap, init, connect, disconnectAction };
 });
