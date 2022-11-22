@@ -1616,7 +1616,7 @@ IFREFELSEREF
 	.compute $inline_array_line_26_column_32_ast_id_68$
 	PAIR
 	SETGLOB 13
-	PUSHINT 100
+	PUSHINT 20
 	SETGLOB 14
 }
 IFREFELSE {
@@ -1799,44 +1799,6 @@ CALLREF {
 }
 THROW 60
 
-.globl	HexUtils_with_obj_isCorrectCoord_3e33fe95
-.type	HexUtils_with_obj_isCorrectCoord_3e33fe95, @function
-CALL $HexUtils_with_obj_isCorrectCoord_3e33fe95_macro$
-
-.macro HexUtils_with_obj_isCorrectCoord_3e33fe95_macro
-.loc ../contracts/utils/HexUtils.sol, 44
-DUP
-FIRST
-OVER
-SECOND
-ADD
-FITS 64
-OVER
-THIRD
-ADD
-FITS 64
-EQINT 0
-.loc ../contracts/utils/HexUtils.sol, 0
-
-.globl	HexUtils_no_obj_isCorrectCoord_3e33fe95
-.type	HexUtils_no_obj_isCorrectCoord_3e33fe95, @function
-CALL $HexUtils_no_obj_isCorrectCoord_3e33fe95_macro$
-
-.macro HexUtils_no_obj_isCorrectCoord_3e33fe95_macro
-.loc ../contracts/utils/HexUtils.sol, 44
-DUP
-FIRST
-OVER
-SECOND
-ADD
-FITS 64
-SWAP
-THIRD
-ADD
-FITS 64
-EQINT 0
-.loc ../contracts/utils/HexUtils.sol, 0
-
 .globl	HexUtils_with_obj_isNeighborCoord_8b5853ae
 .type	HexUtils_with_obj_isNeighborCoord_8b5853ae, @function
 CALL $HexUtils_with_obj_isNeighborCoord_8b5853ae_macro$
@@ -1930,9 +1892,47 @@ MAX
 MAX
 .loc ../contracts/utils/HexUtils.sol, 0
 
+.globl	HexUtils_with_obj_isCorrectCoord_3e33fe95
+.type	HexUtils_with_obj_isCorrectCoord_3e33fe95, @function
+CALL $HexUtils_with_obj_isCorrectCoord_3e33fe95_macro$
+
+.macro HexUtils_with_obj_isCorrectCoord_3e33fe95_macro
+.loc ../contracts/utils/HexUtils.sol, 44
+DUP
+FIRST
+OVER
+SECOND
+ADD
+FITS 64
+OVER
+THIRD
+ADD
+FITS 64
+EQINT 0
+.loc ../contracts/utils/HexUtils.sol, 0
+
+.globl	HexUtils_no_obj_isCorrectCoord_3e33fe95
+.type	HexUtils_no_obj_isCorrectCoord_3e33fe95, @function
+CALL $HexUtils_no_obj_isCorrectCoord_3e33fe95_macro$
+
+.macro HexUtils_no_obj_isCorrectCoord_3e33fe95_macro
+.loc ../contracts/utils/HexUtils.sol, 44
+DUP
+FIRST
+OVER
+SECOND
+ADD
+FITS 64
+SWAP
+THIRD
+ADD
+FITS 64
+EQINT 0
+.loc ../contracts/utils/HexUtils.sol, 0
+
 .macro inline_array_line_24_column_32_ast_id_36
 PUSHINT 3000
-PUSHINT 2000
+DUP
 PUSHINT 4000
 PUSHINT 0
 NEWDICT
@@ -1973,9 +1973,9 @@ REPEAT
 NIP
 
 .macro inline_array_line_26_column_32_ast_id_68
-PUSHINT 200
-PUSHINT 150
-PUSHINT 100
+PUSHINT 50
+PUSHINT 35
+PUSHINT 20
 PUSHINT 0
 NEWDICT
 PUSHINT 3
