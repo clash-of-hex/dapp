@@ -117,11 +117,11 @@ contract Router is IRouter {
         require(_users.exists(msg.sender) == false, Errors.WRONG_OWNER);
         require(HexUtils.isCorrectCoord(baseCoord) == true, Errors.WRONG_COORD);
         tvm.rawReserve(JOIN_GAME_FEE, 4); 
+        _users[msg.sender] = 1;
         if (_userCount != 0 && _users.keys().length ==  uint128(_userCount)) {
           _endTime = now + _roundTime;
         }
         Types.Color color = Types.Color(getRndUint8(), getRndUint8(), getRndUint8());
-        _users[msg.sender] = 1;
         _colors[msg.sender] = color;
         // console.log(format("newGame msg.sender {}", msg.sender));
         address cellAddress = deployCell(msg.sender, baseCoord, color, 5000);

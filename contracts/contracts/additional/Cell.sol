@@ -22,10 +22,10 @@ contract Cell is ICell {
     
     Types.CubeCoord static _coord;
     
-    uint64[] _costPerLevel    = [uint64(4000),  uint64(2000), uint64(3000) ];
+    uint64[] _costPerLevel    = [uint64(4000),  uint64(3000), uint64(3000) ];
     uint64[] _maxEPerLevel    = [uint64(5000),  uint64(7000), uint64(10000)];
-    uint64[] _farmPerLevel    = [uint64(100),   uint64(150),  uint64(200)  ];
-    uint64 _deboost = 100;
+    uint64[] _farmPerLevel    = [uint64(20),    uint64(35),   uint64(50)   ];
+    uint64 _deboost = 20;
    
     address private _router; // admin
     

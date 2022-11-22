@@ -605,6 +605,16 @@ PUSHINT 10000000000
 PUSHINT 4
 RAWRESERVE
 .loc ../contracts/additional/Router.sol, 120
+GETGLOB 9
+GETGLOB 12
+PUSHINT 1
+NEWC
+STU 128
+ROTREV
+PUSHINT 267
+DICTSETB
+SETGLOB 12
+.loc ../contracts/additional/Router.sol, 121
 GETGLOB 19
 NEQINT 0
 DUP
@@ -661,7 +671,7 @@ PUSHCONT {
 }
 IF
 PUSHCONT {
-	.loc ../contracts/additional/Router.sol, 121
+	.loc ../contracts/additional/Router.sol, 122
 	NOW
 	GETGLOB 16
 	ADD
@@ -670,7 +680,7 @@ PUSHCONT {
 	.loc ../contracts/additional/Router.sol, 0
 }
 IF
-.loc ../contracts/additional/Router.sol, 123
+.loc ../contracts/additional/Router.sol, 124
 CALLREF {
 	CALL $getRndUint8_27059573_internal_macro$
 }
@@ -681,16 +691,6 @@ CALLREF {
 	CALL $getRndUint8_27059573_internal_macro$
 }
 TRIPLE
-.loc ../contracts/additional/Router.sol, 124
-GETGLOB 9
-GETGLOB 12
-PUSHINT 1
-NEWC
-STU 128
-ROTREV
-PUSHINT 267
-DICTSETB
-SETGLOB 12
 .loc ../contracts/additional/Router.sol, 125
 GETGLOB 9
 GETGLOB 13
@@ -2089,6 +2089,31 @@ PUSHCONT {
 IF
 THROW 0
 
+.globl	HexUtils_with_obj_isNeighborCoord_8b5853ae
+.type	HexUtils_with_obj_isNeighborCoord_8b5853ae, @function
+CALL $HexUtils_with_obj_isNeighborCoord_8b5853ae_macro$
+
+.macro HexUtils_with_obj_isNeighborCoord_8b5853ae_macro
+.loc ../contracts/utils/HexUtils.sol, 48
+PUXC S1, S-1
+CALLREF {
+	CALL $HexUtils_no_obj_cube_distance_527ce867_macro$
+}
+EQINT 1
+.loc ../contracts/utils/HexUtils.sol, 0
+
+.globl	HexUtils_no_obj_isNeighborCoord_8b5853ae
+.type	HexUtils_no_obj_isNeighborCoord_8b5853ae, @function
+CALL $HexUtils_no_obj_isNeighborCoord_8b5853ae_macro$
+
+.macro HexUtils_no_obj_isNeighborCoord_8b5853ae_macro
+.loc ../contracts/utils/HexUtils.sol, 48
+CALLREF {
+	CALL $HexUtils_no_obj_cube_distance_527ce867_macro$
+}
+EQINT 1
+.loc ../contracts/utils/HexUtils.sol, 0
+
 .globl	HexUtils_with_obj_isCorrectCoord_3e33fe95
 .type	HexUtils_with_obj_isCorrectCoord_3e33fe95, @function
 CALL $HexUtils_with_obj_isCorrectCoord_3e33fe95_macro$
@@ -2125,31 +2150,6 @@ THIRD
 ADD
 FITS 64
 EQINT 0
-.loc ../contracts/utils/HexUtils.sol, 0
-
-.globl	HexUtils_with_obj_isNeighborCoord_8b5853ae
-.type	HexUtils_with_obj_isNeighborCoord_8b5853ae, @function
-CALL $HexUtils_with_obj_isNeighborCoord_8b5853ae_macro$
-
-.macro HexUtils_with_obj_isNeighborCoord_8b5853ae_macro
-.loc ../contracts/utils/HexUtils.sol, 48
-PUXC S1, S-1
-CALLREF {
-	CALL $HexUtils_no_obj_cube_distance_527ce867_macro$
-}
-EQINT 1
-.loc ../contracts/utils/HexUtils.sol, 0
-
-.globl	HexUtils_no_obj_isNeighborCoord_8b5853ae
-.type	HexUtils_no_obj_isNeighborCoord_8b5853ae, @function
-CALL $HexUtils_no_obj_isNeighborCoord_8b5853ae_macro$
-
-.macro HexUtils_no_obj_isNeighborCoord_8b5853ae_macro
-.loc ../contracts/utils/HexUtils.sol, 48
-CALLREF {
-	CALL $HexUtils_no_obj_cube_distance_527ce867_macro$
-}
-EQINT 1
 .loc ../contracts/utils/HexUtils.sol, 0
 
 .globl	HexUtils_with_obj_cube_distance_527ce867
