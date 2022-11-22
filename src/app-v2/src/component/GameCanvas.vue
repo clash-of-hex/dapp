@@ -14,8 +14,8 @@ let PROVIDER = EVER;
 function getMap(radius) {
   let map = new Grid(Hex, spiral({ radius: 1 * radius }));
   for (let hex of map) {
-        hex.type = "#001D37"
-        hex.highlight = false
+    hex.type = "#001D37";
+    hex.highlight = false;
   }
   return map;
 }
@@ -255,7 +255,9 @@ export default {
         //Drawing the hex
         // let color = "#001D37";
         // let color = hex.details ? hex.details.color : hex.type;
-        let color = hex.details ? `${hex.details.color.r}, ${hex.details.color.g}, ${hex.details.color.b}` : hex.type
+        let color = hex.details
+          ? `${hex.details.color.r}, ${hex.details.color.g}, ${hex.details.color.b}`
+          : hex.type;
         this.mainCtx.fillStyle = `rgba(${color},1)`;
         this.mainCtx.fillStyle = color;
         this.mainCtx.strokeStyle = "#0095A7";
@@ -270,20 +272,51 @@ export default {
         this.mainCtx.stroke();
         this.mainCtx.fill();
 
-        this.setText(
-          this.mainCtx,
-          x,
-          y - this.hexSize / 2,
-          `${hex.q};${hex.r}`
-        );
+        // this.setText(
+        //   this.mainCtx,
+        //   x,
+        //   y - this.hexSize / 2,
+        //   `${hex.q};${hex.r}`
+        // );
+
+        let star = new Image();
+        star.src = "/star.svg";
+        let yellowStar = new Image();
+        yellowStar.src = "/star-yellow.svg";
         if (hex.details) {
-          this.setText(this.mainCtx, x, y, `${hex.details.energy}`);
           this.setText(
             this.mainCtx,
             x,
-            y + this.hexSize / 2,
-            `lvl: ${1 * hex.details.level + 1}`
+            y-5,
+            `${hex.details.energy}`,
+            10,
+            "#FFC700"
           );
+          // this.setText(
+          //   this.mainCtx,
+          //   x,
+          //   y + this.hexSize / 2,
+          //   `lvl: ${1 * hex.details.level + 1}`
+          // );
+          console.log(hex.details.level, typeof hex.details.level)
+          if (hex.details.level === "0") {
+            this.mainCtx.drawImage(yellowStar, x-23, y+5, 15, 15);
+            this.mainCtx.drawImage(star, x-8, y+5, 15, 15);
+            this.mainCtx.drawImage(star, x+7, y+5, 15, 15);
+          } else if (hex.details.level === "1") {
+            this.mainCtx.drawImage(yellowStar, x-23, y+5, 15, 15);
+            this.mainCtx.drawImage(yellowStar, x-8, y+5, 15, 15);
+            this.mainCtx.drawImage(star, x+7, y+5, 15, 15);
+          } else if (hex.details.level === "2") {
+            this.mainCtx.drawImage(yellowStar, x-23, y+5, 15, 15);
+            this.mainCtx.drawImage(yellowStar, x-8, y+5, 15, 15);
+            this.mainCtx.drawImage(yellowStar, x+7, y+5, 15, 15);
+          }
+        } else {
+          this.setText(this.mainCtx, x, y-5, 0, 10, "#FFC700");
+          this.mainCtx.drawImage(star, x-23, y+5, 15, 15);
+          this.mainCtx.drawImage(star, x-8, y+5, 15, 15);
+          this.mainCtx.drawImage(star, x+7, y+5, 15, 15);
         }
       }
 
@@ -328,7 +361,7 @@ export default {
     // },
 
     setText(ctx, x, y, txt, fontSize = 10, style = "white", align = "center") {
-      let _font = `${fontSize * (this.camera.zoom + 1)}px Roboto`;
+      let _font = `${fontSize * (this.camera.zoom + 1)}px JetBrains Mono`;
       ctx.font = _font;
       ctx.fillStyle = style;
       ctx.textAlign = align;
