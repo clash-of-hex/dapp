@@ -1,5 +1,5 @@
 <template>
-  <div class="controls-wrapper">
+  <div class="controls-wrapper" data-behavior="main" style="display: none">
     <!-- <div style="position: absolute; left: 50%" id="energy" class="mb-10">
       <input type="radio" name="energy" id="energy20" value="20" /> 20%
       <input type="radio" name="energy" id="energy40" value="40" /> 40%
@@ -15,176 +15,183 @@
       100%
     </div> -->
     <button class="show-controls" @click="showControls = !showControls">
-      Game rooms
+      {{ activeTab === "games" ? "Game rooms" : "Leader board" }}
       <img
         class="arrow-image"
         src="/arrow.svg"
         :class="[showControls ? 'down' : 'up']"
       />
     </button>
-    <perfect-scrollbar>
-      <div class="controls" v-show="showControls">
-        <table id="tblRouters">
-          <tbody data-behavior="main" style="display: none">
-            <tr class="routers-heading">
-              <td>Room name:</td>
-              <td>Players:</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>
-                <input
-                  type="text"
-                  id="router_name"
-                  name="name"
-                  placeholder="Room name"
-                  class="router-name"
-                  v-model="roomName"
-                />
-              </td>
-              <td class="flex">
-                <img src="/users.svg" alt="users" />
-                <div class="users-number">
-                  <svg
-                    @click="setUsersNumber('up')"
-                    width="7"
-                    height="5"
-                    viewBox="0 0 26 26"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="arrow-number up"
-                  >
-                    <path
-                      d="M25.1525 21.7346C25.5895 22.5576 25.6143 23.3914 25.2271 24.2358C24.8412 25.0786 24.2448 25.5 23.438 25.5L2.56252 25.5C1.75574 25.5 1.15872 25.0786 0.771462 24.2358C0.385551 23.3914 0.411099 22.5576 0.848107 21.7346L11.2859 1.61112C11.6893 0.870375 12.2607 0.500002 13.0003 0.500002C13.7398 0.500002 14.3113 0.870375 14.7147 1.61112L25.1525 21.7346Z"
-                      fill="#FFC700"
-                    />
-                  </svg>
+    <div v-show="showControls" class="controls">
+      <perfect-scrollbar>
+        <div v-show="activeTab === 'games'" class="games-tab">
+          <table class="table-games" id="tblRouters">
+            <tbody>
+              <tr class="routers-heading">
+                <td>Room name:</td>
+                <td>Players:</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
                   <input
-                    type="number"
-                    id="router_users"
-                    name="users"
-                    min="2"
-                    max="10"
-                    step="1"
-                    :value="usersNumber"
+                    type="text"
+                    id="router_name"
+                    name="name"
+                    placeholder="Room name"
+                    class="router-name"
+                    v-model="roomName"
                   />
-                  <svg
-                    @click="setUsersNumber('down')"
-                    width="7"
-                    height="5"
-                    viewBox="0 0 26 26"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="arrow-number down"
+                </td>
+                <td>
+                  <button
+                    class="button-add"
+                    type="button"
+                    data-behavior="addRouterAction"
                   >
-                    <path
-                      d="M25.1525 21.7346C25.5895 22.5576 25.6143 23.3914 25.2271 24.2358C24.8412 25.0786 24.2448 25.5 23.438 25.5L2.56252 25.5C1.75574 25.5 1.15872 25.0786 0.771462 24.2358C0.385551 23.3914 0.411099 22.5576 0.848107 21.7346L11.2859 1.61112C11.6893 0.870375 12.2607 0.500002 13.0003 0.500002C13.7398 0.500002 14.3113 0.870375 14.7147 1.61112L25.1525 21.7346Z"
-                      fill="#FFC700"
+                    +Add
+                  </button>
+                </td>
+                <td class="flex">
+                  <img src="/users.svg" alt="users" />
+                  <div class="users-number">
+                    <svg
+                      @click="setUsersNumber('up')"
+                      width="7"
+                      height="5"
+                      viewBox="0 0 26 26"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="arrow-number up"
+                    >
+                      <path
+                        d="M25.1525 21.7346C25.5895 22.5576 25.6143 23.3914 25.2271 24.2358C24.8412 25.0786 24.2448 25.5 23.438 25.5L2.56252 25.5C1.75574 25.5 1.15872 25.0786 0.771462 24.2358C0.385551 23.3914 0.411099 22.5576 0.848107 21.7346L11.2859 1.61112C11.6893 0.870375 12.2607 0.500002 13.0003 0.500002C13.7398 0.500002 14.3113 0.870375 14.7147 1.61112L25.1525 21.7346Z"
+                        fill="#FFC700"
+                      />
+                    </svg>
+                    <input
+                      type="number"
+                      id="router_users"
+                      name="users"
+                      min="2"
+                      max="10"
+                      step="1"
+                      :value="usersNumber"
                     />
-                  </svg>
-                </div>
-              </td>
-              <td>
-                <button type="button" data-behavior="addRouterAction">
-                  Add
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <table id="tblLiders" class="mt-8">
-          <tbody data-behavior="main" style="display: none">
-            <tr>
-              <td colspan="5">Lider board:</td>
-            </tr>
-          </tbody>
-        </table>
-        <table class="mt-8">
-          <tbody>
-            <tr>
-              <td>network</td>
-              <td colspan="2">
-                <div><p data-behavior="network"></p></div>
-              </td>
-            </tr>
-            <tr data-behavior="extension" style="display: none">
-              <td colspan="3">
-                <div>
-                  Need
-                  <a href="https://l1.broxus.com/everscale/wallet"
-                    >EVER Wallet</a
-                  >
-                </div>
-              </td>
-            </tr>
-            <tr data-behavior="login" style="display: none">
-              <td colspan="3">
-                <button type="button" data-behavior="connect">Connect</button>
-              </td>
-            </tr>
-            <tr data-behavior="main" style="display: none">
-              <td>address</td>
-              <td colspan="2">
-                <div><p data-behavior="address"></p></div>
-              </td>
-            </tr>
-            <tr data-behavior="main" style="display: none">
-              <td>pubkey</td>
-              <td colspan="2">
-                <div><p data-behavior="publicKey"></p></div>
-              </td>
-            </tr>
-            <tr data-behavior="main" style="display: none">
-              <td colspan="3">
-                <button type="button" data-behavior="disconnectAction">
-                  Disconnect
-                </button>
-              </td>
-            </tr>
-            <tr data-behavior="main" style="display: none">
-              <td colspan="3">_________</td>
-            </tr>
-            <tr data-behavior="main" style="display: none">
-              <td colspan="3">
-                <button type="button" data-behavior="getRoutersAction">
-                  Get Routers
-                </button>
-              </td>
-            </tr>
-            <tr data-behavior="main" style="display: none">
-              <td colspan="3">
-                <button type="button" data-behavior="destroyCellsAction">
-                  Destroy Cells
-                </button>
-              </td>
-            </tr>
-            <tr data-behavior="main" style="display: none">
-              <td colspan="3">
-                <button type="button" data-behavior="calcRewardsAction">
-                  Calc Rewards
-                </button>
-              </td>
-            </tr>
-            <tr data-behavior="main" style="display: none">
-              <td colspan="3">
-                <button type="button" data-behavior="claimRewardAction">
-                  Claim Reward
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                    <svg
+                      @click="setUsersNumber('down')"
+                      width="7"
+                      height="5"
+                      viewBox="0 0 26 26"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="arrow-number down"
+                    >
+                      <path
+                        d="M25.1525 21.7346C25.5895 22.5576 25.6143 23.3914 25.2271 24.2358C24.8412 25.0786 24.2448 25.5 23.438 25.5L2.56252 25.5C1.75574 25.5 1.15872 25.0786 0.771462 24.2358C0.385551 23.3914 0.411099 22.5576 0.848107 21.7346L11.2859 1.61112C11.6893 0.870375 12.2607 0.500002 13.0003 0.500002C13.7398 0.500002 14.3113 0.870375 14.7147 1.61112L25.1525 21.7346Z"
+                        fill="#FFC700"
+                      />
+                    </svg>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div v-show="activeTab === 'top'" class="leaders-tab">
+          <table id="tblLiders" class="mt-8">
+            <tbody>
+              <tr>
+                <td colspan="5">Lider board:</td>
+              </tr>
+            </tbody>
+          </table>
+          <table class="mt-8">
+            <tbody>
+              <!-- <tr>
+                <td>network</td>
+                <td colspan="2">
+                  <div><p data-behavior="network"></p></div>
+                </td>
+              </tr> -->
+              <!-- <tr data-behavior="extension" style="display: none">
+                <td colspan="3">
+                  <div>
+                    Need
+                    <a href="https://l1.broxus.com/everscale/wallet"
+                      >EVER Wallet</a
+                    >
+                  </div>
+                </td>
+              </tr> -->
+              <tr data-behavior="login" style="display: none">
+                <td colspan="3">
+                  <button type="button" data-behavior="connect">Connect</button>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="3">_________</td>
+              </tr>
+              <tr>
+                <td colspan="3">
+                  <button type="button" data-behavior="getRoutersAction">
+                    Get Routers
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="3">
+                  <button type="button" data-behavior="destroyCellsAction">
+                    Destroy Cells
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="3">
+                  <button type="button" data-behavior="calcRewardsAction">
+                    Calc Rewards
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="3">
+                  <button type="button" data-behavior="claimRewardAction">
+                    Claim Reward
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </perfect-scrollbar>
+      <div class="bottom-buttons">
+        <button
+          class="button-games"
+          :class="{ active: activeTab === 'games' }"
+          @click="activeTab = 'games'"
+        >
+          Game rooms
+        </button>
+        <button
+          class="button-top"
+          :class="{ active: activeTab === 'top' }"
+          @click="activeTab = 'top'"
+        >
+          30 days TOP
+        </button>
       </div>
-    </perfect-scrollbar>
+    </div>
   </div>
 </template>
 <script>
+import * as EVER from "../services/ever.js";
 export default {
   data() {
     return {
       showControls: true,
       usersNumber: 3,
       roomName: "",
+      activeTab: "games",
     };
   },
   methods: {
@@ -201,7 +208,7 @@ export default {
 <style lang="scss">
 .controls-wrapper {
   position: fixed;
-  top: 64px;
+  top: 72px;
   left: 0;
   width: 480px;
   z-index: 2;
@@ -229,17 +236,19 @@ export default {
 }
 //custom scroll
 .ps {
-  height: 400px;
+  height: 350px;
+  background: rgba(0, 4, 11, 0.9);
 }
 .ps__thumb-y {
   background-color: #00e4ff;
 }
 
 .controls {
+  display: flex;
+  flex-direction: column;
   color: #69e0ee;
   font-family: "JetBrains Mono";
   width: 480px;
-  height: 400px;
   background: rgba(0, 4, 11, 0.9);
   // overflow-y: scroll;
   table {
@@ -284,6 +293,54 @@ export default {
         transform: rotate(180deg);
       }
     }
+  }
+  .games-tab,
+  .leaders-tab {
+    flex: 1;
+    height: 350px;
+  }
+  .bottom-buttons {
+    button {
+      height: 50px;
+      width: 50%;
+      font-size: 20px;
+      font-weight: 800;
+    }
+    .button-games {
+      background-color: #00040b;
+      color: #00e4ff;
+      border: 3px solid #00e4ff;
+      &.active {
+        background-color: #00e4ff;
+        color: #00040b;
+      }
+    }
+    .button-top {
+      background-color: #00040b;
+      color: #ffc700;
+      border: 3px solid #ffc700;
+      &.active {
+        background-color: #ffc700;
+        color: #00040b;
+      }
+    }
+  }
+  .table-games {
+    button {
+      display: flex;
+      align-items: center;
+      height: 24px;
+      padding: 0 10px;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+  }
+  .button-join {
+    border: 2px solid #00e4ff;
+  }
+  .button-add {
+    color: #08de04;
+    border: 2px solid #08de04;
   }
 }
 input[type="number"] {

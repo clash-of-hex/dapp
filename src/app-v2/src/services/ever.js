@@ -155,9 +155,8 @@ async function getRoutersAction() {
     limit: 50,
   });
   let addreses = details.accounts.map((el) => el.toString());
-  console.log("routers", addreses);
+  console.log("routers addreses", addreses);
   let accs = await getAccArr(addreses);
-  console.log("routers", accs);
   for (let i = 0; i < accs.length; i++) {
     let details = await getDetailsRouter(accs[i].id, accs[i].boc);
     if (details) {
@@ -169,8 +168,6 @@ async function getRoutersAction() {
         cell = row.insertCell(0);
         cell.innerHTML = details.name;
         cell = row.insertCell(1);
-        cell.innerHTML = details.userCount;
-        cell = row.insertCell(2);
         // cell.innerHTML = details.radius;
         // cell = row.insertCell(3);
         // cell.innerHTML = details.speed;
@@ -178,11 +175,14 @@ async function getRoutersAction() {
         // cell.innerHTML = date.customFormat("#DD#-#MM#-#YYYY# #hh#:#mm#:#ss#");
         // cell = row.insertCell(5);
         var btn = document.createElement("button");
-        btn.textContent = "Set";
+        btn.textContent = "Join";
         btn.setAttribute("type", "button");
+        btn.setAttribute("class", "button-join");
         btn.setAttribute("addr", accs[i].id);
         btn.onclick = setRouter;
         cell.appendChild(btn);
+        cell = row.insertCell(2);
+        cell.innerHTML = `<div class="flex"><img src="/users.svg" style="margin-right: 20px;"/> ${details.userCount}</div>`;
         // cell = row.insertCell(3);
         // cell.innerHTML = accs[i].id;
         // cell.style = "visibility: hidden; width: 0px";
@@ -327,7 +327,7 @@ function switchScreen(to) {
   console.log("switchScreen:", to);
   ["extension", "login", "main"].forEach((screen) => {
     const switcher = (elem) =>
-      (elem.style.display = to === screen ? "table-row" : "none");
+      (elem.style.display = to === screen ? "block" : "none");
     behavior(screen, switcher);
   });
 }

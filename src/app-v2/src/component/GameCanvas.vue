@@ -95,8 +95,6 @@ export default {
         }
         if (!tHex) return;
         if (hHex && !hHex.details) return;
-        console.log("hHex", hHex);
-        console.log("tHex", tHex);
         let cellCoord = {
           x: hexCoordinates.q,
           y: hexCoordinates.r,
@@ -111,7 +109,6 @@ export default {
         } else {
           if (!this.isNeighborHex(hHex, tHex)) return;
           let energy = this.getEnegry(hHex);
-          console.log("energy", energy);
           if (!tHex.details) {
             await PROVIDER.markCell(hHex.address, cellCoord, energy);
           } else if (
@@ -287,7 +284,7 @@ export default {
           this.setText(
             this.mainCtx,
             x,
-            y-5,
+            y - 5,
             `${hex.details.energy}`,
             10,
             "#FFC700"
@@ -298,25 +295,24 @@ export default {
           //   y + this.hexSize / 2,
           //   `lvl: ${1 * hex.details.level + 1}`
           // );
-          console.log(hex.details.level, typeof hex.details.level)
           if (hex.details.level === "0") {
-            this.mainCtx.drawImage(yellowStar, x-23, y+5, 15, 15);
-            this.mainCtx.drawImage(star, x-8, y+5, 15, 15);
-            this.mainCtx.drawImage(star, x+7, y+5, 15, 15);
+            this.mainCtx.drawImage(yellowStar, x - 23, y + 5, 15, 15);
+            this.mainCtx.drawImage(star, x - 8, y + 5, 15, 15);
+            this.mainCtx.drawImage(star, x + 7, y + 5, 15, 15);
           } else if (hex.details.level === "1") {
-            this.mainCtx.drawImage(yellowStar, x-23, y+5, 15, 15);
-            this.mainCtx.drawImage(yellowStar, x-8, y+5, 15, 15);
-            this.mainCtx.drawImage(star, x+7, y+5, 15, 15);
+            this.mainCtx.drawImage(yellowStar, x - 23, y + 5, 15, 15);
+            this.mainCtx.drawImage(yellowStar, x - 8, y + 5, 15, 15);
+            this.mainCtx.drawImage(star, x + 7, y + 5, 15, 15);
           } else if (hex.details.level === "2") {
-            this.mainCtx.drawImage(yellowStar, x-23, y+5, 15, 15);
-            this.mainCtx.drawImage(yellowStar, x-8, y+5, 15, 15);
-            this.mainCtx.drawImage(yellowStar, x+7, y+5, 15, 15);
+            this.mainCtx.drawImage(yellowStar, x - 23, y + 5, 15, 15);
+            this.mainCtx.drawImage(yellowStar, x - 8, y + 5, 15, 15);
+            this.mainCtx.drawImage(yellowStar, x + 7, y + 5, 15, 15);
           }
         } else {
-          this.setText(this.mainCtx, x, y-5, 0, 10, "#FFC700");
-          this.mainCtx.drawImage(star, x-23, y+5, 15, 15);
-          this.mainCtx.drawImage(star, x-8, y+5, 15, 15);
-          this.mainCtx.drawImage(star, x+7, y+5, 15, 15);
+          this.setText(this.mainCtx, x, y - 5, 0, 10, "#FFC700");
+          this.mainCtx.drawImage(star, x - 23, y + 5, 15, 15);
+          this.mainCtx.drawImage(star, x - 8, y + 5, 15, 15);
+          this.mainCtx.drawImage(star, x + 7, y + 5, 15, 15);
         }
       }
 
@@ -423,7 +419,6 @@ export default {
 
       //Keyboard controls
       document.addEventListener("keydown", (e) => {
-        console.log("e.code", e.code);
         switch (e.code) {
           case "ArrowUp":
           case "KeyW":
@@ -473,21 +468,22 @@ export default {
     },
   },
 };
-
-// 1. Create a hex class:
-// const Tile = defineHex({ dimensions: 30 })
-
-// 2. Create a grid by passing the class and a "traverser" for a rectangular-shaped grid:
-// const grid = new Grid(Tile, rectangle({ width: 10, height: 10 }))
-
-// 3. Iterate over the grid to log each hex:
-// grid.forEach(console.log)
 </script>
 
 <template>
   <div>
-    <canvas id="mainCanvas"></canvas>
-    <canvas id="animationCanvas"></canvas>
+    <div>
+      <canvas id="mainCanvas"></canvas>
+      <canvas id="animationCanvas"></canvas>
+    </div>
+    <div data-behavior="extension" style="display: none" class="login-status">
+      Please install 
+      <a href="https://l1.broxus.com/everscale/wallet">EVER Wallet</a>
+    </div>
+    <div data-behavior="login" style="display: none" class="login-status">
+      Please authorize your account on the Test Network
+    </div>
+
     <!-- <table style="position: absolute; right: 0px">
       <tbody>
         <tr>
@@ -548,7 +544,7 @@ export default {
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 table {
   margin: auto;
   z-index: 1;
@@ -567,5 +563,18 @@ tr td {
 tr td div p {
   margin-top: 0;
   margin-bottom: 0;
+}
+
+.login-status {
+  position: absolute;
+  width: 100%;
+  top: 100px;
+  left: 0;
+  text-align: center;
+  color: white;
+  font-size: 30px;
+  a {
+    text-decoration: underline;
+  }
 }
 </style>
