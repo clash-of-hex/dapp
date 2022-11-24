@@ -1,1 +1,1 @@
-# hex-battle-game contracts
+# Clash of Hex Contracts

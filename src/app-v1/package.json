@@ -1,5 +1,5 @@
 {
-  "name": "hex-battle-game",
+  "name": "clash-of-hex-app",
   "version": "1.0.0",
   "source": "src/index.html",
   "assetsPath": "asset",
@@ -10,10 +10,10 @@
     "build-asset": "pwa-asset-generator ../asset/logo.svg public --favicon --type png --padding 0 --background transparent --opaque false --log false",
     "build": "npm run cp-wasm && parcel build --public-url /v1"
   },
-  "author": "hex-battle-game",
+  "author": "Clash of Hex",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hex-battle-game/dapp/issues"
+    "url": "https://github.com/clash-of-hex/dapp/issues"
   },
   "dependencies": {
     "@eversdk/appkit": "^0.3.3",
