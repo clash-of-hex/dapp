@@ -10,7 +10,7 @@ const assetPath = path.join(resolve(join(rootPath, '..')), "asset")
 // https://vitejs.dev/config/
 // @ts-ignore
 export default defineConfig({
-  base: isProduction ? '/v2/' : '/',
+  base: '/',
   build: {
     rollupOptions: {
       input: {

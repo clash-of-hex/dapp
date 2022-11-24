@@ -21,7 +21,7 @@ const routes: RouteRecordRaw[] = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(isProduction ? '/v2/' : '/'),
+  history: createWebHistory('/'),
   routes,
 });
 router.beforeEach(() => {

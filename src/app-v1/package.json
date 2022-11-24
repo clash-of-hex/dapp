@@ -8,7 +8,7 @@
     "postinstall": "run-p build-*",
     "cp-wasm": "mkdir -p dist && cp node_modules/@eversdk/lib-web/eversdk.wasm dist",
     "build-asset": "pwa-asset-generator ../asset/logo.svg public --favicon --type png --padding 0 --background transparent --opaque false --log false",
-    "build": "npm run cp-wasm && parcel build"
+    "build": "npm run cp-wasm && parcel build --public-url /v1"
   },
   "author": "hex-battle-game",
   "license": "MIT",
