@@ -5,12 +5,12 @@ This agreement is for collaboration, it may not be detailed enough, if it is not
 ## Main flow
 
 ```shell
-git clone git@github.com:hex-battle-game/dapp.git
+git clone git@github.com:clash-of-hex/dapp.git
 cd HWLT-firmware
 git checkout -b feature/name-of-feature origin/main
 ```
 
-Coding and testing local see [README.md Develop](https://github.com/hex-battle-game/dapp/blob/main/README.md#develop)
+Coding and testing local see [README.md Develop](https://github.com/clash-of-hex/dapp/blob/main/README.md#develop)
 
 > Git history: work log vs recipe https://www.bitsnbites.eu/git-history-work-log-vs-recipe/
 
@@ -35,7 +35,7 @@ git push --set-upstream origin feature/name-of-feature
 Follow by link:
 
 ```shell
-https://github.com/hex-battle-game/dapp/pull/new/feature/name-of-feature
+https://github.com/clash-of-hex/dapp/pull/new/feature/name-of-feature
 ```
 
 ## Update branch from main

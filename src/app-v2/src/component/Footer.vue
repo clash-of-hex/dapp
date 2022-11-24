@@ -1,8 +1,8 @@
 <script setup>
 import icon from "./icon";
 const navigation = [
-  { name: "GitHub", icon: icon.GitHub, href: "https://github.com/hex-battle-game/dapp" },
-  { name: "Discussions", icon: icon.Discussions, href: "https://github.com/orgs/hex-battle-game/discussions" },
+  { name: "GitHub", icon: icon.GitHub, href: "https://github.com/clash-of-hex/dapp" },
+  { name: "Discussions", icon: icon.Discussions, href: "https://github.com/orgs/clash-of-hex/discussions" },
 ];
 </script>
 

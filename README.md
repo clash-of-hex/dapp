@@ -1,11 +1,11 @@
-# Hex Battle Game
+# Clash of Hex
 
 A GameFi dApp that allows players to compete with capture the most cells on an hex battlefield.
 
-- [dApp](https://hex-battle-game.github.io)
-- [discussions](https://github.com/orgs/hex-battle-game/discussions)
-- [process](https://github.com/orgs/hex-battle-game/projects/1/views/1?visibleFields=%5B%22Title%22%2C%22Assignees%22%2C%22Status%22%2C%22Labels%22%2C%22Milestone%22%5D)
-- [roadmap](https://github.com/hex-battle-game/dapp/milestones)
+- [dApp](https://clash-of-hex.github.io)
+- [discussions](https://github.com/orgs/clash-of-hex/discussions)
+- [process](https://github.com/orgs/clash-of-hex/projects/1/views/1?visibleFields=%5B%22Title%22%2C%22Assignees%22%2C%22Status%22%2C%22Labels%22%2C%22Milestone%22%5D)
+- [roadmap](https://github.com/clash-of-hex/dapp/milestones)
 
 ## Looking for team members
 
@@ -34,6 +34,6 @@ npm start
 ## Deploy
 
 ```shell
-git remote add gh-pages git@github.com:hex-battle-game/hex-battle-game.github.io.git
+git remote add gh-pages git@github.com:clash-of-hex/clash-of-hex.github.io.git
 npm run deploy
 ```
