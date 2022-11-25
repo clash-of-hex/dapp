@@ -111,9 +111,6 @@
           <table class="mt-8">
             <tbody>
               <tr>
-                <td colspan="3">_________</td>
-              </tr>
-              <tr>
                 <td colspan="3">
                   <button type="button" data-behavior="destroyCellsAction">
                     Destroy Cells
@@ -149,9 +146,6 @@
           </table>
           <table class="mt-8">
             <tbody>
-              <tr>
-                <td colspan="1">_________</td>
-              </tr>
               <tr>
                 <td colspan="1">
                   <button type="button" data-behavior="getRoutersAction">

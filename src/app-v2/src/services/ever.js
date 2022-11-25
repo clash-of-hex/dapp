@@ -171,7 +171,7 @@ async function getRoutersAction() {
         cell = row.insertCell(0);
         cell.innerHTML = details.name;
         cell = row.insertCell(1);
-        cell.innerHTML = `<div class="flex"><img src="/users.svg" style="margin-right: 20px;"/> ${Object.keys(liders.users).length}/${details.userCount}</div>`;
+        cell.innerHTML = `<div class="flex"><img src="/users.svg" style="margin-right: 10px;"/> ${Object.keys(liders.users).length}/${details.userCount}</div>`;
         cell = row.insertCell(2);
         // cell.innerHTML = details.radius;
         // cell = row.insertCell(3);
