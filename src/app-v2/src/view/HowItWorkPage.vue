@@ -2,7 +2,7 @@
   <div class="flex flex-col items-center gap-20 bg-base-100 py-20">
     <p>Attention</p>
     <p>
-      Before starting the game, make sure you have installed the "Ever Wallet" browser extension. All actions in the game are performed in a smart contract placed in the blockchain, which means that each action must be confirmed in the "Ever Wallet" from the account you have chosen to authorize in the game. The game is in test mode, so the test network "testnet" is used. Do not forget to switch to it in the wallet. Coins from the testnet you can always get in telegram bot t.me/everdev_giver_bot.
+      Before starting the game, make sure you have installed the <a href="https://chrome.google.com/webstore/detail/ever-wallet/cgeeodpfagjceefieflmdfphplkenlfk/">"Ever Wallet"</a> browser extension. All actions in the game are performed in a smart contract placed in the blockchain, which means that each action must be confirmed in the "Ever Wallet" from the account you have chosen to authorize in the game. The game is in test mode, so the test network "testnet" is used. Do not forget to switch to it in the wallet. Coins from the testnet you can always get in telegram bot t.me/everdev_giver_bot.
     </p>
     <p>Interface</p>
     <img src="/img/info_game_rooms.png">
