@@ -1,39 +1,39 @@
 <template>
   <div class="flex flex-col items-center gap-20 bg-base-100 py-20">
-    <p>Важно</p>
+    <p>Attention</p>
     <p>
-      Перед началом игры убедитесь что у вас установлено расширение браузера "Ever Wallet". Все дейсвия в игре выполняются в смарт контракте, размещенном в блокчейне, это означает что каждое действие необходимо подтверждать в кошельке "Ever Wallet" от аккаунта который вы выбрали для авторизации в игре. Игра находится в тестовом режиме, поэтому используется тестовая сеть "testnet". Не забудьте переключиться на нее в кошельке. Монеты тестовой сети вы можете всегда получить в телеграм боте @everdev_giver_bot.
+      Before starting the game, make sure you have installed the "Ever Wallet" browser extension. All actions in the game are performed in a smart contract placed in the blockchain, which means that each action must be confirmed in the "Ever Wallet" from the account you have chosen to authorize in the game. The game is in test mode, so the test network "testnet" is used. Do not forget to switch to it in the wallet. Coins from the testnet you can always get in telegram bot @everdev_giver_bot.
     </p>
-    <p>Опиание интерфейса</p>
+    <p>Interface</p>
     <img src="/img/info_game_rooms.png">
-    <p>Список локаций</p>
+    <p>Game rooms</p>
     <p>
-      На панели отображены все текущие локации созданные игроками. Справа от каждой локации указано количество игроков которые присоединились к игре и максимальное количество игроков в локации. "1/3" означает что к игре присоденился 1 игрок из 3.
-      Если в локации еще не все места заняты, можете зайти в локацию "Join" и присоединиться к игре. Раунд начинается сразу как только наберется нужное количество игроков.
-      Если локация уже заполнена игроками, вы можеет зайти "Info" и наблюдать за их игрой.
+      The panel displays all the current locations created by the players. To the right of each location is the number of players who have joined the game and the maximum number of players in the room. "1/3" means that the game joined 1 player out of 3.
+      If not all seats are taken yet, you can join the game by pressing "Join". The round starts as soon as the required number of players is reached.
+      If the location is already filled with players, you can press "Info" and become an observer.
     </p>
     <p>
-      Вы таже можете создать свою локацию. Для этого необходимо указать "Room name", выбрать максимальное количество игроков и нажать "Add". После подтверждения транзакции, ваша новая локация появится в списке.
+      You can also create your own room. To do this, you need to specify "Room name", select the maximum number of players and click "Add". After confirming the transaction, your new location will be displayed in the list.
     </p>
     <img src="/img/info_this_game.png">
-    <p>Информация о текущей игре</p>
+    <p>Current game information</p>
     <p>
-      После того какак вы выбрали локацию по кнокам "Join" или "Info", информация о ней отображается на закладке "This game". В списке указывается адрес игрока и количество захваченных им ячеек. Цвет адреса в списке отображает цвет ячеек игрока на карте
+      After you have selected a room with the "Join" or "Info" buttons, information about it will be displayed in the "This game" tab. The list shows the address of the player and the number of cells he has captured. The color of the address in the list shows the color of the player's cells on the map.
     </p>
     <img src="/img/info_top_users.png">
-    <p>Топ игроков по завершенным играм</p>
+    <p>Leaderboard</p>
     <p>
-      По всем играм информация по игрокам суммируется и отображается на закладке "30 days TOP". В списке указывается адрес игрока и количество захваченных ячеек в играх которых он участвовал.
+      The best players are placed in the "30 days TOP". The list shows the address of the player and the number of captured cells in the games in which he participated.
     </p>
     <img src="/img/info_main_map.png">
-    <p>Процесс игры</p>
+    <p>Gameplay</p>
     <p>
-      Для более удобной игры вы всегда можете свернуть панель информации.
-      Также вы можете двигать карту управляя клавишами: "A"-⬅️, "D"-➡️, "W"-⬆️, "S"-⬇️
+      You can always minimize the information panel for a more comfortable game.
+      You can also move the map by pressing the "A"-⬅️, "D"-➡️, "W"-⬆️, "S"-⬇️
     </p>
     <p>
-      Grab the first cell. 
-      Для захвата первой ячейки необходимо выполнить двойной клик левой кнопкой мышки по любой выбранной свободной ячейке на поле.
+      Capture the first cell.
+      To capture the first cell, double left-click on any free cell on the map.
     </p>
     <img src="/img/info_ceil.png">
     <p>
@@ -48,7 +48,7 @@
       After the last player joins and captures the first cell the round begins. The round lasts for 15 minutes.
     </p>
     <p>
-      Upgrade the level of your cell. Для увеличения уровня ячейки необходимо сначала поставить отметку на нужной ячейке, клиекнув по ней один раз левой кнопкой мышки, и далее выполнить двойной клик левой кнопкой мышки по этой же ячейке. You will lose 3k energy - this is the cost of the lvlap. Now the energy production rate of this cell has increased.
+      Upgrade the level of your cell. To do this, mark the desired cell by clicking it once with the left mouse button, and then double-click the same cell with the left mouse button. You will lose 3k energy - this is the cost of the lvlap. Now the energy production rate of this cell has increased.
     </p>
     <img src="/img/info_grab_cail.png">
     <p>
