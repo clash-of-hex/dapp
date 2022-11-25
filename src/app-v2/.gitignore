@@ -25,5 +25,6 @@ dist-ssr
 *.sw?
 .eslintcache
 *.png
+!public/img/*.png
 component.d.ts
 auto-imports.d.ts
