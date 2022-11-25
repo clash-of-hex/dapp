@@ -28,8 +28,8 @@
           <table class="table-games" id="tblRouters">
             <tbody>
               <tr class="routers-heading">
-                <td>Room name:</td>
-                <td>Players:</td>
+                <td style="width: 70%;">Room name</td>
+                <td>Players</td>
                 <td></td>
               </tr>
               <tr>
@@ -42,15 +42,6 @@
                     class="router-name"
                     v-model="roomName"
                   />
-                </td>
-                <td>
-                  <button
-                    class="button-add"
-                    type="button"
-                    data-behavior="addRouterAction"
-                  >
-                    +Add
-                  </button>
                 </td>
                 <td class="flex">
                   <img src="/users.svg" alt="users" />
@@ -94,50 +85,33 @@
                     </svg>
                   </div>
                 </td>
+                <td>
+                  <button
+                    class="button-add"
+                    type="button"
+                    data-behavior="addRouterAction"
+                  >
+                    +Add
+                  </button>
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
-        <div v-show="activeTab === 'top'" class="leaders-tab">
-          <table id="tblLiders" class="mt-8">
+        <div v-show="activeTab === 'thisgame'" class="thisgame-tab">
+          <table id="tblUsers">
             <tbody>
-              <tr>
-                <td colspan="5">Lider board:</td>
+              <tr class="routers-heading">
+                <td style="width: 70%;">User address</td>
+                <td colspan="2">Cells</td>
+                <td></td>
               </tr>
             </tbody>
           </table>
           <table class="mt-8">
             <tbody>
-              <!-- <tr>
-                <td>network</td>
-                <td colspan="2">
-                  <div><p data-behavior="network"></p></div>
-                </td>
-              </tr> -->
-              <!-- <tr data-behavior="extension" style="display: none">
-                <td colspan="3">
-                  <div>
-                    Need
-                    <a href="https://l1.broxus.com/everscale/wallet"
-                      >EVER Wallet</a
-                    >
-                  </div>
-                </td>
-              </tr> -->
-              <tr data-behavior="login" style="display: none">
-                <td colspan="3">
-                  <button type="button" data-behavior="connect">Connect</button>
-                </td>
-              </tr>
               <tr>
                 <td colspan="3">_________</td>
-              </tr>
-              <tr>
-                <td colspan="3">
-                  <button type="button" data-behavior="getRoutersAction">
-                    Get Routers
-                  </button>
-                </td>
               </tr>
               <tr>
                 <td colspan="3">
@@ -163,6 +137,31 @@
             </tbody>
           </table>
         </div>
+        <div v-show="activeTab === 'top'" class="leaders-tab">
+          <table id="tblLiders">
+            <tbody>
+              <tr class="routers-heading">
+                <td style="width: 70%;">User address</td>
+                <td colspan="2">Cells</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table class="mt-8">
+            <tbody>
+              <tr>
+                <td colspan="1">_________</td>
+              </tr>
+              <tr>
+                <td colspan="1">
+                  <button type="button" data-behavior="getRoutersAction">
+                    Get Routers
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </perfect-scrollbar>
       <div class="bottom-buttons">
         <button
@@ -171,6 +170,13 @@
           @click="activeTab = 'games'"
         >
           Game rooms
+        </button>
+        <button
+          class="button-thisgame"
+          :class="{ active: activeTab === 'thisgame' }"
+          @click="activeTab = 'thisgame'"
+        >
+          This game
         </button>
         <button
           class="button-top"
@@ -295,6 +301,7 @@ export default {
     }
   }
   .games-tab,
+  .thisgame-tab,
   .leaders-tab {
     flex: 1;
     height: 350px;
@@ -302,7 +309,7 @@ export default {
   .bottom-buttons {
     button {
       height: 50px;
-      width: 50%;
+      width: 33.33%;
       font-size: 20px;
       font-weight: 800;
     }
@@ -312,6 +319,15 @@ export default {
       border: 3px solid #00e4ff;
       &.active {
         background-color: #00e4ff;
+        color: #00040b;
+      }
+    }
+    .button-thisgame {
+      background-color: #00040b;
+      color: #c7ff00;
+      border: 3px solid #c7ff00;
+      &.active {
+        background-color: #c7ff00;
         color: #00040b;
       }
     }

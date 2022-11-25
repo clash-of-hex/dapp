@@ -147,8 +147,9 @@ export async function disconnectAction() {
 }
 
 async function getRoutersAction() {
-  clearTblRows("tblRouters", 3);
+  clearTblRows("tblRouters", 2);
   console.log("getRoutersAction");
+  let topLiders = {};
   const providerState = await ever.getProviderState();
   let details = await ever.getAccountsByCodeHash({
     codeHash: Config[providerState.selectedConnection].codeHash,
@@ -159,15 +160,19 @@ async function getRoutersAction() {
   let accs = await getAccArr(addreses);
   for (let i = 0; i < accs.length; i++) {
     let details = await getDetailsRouter(accs[i].id, accs[i].boc);
-    if (details) {
+    let liders = await getUsersRouter(accs[i].id, accs[i].boc);
+    if (details && liders) {
       let row, cell;
       var date = new Date(1000 * details.endTime);
       console.log("date", date);
+      console.log("details", details);
       row = addTblRow("tblRouters");
       if (row) {
         cell = row.insertCell(0);
         cell.innerHTML = details.name;
         cell = row.insertCell(1);
+        cell.innerHTML = `<div class="flex"><img src="/users.svg" style="margin-right: 20px;"/> ${Object.keys(liders.users).length}/${details.userCount}</div>`;
+        cell = row.insertCell(2);
         // cell.innerHTML = details.radius;
         // cell = row.insertCell(3);
         // cell.innerHTML = details.speed;
@@ -175,21 +180,34 @@ async function getRoutersAction() {
         // cell.innerHTML = date.customFormat("#DD#-#MM#-#YYYY# #hh#:#mm#:#ss#");
         // cell = row.insertCell(5);
         var btn = document.createElement("button");
-        btn.textContent = "Join";
+        btn.textContent = details.userCount*1 > 0 && Object.keys(liders.users).length >= details.userCount*1 ? "Info" : "Join";
         btn.setAttribute("type", "button");
         btn.setAttribute("class", "button-join");
         btn.setAttribute("addr", accs[i].id);
         btn.onclick = setRouter;
         cell.appendChild(btn);
-        cell = row.insertCell(2);
-        cell.innerHTML = `<div class="flex"><img src="/users.svg" style="margin-right: 20px;"/> ${details.userCount}</div>`;
         // cell = row.insertCell(3);
         // cell.innerHTML = accs[i].id;
         // cell.style = "visibility: hidden; width: 0px";
       }
       // cell.colSpan = "4"
       // cell.style="text-align:left;"
+      for (let key of Object.keys(liders.users)) {
+        topLiders[key] = (topLiders[key] || 0) + 1*liders.users[key];
+      }
     }
+  }
+  topLiders = Object.entries(topLiders).map(([key, value]) => ({key,value}))
+  topLiders.sort((a,b) => b.value - a.value);
+  console.log("topLiders", topLiders);
+  clearTblRows("tblLiders", );
+  for (let lider of topLiders) {
+    let row, cell;
+    row = addTblRow("tblLiders");
+    cell = row.insertCell(0);
+    cell.innerHTML = `${lider.key.substr(0, 6)}...${lider.key.substr(-4, 4)}`;
+    cell = row.insertCell(1);
+    cell.innerHTML = lider.value;
   }
 }
 
@@ -197,17 +215,20 @@ async function getLiderBoard() {
   console.log("getLiderBoard");
   const providerState = await ever.getProviderState();
   let details = await routerLiders();
-  let users = details.users.map((el) => el.toString());
-  console.log("users", users);
-  clearTblRows("tblLiders", 1);
-  for (let i = 0; i < users.length; i++) {
-    let usr = users[i].split(",");
+  // let users = details.users.map((el) => el.toString());
+  console.log("users", details.users);
+  console.log("colors", details.colors);
+  clearTblRows("tblUsers", 1);
+  for (let i = 0; i < details.users.length; i++) {
+    let usrAddr = details.users[i][0].toString();
+    let usrColor = details.colors[i][1];
     let row, cell;
-    row = addTblRow("tblLiders");
+    row = addTblRow("tblUsers");
     cell = row.insertCell(0);
-    cell.innerHTML = `${usr[0].substr(0, 6)}...${usr[0].substr(-4, 4)}`;
+    cell.innerHTML = `${usrAddr.substr(0, 6)}...${usrAddr.substr(-4, 4)}`;
+    cell.style=`color: rgb(${usrColor.r},${usrColor.g},${usrColor.b});`
     cell = row.insertCell(1);
-    cell.innerHTML = usr[1];
+    cell.innerHTML = details.users[i][1];
     // cell.colSpan = "4"
     // cell.style="text-align:left;"
   }
@@ -239,6 +260,7 @@ async function addRouterAction() {
   // let speed = document.getElementById("router_speed").value;
   // let time = document.getElementById("router_time").value;
   console.log("addRouterAction", name);
+  if (name.length < 3) return;
   const providerState = await newRouter(name, users);
   await getRoutersAction();
 }
@@ -740,6 +762,41 @@ export async function getDetailsRouter(address, boc = null) {
     let details;
     details = await router.methods.getDetails({}).call();
     console.log("getDetails router", details);
+    return details;
+  } catch (e) {
+    console.error(e);
+    if (e instanceof TvmException) {
+      console.error(e.code);
+    }
+  }
+}
+
+export async function getUsersRouter(address, boc = null) {
+  if (boc) {
+    try {
+      const output = await runLocal(
+        routerAbi,
+        address,
+        "getUsers",
+        {},
+        true,
+        boc
+      );
+      return output;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  const router = new ever.Contract(routerAbi, address);
+  try {
+    const stateRes = await router.getFullState();
+    if (stateRes.state == null || !stateRes.state.isDeployed) {
+      return null;
+    }
+    //console.log('state', stateRes.state);
+    let details;
+    details = await router.methods.getUsers({}).call();
+    console.log("getUsers router", details);
     return details;
   } catch (e) {
     console.error(e);
