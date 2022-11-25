@@ -1,8 +1,8 @@
 <template>
   <div class="flex flex-col items-center gap-20 bg-base-100 py-20">
-    <p>Attention</p>
+        <p>Attention</p>
     <p>
-      Before starting the game, make sure you have installed the <a href="https://chrome.google.com/webstore/detail/ever-wallet/cgeeodpfagjceefieflmdfphplkenlfk/">"Ever Wallet"</a> browser extension. All actions in the game are performed in a smart contract placed in the blockchain, which means that each action must be confirmed in the "Ever Wallet" from the account you have chosen to authorize in the game. The game is in test mode, so the test network "testnet" is used. Do not forget to switch to it in the wallet. Coins from the testnet you can always get in <a href="https://t.me/everdev_giver_bot">"telegram bot"</a>.
+      Before starting the game, make sure you have installed the <a href="https://chrome.google.com/webstore/detail/ever-wallet/cgeeodpfagjceefieflmdfphplkenlfk/">"Ever Wallet"</a> browser extension. All actions in the game are performed in a smart contract placed in the blockchain, which means that each action must be confirmed in the "Ever Wallet" from the account you have chosen to authorize in the game. The game is in test mode, so the test network "testnet" is used. Do not forget to switch to it in the wallet. Coins from the testnet you can always get in <a href="https://t.me/everdev_giver_bot">telegram bot</a>.
     </p>
     <p>Interface</p>
     <img src="/img/info_game_rooms.png">
@@ -66,19 +66,19 @@
       The goal of the game is to own as many cells as possible by the end of the round.
     </p>
     <p>
-      Game Parameters:
-
-      Empty Cell Marking Price: 4000 ⚡️
-      Levelup: 3000 ⚡️
-      Maximum Cell Capacity:
-        Level 1 - 5000 ⚡️
-        Level 2 - 7000 ⚡️
-        Level 3 - 10000 ⚡️
-      Energy generation in the cell:
-        level 1 - 20 ⚡️/sec
-        Level 2 - 35 ⚡️/sec
-        Level 3 - 50 ⚡️/sec
-      Decreasing energy in the cell when it exceeds its capacity: 20 ⚡️/sec
+      Game Parameters:<br>
+      <br>
+      Empty Cell Marking Price: 4000 ⚡️<br>
+      Levelup: 3000 ⚡️<br>
+      Maximum Cell Capacity:<br>
+        Level 1 - 5000 ⚡️<br>
+        Level 2 - 7000 ⚡️<br>
+        Level 3 - 10000 ⚡️<br>
+      Energy generation in the cell:<br>
+        level 1 - 20 ⚡️/sec<br>
+        Level 2 - 35 ⚡️/sec<br>
+        Level 3 - 50 ⚡️/sec<br>
+      Decreasing energy in the cell when it exceeds its capacity: 20 ⚡️/sec<br>
     </p>
   </div>
 </template>
