@@ -48,7 +48,7 @@
       After the last player joins and captures the first cell the round begins. The round lasts for 15 minutes.
     </p>
     <p>
-      Upgrade the level of your cell. To do this, mark the desired cell by clicking it once with the left mouse button, and then double-click the same cell with the left mouse button. You will lose 3k energy - this is the cost of the lvlap. Now the energy production rate of this cell has increased.
+      Upgrade the level of your cell. To do this, mark the desired cell by clicking it once with the left mouse button, and then double-click the same cell with the left mouse button. You will lose 3k energy - this is the cost of the lvlup. Now the energy production rate of this cell has increased.
     </p>
     <img src="/img/info_grab_cail.png">
     <p>
@@ -68,7 +68,7 @@
     <p>
       The game is over when the round time of the current location ends. After that, all captures and cell markings are prohibited. The winner is the player who captures the most cells on the map.<br>
       <br>
-      The winner's reward is all EVERs accumulated in the cell contacts and the main room contract.<br>
+      The winner's reward is all EVERs accumulated in the cell contracts and the main room contract.<br>
       How do I get a reward?<br>
       1) Click the "Destroy Cells" button and wait for the process to complete. If there are any cells left on the field, press the button again. This will collect all the coins from their contracts in the main room contract.<br>
       2) Click on the "Calc Rewards" button and wait for the process to finish.<br>
