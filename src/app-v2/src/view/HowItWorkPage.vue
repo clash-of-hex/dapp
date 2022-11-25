@@ -66,6 +66,15 @@
       The goal of the game is to own as many cells as possible by the end of the round.
     </p>
     <p>
+      The game is over when the round time of the current location ends. After that, all captures and cell markings are prohibited. The winner is the player who captures the most cells on the map.<br>
+      <br>
+      The winner's reward is all EVERs accumulated in the cell contacts and the main room contract.<br>
+      How do I get a reward?<br>
+      1) Click the "Destroy Cells" button and wait for the process to complete. If there are any cells left on the field, press the button again. This will collect all the coins from their contracts in the main room contract.<br>
+      2) Click on the "Calc Rewards" button and wait for the process to finish.<br>
+      3) Click on "Claim Reward" and the prize money will be sent to your address if you are a winner. If there is more than one winner (they have the same number of cells), each winner must click the button to get their reward.<br>
+    </p>
+    <p>
       Game Parameters:<br>
       <br>
       Empty Cell Marking Price: 4000 ⚡️<br>
