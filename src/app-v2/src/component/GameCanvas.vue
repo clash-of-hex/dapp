@@ -109,6 +109,11 @@ export default {
         } else {
           if (!this.isNeighborHex(hHex, tHex)) return;
           let energy = this.getEnegry(hHex);
+          const _details = await PROVIDER.getDetailsCell(hHex.address);
+          if (_details) {
+            console.log("_details", _details);
+            energy = _details.energy;
+          }
           if (!tHex.details) {
             await PROVIDER.markCell(hHex.address, cellCoord, energy);
           } else if (
