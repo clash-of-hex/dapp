@@ -35,7 +35,7 @@
       Capture the first cell.
       To capture the first cell, double left-click on any free cell on the map.
     </p>
-    <img src="/img/info_cell_capture.png">
+    <img src="/img/info_first_cell_capture.png">
     <p>
       The cell has the following stats:
       Current amount of energy, base capacity, rate of energy production. 
@@ -50,18 +50,19 @@
     <p>
       Upgrade the level of your cell. To do this, mark the desired cell by clicking it once with the left mouse button, and then double-click the same cell with the left mouse button. You will lose 3k energy - this is the cost of the lvlup. Now the energy production rate of this cell has increased.
     </p>
-    <img src="/img/info_grab_cail.png">
+    <img src="/img/info_cell_lvlup.png">
     <p>
       Wait until you accumulate 4k energy and capture the next cell. To do this, click on the cell near which you want to capture the cell and click on the cell you want to capture. You will lose 4k - this is the cost of the capture. Now you control two cells.
     </p>
-    <img src="/img/info_help_cail.png">
+    <img src="/img/info_free_cell_capture.png">
     <p>
       Wait until the energy of the cells fills up. Then transfer energy from the first cell to the second cell. To do this, select cell 1 and dbl click on cell 2. Now the energy of cell two has exceeded the base capacity and every second it will lose energy until it returns to the base capacity level. Hurry up to use your energy advantage in your tactics.
     </p>
-    <img src="/img/info_attk_cail.png">
+    <img src="/img/info_energy_transfer.png">
     <p>
       If you are adjacent to an enemy cell, you can attack and capture it if your energy exceeds the enemy's. To do this, select your cell and then the enemy cell. Energy is subtracted and if your energy is greater, the cell will be captured.
     </p>
+    <img src="/img/info_enemy_capture.png">
     <p>
       The goal of the game is to own as many cells as possible by the end of the round.
     </p>
