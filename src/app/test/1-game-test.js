@@ -110,10 +110,10 @@ describe(`Test Router contract (BASE)`, async function() {
     try {
       let res = await locklift.tracing.trace(gameroot.methods.newRouter({
           roundTime: 60,
-          radius: 5,
+          radius: 3,
           speed: 1,
-          userCount: 0,
-          name: 'Test location radius:5 speed:1',
+          userCount: 2,
+          name: 'Test location radius:3 speed:1 users:2',
           nonce: _nonceNewRouter
       }).send({
           from: owner.address.toString(),
@@ -213,6 +213,37 @@ describe(`Test Cell contract (BASE)`, async function() {
     console.log('getUsers', details);
   });
 
+  it('Start Cell3 User2', async () => {
+    
+    let res = await locklift.tracing.trace(router1.methods.newGame({
+        baseCoord: cellCoord3
+    }).send({
+        from: owner2.address.toString(),
+        amount: toNano(12),
+    }));
+
+    let details
+    details = await router1.methods._resolveCell({ coord: cellCoord3 }).call();
+    console.log('_resolveCell', details);
+
+    cell3 = locklift.factory.getDeployedContract(
+      "Cell",
+      new Address(details.cellAddress.toString()),
+    );
+    details = await cell3.methods.getDetails({}).call();
+    console.log('getDetails cell3', details);
+
+    details = await cell1.methods.getDetails({}).call();
+    console.log('getDetails cell1', details);
+
+    expect(details.level)
+        .to.be.equal('0', 'Wrong level');
+
+    details = await router1.methods.getUsers({}).call();
+    console.log('getUsers', details);
+
+  });
+
   it('Mark Cell2 User1', async () => {
     
     let res = await locklift.tracing.trace(cell1.methods.markCell({
@@ -244,17 +275,17 @@ describe(`Test Cell contract (BASE)`, async function() {
     console.log('getUsers', details);
   });
 
-  it('Upgrade Cell2 User1', async () => {
+  it('Upgrade Cell3 User2', async () => {
     
-    let res = await locklift.tracing.trace(cell2.methods.upgradeCell({
+    let res = await locklift.tracing.trace(cell3.methods.upgradeCell({
     }).send({
-        from: owner.address.toString(),
+        from: owner2.address.toString(),
         amount: toNano(1),
     }));
     
     let details
-    details = await cell2.methods.getDetails({}).call();
-    console.log('getDetails cell2', details);
+    details = await cell3.methods.getDetails({}).call();
+    console.log('getDetails cell3', details);
 
     expect(details.level)
         .to.be.equal('1', 'Wrong level');
@@ -265,7 +296,7 @@ describe(`Test Cell contract (BASE)`, async function() {
     
     let res = await locklift.tracing.trace(cell1.methods.helpCell({
         targetCoord: cellCoord2,
-        energy: 500
+        energy: 200
     }).send({
         from: owner.address.toString(),
         amount: toNano(1),
@@ -279,35 +310,7 @@ describe(`Test Cell contract (BASE)`, async function() {
     console.log('getDetails cell2', details);
 
     expect(details.level)
-        .to.be.equal('1', 'Wrong level');
-
-  });
-
-  it('Start new game User2', async () => {
-    
-    let res = await locklift.tracing.trace(router1.methods.newGame({
-        baseCoord: cellCoord3
-    }).send({
-        from: owner2.address.toString(),
-        amount: toNano(12),
-    }));
-
-    let details
-    details = await router1.methods._resolveCell({ coord: cellCoord3 }).call();
-    console.log('_resolveCell', details);
-
-    cell3 = locklift.factory.getDeployedContract(
-      "Cell",
-      new Address(details.cellAddress.toString()),
-    );
-    details = await cell3.methods.getDetails({}).call();
-    console.log('getDetails cell3', details);
-
-    expect(details.level)
         .to.be.equal('0', 'Wrong level');
-
-    details = await router1.methods.getUsers({}).call();
-    console.log('getUsers', details);
 
   });
 
@@ -335,7 +338,7 @@ describe(`Test Cell contract (BASE)`, async function() {
     console.log('getDetails cell3', details);
 
     expect(details.level)
-        .to.be.equal('0', 'Wrong level');
+        .to.be.equal('1', 'Wrong level');
 
     details = await router1.methods.getUsers({}).call();
     console.log('getUsers', details);

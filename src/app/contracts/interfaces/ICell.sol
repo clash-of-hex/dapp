@@ -4,6 +4,10 @@ import '../utils/Types.sol';
 
 interface ICell {
 
+    function startGame(
+        uint128 endTime
+    ) external; 
+
     function _helpCell(
         address owner,
         Types.CubeCoord coord,

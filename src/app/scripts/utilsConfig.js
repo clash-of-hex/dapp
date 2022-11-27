@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const CONFIG_PATH = '../config.json';
+const CONFIG_PATH = '../../config.json';
 
 
 const saveConf = (data) => {

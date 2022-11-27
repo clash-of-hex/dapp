@@ -36,6 +36,7 @@ contract Router is IRouter {
     mapping(address => uint128) public _users; 
     mapping(address => Types.Color) public _colors; 
     mapping(address => uint128) public _rewards; 
+    address[] private _lobby; 
     
     TvmCell private _codeCell;
     uint64 private _roundTime;
@@ -120,11 +121,17 @@ contract Router is IRouter {
         _users[msg.sender] = 1;
         if (_userCount != 0 && _users.keys().length ==  uint128(_userCount)) {
           _endTime = now + _roundTime;
+          for (uint256 i = 0; i < _lobby.length; i++) {
+            ICell(_lobby[i]).startGame{
+                value: ACTION_VALUE
+            }(_endTime);
+          }	
         }
         Types.Color color = Types.Color(getRndUint8(), getRndUint8(), getRndUint8());
         _colors[msg.sender] = color;
         // console.log(format("newGame msg.sender {}", msg.sender));
         address cellAddress = deployCell(msg.sender, baseCoord, color, 5000);
+        _lobby.push(cellAddress);
     }
 
     function _newCell(

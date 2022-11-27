@@ -119,6 +119,10 @@ contract Cell is ICell {
         _lastCalcTime = now;
     }
 
+    function startGame(uint128 endTime) override external onlyRouter {
+        _endTime = endTime;
+    }
+
 
 ////////////////////////////////// MARK CELL
     function markCell(
@@ -260,7 +264,7 @@ contract Cell is ICell {
         });
     }
     
-    function _destroy() public override onlyRouter {
+    function _destroy() override external onlyRouter {
         require(now > _endTime, Errors.TIME_IS_OVER);
         selfdestruct(_router);
     }
