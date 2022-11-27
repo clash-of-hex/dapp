@@ -715,8 +715,9 @@ export async function newRouter(name, users) {
     rootAbi,
     Config[providerState.selectedConnection].gameroot
   );
-  let time = 600;
-  let radius = 1 * users + 1;
+  if (users <= 1) users = 2;
+  let time = 1200; //20 min
+  let radius = 1 * users;
   let speed = 1;
   try {
     console.log("newRouter", 1);
