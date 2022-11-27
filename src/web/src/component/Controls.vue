@@ -45,7 +45,7 @@
                   />
                 </td>
                 <td class="flex">
-                  <img src="/users.svg" alt="users" />
+                  <img src="/users.svg" alt="users" style="max-width: 24px; height: 17px; margin-right: 10px;" />
                   <div class="users-number">
                     <svg
                       @click="setUsersNumber('up')"
