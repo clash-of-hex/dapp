@@ -35,7 +35,7 @@
       Capture the first cell.
       To capture the first cell, double left-click on any free cell on the map.
     </p>
-    <img src="/img/info_ceil.png">
+    <img src="/img/info_cell_capture.png">
     <p>
       The cell has the following stats:
       Current amount of energy, base capacity, rate of energy production. 
