@@ -19,6 +19,14 @@ You are a curious mind, and your skills, both potential and realized, can be hel
 npm install
 ```
 
+## Develop App
+
+```shell
+cd src/app
+npm run se-reset
+npm test
+```
+
 ## Develop Web
 
 ```shell

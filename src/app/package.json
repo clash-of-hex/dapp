@@ -3,18 +3,20 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build":  "locklift build",
-    "dev":  "locklift test --network devnet",
-    "test": "locklift test --network local",
-    "deploy_dev":  "locklift run --network devnet --disable-build --script scripts/1-deploy-router.js"
+    "build": "locklift build",
+    "dev": "locklift test --network devnet",
+    "deploy-dev": "locklift run --network devnet --disable-build --script scripts/1-deploy-router.js",
+    "se-reset": "everdev se reset",
+    "test": "locklift test --network local"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "clash-of-hex",
+  "license": "MIT",
   "devDependencies": {
     "@types/chai": "^4.3.3",
     "@types/mocha": "^10.0.0",
     "@types/node": "^18.11.7",
     "chai": "^4.3.6",
+    "everdev": "^1.4.1",
     "everscale-standalone-client": "^2.1.1",
     "locklift": "^2.4.3",
     "prettier": "^2.7.1",
