@@ -19,10 +19,12 @@ You are a curious mind, and your skills, both potential and realized, can be hel
 npm install
 ```
 
-### Build
+## Develop Web
 
 ```shell
-npm run build
+npm run build-app
+cd src/web
+npm start
 ```
 
 ## Preview
