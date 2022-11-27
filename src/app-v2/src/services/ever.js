@@ -163,24 +163,30 @@ async function getRoutersAction() {
     let liders = await getUsersRouter(accs[i].id, accs[i].boc);
     if (details && liders) {
       let row, cell;
-      var date = new Date(1000 * details.endTime);
-      console.log("date", date);
+      // var endDate = new Date(1000 * details.endTime);
+      // console.log("date", endDate);
       console.log("details", details);
       row = addTblRow("tblRouters");
       if (row) {
         cell = row.insertCell(0);
         cell.innerHTML = details.name;
         cell = row.insertCell(1);
-        cell.innerHTML = `<div class="flex"><img src="/users.svg" style="margin-right: 10px;"/> ${Object.keys(liders.users).length}/${details.userCount}</div>`;
+        cell.innerHTML = `<div class="flex"><img src="/users.svg" style="margin-right: 10px;"/> ${
+          Object.keys(liders.users).length
+        }/${details.userCount}</div>`;
         cell = row.insertCell(2);
         // cell.innerHTML = details.radius;
         // cell = row.insertCell(3);
         // cell.innerHTML = details.speed;
         // cell = row.insertCell(4);
-        // cell.innerHTML = date.customFormat("#DD#-#MM#-#YYYY# #hh#:#mm#:#ss#");
+        // cell.innerHTML = endDate.customFormat("#DD#-#MM#-#YYYY# #hh#:#mm#:#ss#");
         // cell = row.insertCell(5);
         var btn = document.createElement("button");
-        btn.textContent = details.userCount*1 > 0 && Object.keys(liders.users).length >= details.userCount*1 ? "Info" : "Join";
+        btn.textContent =
+          details.userCount * 1 > 0 &&
+          Object.keys(liders.users).length >= details.userCount * 1
+            ? "Info"
+            : "Join";
         btn.setAttribute("type", "button");
         btn.setAttribute("class", "button-join");
         btn.setAttribute("addr", accs[i].id);
@@ -193,14 +199,14 @@ async function getRoutersAction() {
       // cell.colSpan = "4"
       // cell.style="text-align:left;"
       for (let key of Object.keys(liders.users)) {
-        topLiders[key] = (topLiders[key] || 0) + 1*liders.users[key];
+        topLiders[key] = (topLiders[key] || 0) + 1 * liders.users[key];
       }
     }
   }
-  topLiders = Object.entries(topLiders).map(([key, value]) => ({key,value}))
-  topLiders.sort((a,b) => b.value - a.value);
+  topLiders = Object.entries(topLiders).map(([key, value]) => ({ key, value }));
+  topLiders.sort((a, b) => b.value - a.value);
   console.log("topLiders", topLiders);
-  clearTblRows("tblLiders", );
+  clearTblRows("tblLiders");
   for (let lider of topLiders) {
     let row, cell;
     row = addTblRow("tblLiders");
@@ -226,7 +232,7 @@ async function getLiderBoard() {
     row = addTblRow("tblUsers");
     cell = row.insertCell(0);
     cell.innerHTML = `${usrAddr.substr(0, 6)}...${usrAddr.substr(-4, 4)}`;
-    cell.style=`color: rgb(${usrColor.r},${usrColor.g},${usrColor.b});`
+    cell.style = `color: rgb(${usrColor.r},${usrColor.g},${usrColor.b});`;
     cell = row.insertCell(1);
     cell.innerHTML = details.users[i][1];
     // cell.colSpan = "4"
@@ -246,6 +252,41 @@ async function setRouter(el) {
     hex.details = undefined;
   }
   let details = await routerDetails();
+  // let endDate = Date.now() - details.endTime;
+  let currentTime = Date.now();
+  let endDate = 1000 * details.endTime;
+  let timeLeft = 0;
+  let interval = null;
+  clearInterval(interval);
+  behavior("timeLeft", (elem) => {
+    elem.innerText = "";
+  });
+  
+  if (endDate > 0) {
+    if (currentTime < endDate) {
+      timeLeft = (currentTime - endDate) / 1000;
+      behavior("timeLeft", (elem) => {
+        interval = setInterval(() => {
+          if (timeLeft >= 0) {
+            elem.innerText = 'Time left: ' + Math.round(timeLeft);
+            timeLeft -= 1;
+          } else {
+            elem.innerText = "";
+            clearInterval(interval);
+            interval = null;
+          }
+        }, 1000);
+      });
+    } else {
+      behavior("timeLeft", (elem) => {
+        elem.innerText = "Round ended";
+      });
+    }
+  } else {
+    behavior("timeLeft", (elem) => {
+      elem.innerText = "Round not started";
+    });
+  }
   console.log("details", details);
   onRoumingChange(details.radius);
   loadMap();
@@ -272,7 +313,7 @@ export async function connect() {
 }
 
 async function checkConnect() {
-  console.log('checkConnect')
+  console.log("checkConnect");
   const providerState = await ever.getProviderState();
   const permissions = providerState.permissions;
   const network = providerState.selectedConnection;
@@ -675,7 +716,7 @@ export async function newRouter(name, users) {
     Config[providerState.selectedConnection].gameroot
   );
   let time = 600;
-  let radius = 1*users + 1;
+  let radius = 1 * users + 1;
   let speed = 1;
   try {
     console.log("newRouter", 1);
@@ -686,7 +727,7 @@ export async function newRouter(name, users) {
         speed: speed,
         userCount: users,
         name: name,
-        nonce: '0'
+        nonce: "0",
       })
       .send({
         from: account.address.toString(),

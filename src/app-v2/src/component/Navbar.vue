@@ -20,6 +20,7 @@
       >
     </div>
     <div class="nav-right">
+      <div class="show-time" data-behavior="timeLeft"></div>
       <div class="show-address hidden" data-behavior="main">
         address: <span data-behavior="address"></span>
       </div>
@@ -148,5 +149,10 @@ export default {
   span {
     margin-left: 10px;
   }
+}
+.show-time {
+  color: #69e0ee;
+  margin-right: 20px;
+  text-decoration-style: dashed;
 }
 </style>

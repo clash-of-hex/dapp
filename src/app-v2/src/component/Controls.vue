@@ -28,7 +28,7 @@
           <table class="table-games" id="tblRouters">
             <tbody>
               <tr class="routers-heading">
-                <td style="width: 70%;">Room name</td>
+                <td>Room name</td>
                 <td>Players</td>
                 <td></td>
               </tr>
@@ -41,6 +41,7 @@
                     placeholder="Room name"
                     class="router-name"
                     v-model="roomName"
+                    minlength="2"
                   />
                 </td>
                 <td class="flex">
@@ -102,7 +103,7 @@
           <table id="tblUsers">
             <tbody>
               <tr class="routers-heading">
-                <td style="width: 70%;">User address</td>
+                <td style="width: 70%">User address</td>
                 <td colspan="2">Cells</td>
                 <td></td>
               </tr>
@@ -138,7 +139,7 @@
           <table id="tblLiders">
             <tbody>
               <tr class="routers-heading">
-                <td style="width: 70%;">User address</td>
+                <td style="width: 70%">User address</td>
                 <td colspan="2">Cells</td>
                 <td></td>
               </tr>
@@ -196,9 +197,17 @@ export default {
   },
   methods: {
     setUsersNumber(direction) {
-      if (direction === "down" && this.usersNumber > 0) {
+      if (
+        direction === "down" &&
+        this.usersNumber > 2 &&
+        this.usersNumber <= 4
+      ) {
         this.usersNumber--;
-      } else if (direction === "up" && this.usersNumber >= 0) {
+      } else if (
+        direction === "up" &&
+        this.usersNumber >= 2 &&
+        this.usersNumber < 4
+      ) {
         this.usersNumber++;
       }
     },
@@ -261,7 +270,7 @@ export default {
     border-top: 2px solid #c27400;
     border-bottom: 1px solid #c27400;
     td:first-child {
-      width: 50%;
+      width: 70%;
       border-right: 1px solid #c27400;
     }
   }
