@@ -233,6 +233,7 @@ export default {
   color: #00e4ff;
   padding-bottom: 10px;
   background: rgba(0, 4, 11, 0.9);
+  user-select: none;
 }
 .arrow-image {
   height: 25px;
