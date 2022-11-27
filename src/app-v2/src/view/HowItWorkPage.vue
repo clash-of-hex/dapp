@@ -5,8 +5,8 @@
       Before starting the game, make sure you have installed the <a href="https://chrome.google.com/webstore/detail/ever-wallet/cgeeodpfagjceefieflmdfphplkenlfk/">"Ever Wallet"</a> browser extension. All actions in the game are performed in a smart contract placed in the blockchain, which means that each action must be confirmed in the "Ever Wallet" from the account you have chosen to authorize in the game. The game is in test mode, so the test network "testnet" is used. Do not forget to switch to it in the wallet. Coins from the testnet you can always get in <a href="https://t.me/everdev_giver_bot">telegram bot</a>.
     </p>
     <p>Interface</p>
-    <img src="/img/info_game_rooms.png">
     <p>Game rooms</p>
+    <img src="/img/info_game_rooms.png">
     <p>
       The panel displays all the current locations created by the players. To the right of each location is the number of players who have joined the game and the maximum number of players in the room. "1/3" means that the game joined 1 player out of 3.
       If not all seats are taken yet, you can join the game by pressing "Join". The round starts as soon as the required number of players is reached.
@@ -15,17 +15,16 @@
     <p>
       You can also create your own room. To do this, you need to specify "Room name", select the maximum number of players and click "Add". After confirming the transaction, your new location will be displayed in the list.
     </p>
-    <img src="/img/info_this_game.png">
     <p>Current game information</p>
     <p>
       After you have selected a room with the "Join" or "Info" buttons, information about it will be displayed in the "This game" tab. The list shows the address of the player and the number of cells he has captured. The color of the address in the list shows the color of the player's cells on the map.
     </p>
-    <img src="/img/info_top_users.png">
+    <img src="/img/info_this_game.png">
     <p>Leaderboard</p>
     <p>
       The best players are placed in the "30 days TOP". The list shows the address of the player and the number of captured cells in the games in which he participated.
     </p>
-    <img src="/img/info_main_map.png">
+    <img src="/img/info_30days_top.png">
     <p>Gameplay</p>
     <p>
       You can always minimize the information panel for a more comfortable game.
@@ -38,7 +37,7 @@
     <img src="/img/info_first_cell_capture.png">
     <p>
       The cell has the following stats:
-      Current amount of energy, base capacity, rate of energy production. 
+      current amount of energy, base capacity, rate of energy production. 
       A table of stats is at the end of "how to play".
     </p>
     <p>
