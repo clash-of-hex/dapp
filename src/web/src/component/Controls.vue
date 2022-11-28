@@ -28,7 +28,12 @@
           <table class="table-games" id="tblRouters">
             <tbody>
               <tr class="routers-heading">
-                <td>Room name</td>
+                <td>
+                  <div>Room name
+                  <button type="button" data-behavior="getRoutersAction" style="display: inline;">
+                    ↻
+                  </button></div>
+                </td>  
                 <td>Players</td>
                 <td></td>
               </tr>
@@ -145,17 +150,6 @@
               </tr>
             </tbody>
           </table>
-          <table class="mt-8">
-            <tbody>
-              <tr>
-                <td colspan="1">
-                  <button type="button" data-behavior="getRoutersAction">
-                    Get Routers
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
         </div>
       </perfect-scrollbar>
       <div class="bottom-buttons">
@@ -233,6 +227,7 @@ export default {
   color: #00e4ff;
   padding-bottom: 10px;
   background: rgba(0, 4, 11, 0.9);
+  user-select: none;
 }
 .arrow-image {
   height: 25px;

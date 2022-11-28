@@ -28,11 +28,10 @@ export class UIScene extends Container implements IScene {
     const col4 = 610
     this.addChild(new Battlefield({
       position: { x: col4, y: 10 },
-      hex: { dimensions: 50, origin: 'topLeft' },
       rectangle: {
         width: 1,
         height: 1,
-      }, gep: 4,
+      },
     }))
   }
   

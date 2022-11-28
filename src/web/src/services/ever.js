@@ -159,13 +159,18 @@ async function getRoutersAction() {
   console.log("routers addreses", addreses);
   let accs = await getAccArr(addreses);
   for (let i = 0; i < accs.length; i++) {
-    let details = await getDetailsRouter(accs[i].id, accs[i].boc);
-    let liders = await getUsersRouter(accs[i].id, accs[i].boc);
+    accs[i].details = await getDetailsRouter(accs[i].id, accs[i].boc);
+    accs[i].liders = await getUsersRouter(accs[i].id, accs[i].boc);
+  }
+  accs = accs.sort((a, b) => (a.details.endTime == 0 || b.details.endTime == 0) ? 1*a.details.endTime - 1*b.details.endTime : 1*b.details.endTime - 1*a.details.endTime);
+  for (let i = 0; i < accs.length; i++) {
+    let details = accs[i].details;
+    let liders = accs[i].liders;
     if (details && liders) {
       let row, cell;
       // var endDate = new Date(1000 * details.endTime);
       // console.log("date", endDate);
-      console.log("details", details);
+      //console.log("details", details);
       row = addTblRow("tblRouters");
       if (row) {
         cell = row.insertCell(0);
@@ -225,6 +230,7 @@ async function getLiderBoard() {
   console.log("users", details.users);
   console.log("colors", details.colors);
   clearTblRows("tblUsers", 1);
+  details.users = details.users.sort((a, b) => 1*b[1] - 1*a[1]);
   for (let i = 0; i < details.users.length; i++) {
     let usrAddr = details.users[i][0].toString();
     let usrColor = details.colors[i][1];
@@ -238,6 +244,16 @@ async function getLiderBoard() {
     // cell.colSpan = "4"
     // cell.style="text-align:left;"
   }
+}
+
+const formatSeconds = (secs) => {
+  const pad = (n) => n < 10 ? `0${n}` : n;
+
+  const h = Math.floor(secs / 3600);
+  const m = Math.floor(secs / 60) - (h * 60);
+  const s = Math.floor(secs - h * 3600 - m * 60);
+
+  return `${pad(h)}:${pad(m)}:${pad(s)}`;
 }
 
 async function setRouter(el) {
@@ -261,17 +277,17 @@ async function setRouter(el) {
   behavior("timeLeft", (elem) => {
     elem.innerText = "";
   });
-  
+
   if (endDate > 0) {
     if (currentTime < endDate) {
-      timeLeft = (currentTime - endDate) / 1000;
+      timeLeft = (endDate - currentTime) / 1000;
       behavior("timeLeft", (elem) => {
         interval = setInterval(() => {
           if (timeLeft >= 0) {
-            elem.innerText = 'Time left: ' + Math.round(timeLeft);
+            elem.innerText = 'Time left: ' + formatSeconds(timeLeft);
             timeLeft -= 1;
           } else {
-            elem.innerText = "";
+            elem.innerText = "Round ended";
             clearInterval(interval);
             interval = null;
           }
@@ -304,6 +320,7 @@ async function addRouterAction() {
   if (name.length < 3) return;
   const providerState = await newRouter(name, users);
   await getRoutersAction();
+  document.getElementById("router_name").value = '';
 }
 
 export async function connect() {
@@ -715,8 +732,9 @@ export async function newRouter(name, users) {
     rootAbi,
     Config[providerState.selectedConnection].gameroot
   );
-  let time = 600;
-  let radius = 1 * users + 1;
+  if (users <= 1) users = 2;
+  let time = 1200; //20 min
+  let radius = 1 * users;
   let speed = 1;
   try {
     console.log("newRouter", 1);

@@ -92,6 +92,7 @@ export default {
 </script>
 <style lang="scss">
 .nav {
+  user-select: none;
   width: 100%;
   min-height: 4rem;
   display: flex;
