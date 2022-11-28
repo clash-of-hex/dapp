@@ -9,8 +9,8 @@
 </div>
 
 - [dApp](https://clash-of-hex.github.io)
-- [discussions](https://github.com/orgs/clash-of-hex/discussions)
-- [dWaiting list form](https://forms.gle/H8k8SCUc7ak3xMzQA)
+- [demo](https://www.youtube.com/watch?v=eR2uyTqkp8k)
+- [discussions](https://github.com/orgs/clash-of-hex/discussions) **&** [waiting list form](https://forms.gle/H8k8SCUc7ak3xMzQA)
 
 ## Roadmap 🛣
 
