@@ -1,11 +1,11 @@
 import { Graphics, Container } from 'pixi.js'
-import { Hex, defineHex, Grid, rectangle, RectangleOptions, HexOptions } from 'honeycomb-grid'
+import { Hex, defineHex, Grid, rectangle, RectangleOptions, HexOptions, Orientation } from 'honeycomb-grid'
 import { Prop } from './Prop'
 import { BattlefieldCell } from './BattlefieldCell'
 
 export interface BattlefieldProp extends Prop {
-  gep: number
-  hex: Partial<HexOptions>
+  gep?: number
+  hex?: Partial<HexOptions>
   rectangle: RectangleOptions
 }
 
@@ -18,7 +18,13 @@ export class Battlefield extends Container {
       this.x = prop.position.x
       this.y = prop.position.y
     }
-    const hex = defineHex(prop.hex)
+
+    const hex = defineHex({
+      orientation: Orientation.FLAT,
+      dimensions: 90,
+      origin: 'topLeft',
+      ...prop.hex
+    })
     this.grid = new Grid(hex, rectangle(prop.rectangle))
     const render = (hex: Hex) => {
       const cell = new BattlefieldCell({
