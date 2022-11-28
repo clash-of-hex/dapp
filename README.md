@@ -19,9 +19,10 @@
 - `<0xS3>` 🚀🐣 ️~First Alpha version~
 - `<0xS4>` 🧑‍🏭👷‍♀️~Testing, development and testing~
 - `<0xS5>` 🤞👉 [Elysium Hackathon 2022 on GitCoin](https://gitcoin.co/hackathon/everscale/projects/17094/clash-of-hex)
-- `<0xS6>` 🚣‍♂️🚣‍ [Waiting list form](https://forms.gle/H8k8SCUc7ak3xMzQA)
-- `<0xS7>` 🎉🚀 Launch on mainnet
-- `<0xS8>` 🏆🥇 First Tournament
+- `<0xS6>` 👷‍♀👷‍ Implement [interactive tutor](https://www.figma.com/proto/v1VYuKYbg5OIm9lHdkB15P/Clash-of-Hex?page-id=22%3A3368&node-id=481%3A7698&viewport=1019%2C-2066%2C0.12&scaling=contain&starting-point-node-id=481%3A7698) form figma
+- `<0xS7>` 🚣‍♂️🚣‍ [Waiting list form](https://forms.gle/H8k8SCUc7ak3xMzQA)
+- `<0xS8>` 🎉🚀 Launch on mainnet
+- `<0xS9>` 🏆🥇 First Tournament
 
 ## Looking for team members
 
