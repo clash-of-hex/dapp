@@ -489,70 +489,12 @@ export default {
       <canvas id="animationCanvas"></canvas>
     </div>
     <div data-behavior="extension" style="display: none" class="login-status">
-      Please install 
-      <a href="https://l1.broxus.com/everscale/wallet">EVER Wallet</a>
+      Please install
+      <a href="https://everwallet.net/">EVER Wallet</a>
     </div>
     <div data-behavior="login" style="display: none" class="login-status">
       Please authorize your account on the Test Network
     </div>
-
-    <!-- <table style="position: absolute; right: 0px">
-      <tbody>
-        <tr>
-          <td></td>
-          <td><button id="camera_up">- Y ⬆️</button></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td><button id="camera_left">- X ⬅️</button></td>
-          <td>📷</td>
-          <td><button id="camera_right">+ X ➡️</button></td>
-        </tr>
-        <tr>
-          <td><button id="zoom_out">- Zoom</button></td>
-          <td><button id="camera_down">+ Y ⬇️</button></td>
-          <td><button id="zoom_in">+ Zoom</button></td>
-        </tr>
-        <tr>
-          <td>network</td>
-          <td colspan="2">
-            <div><p data-behavior="network"></p></div>
-          </td>
-        </tr>
-        <tr data-behavior="extension" style="display: none">
-          <td colspan="3">
-            <div>
-              Need
-              <a href="https://l1.broxus.com/everscale/wallet">EVER Wallet</a>
-            </div>
-          </td>
-        </tr>
-        <tr data-behavior="login" style="display: none">
-          <td colspan="3">
-            <button type="button" data-behavior="connect">Connect</button>
-          </td>
-        </tr>
-        <tr data-behavior="main" style="display: none">
-          <td>address</td>
-          <td colspan="2">
-            <div><p data-behavior="address"></p></div>
-          </td>
-        </tr>
-        <tr data-behavior="main" style="display: none">
-          <td>pubkey</td>
-          <td colspan="2">
-            <div><p data-behavior="publicKey"></p></div>
-          </td>
-        </tr>
-        <tr data-behavior="main" style="display: none">
-          <td colspan="3">
-            <button type="button" data-behavior="disconnectAction">
-              Disconnect
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table> -->
   </div>
 </template>
 
