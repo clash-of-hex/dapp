@@ -240,6 +240,16 @@ async function getLiderBoard() {
   }
 }
 
+const formatSeconds = (secs) => {
+  const pad = (n) => n < 10 ? `0${n}` : n;
+
+  const h = Math.floor(secs / 3600);
+  const m = Math.floor(secs / 60) - (h * 60);
+  const s = Math.floor(secs - h * 3600 - m * 60);
+
+  return `${pad(h)}:${pad(m)}:${pad(s)}`;
+}
+
 async function setRouter(el) {
   console.log("setRouter", el);
   let address = el.target.attributes.addr.value;
@@ -261,17 +271,17 @@ async function setRouter(el) {
   behavior("timeLeft", (elem) => {
     elem.innerText = "";
   });
-  
+
   if (endDate > 0) {
     if (currentTime < endDate) {
-      timeLeft = (currentTime - endDate) / 1000;
+      timeLeft = (endDate - currentTime) / 1000;
       behavior("timeLeft", (elem) => {
         interval = setInterval(() => {
           if (timeLeft >= 0) {
-            elem.innerText = 'Time left: ' + Math.round(timeLeft);
+            elem.innerText = 'Time left: ' + formatSeconds(timeLeft);
             timeLeft -= 1;
           } else {
-            elem.innerText = "";
+            elem.innerText = "Round ended";
             clearInterval(interval);
             interval = null;
           }
@@ -304,6 +314,7 @@ async function addRouterAction() {
   if (name.length < 3) return;
   const providerState = await newRouter(name, users);
   await getRoutersAction();
+  document.getElementById("router_name").value = '';
 }
 
 export async function connect() {
