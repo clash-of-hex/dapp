@@ -194,9 +194,7 @@ export default {
       const hex = grid.pointToHex({ x: this.camera.x, y: this.camera.y });
       const x = hex.x;
       const y = hex.y;
-      if (this.scales > 43 && this.scales < 48) {
-        this.hexSize = this.scales;
-      }
+      this.hexSize = this.scales;
       this.calculateHexDimensions();
       let replacementMap = new Grid(Hex, spiral({ radius: currentMap.radius }));
       for (let i = 0; i < currentMap.length; i++) {
@@ -395,7 +393,7 @@ export default {
       this.halfCanvasWidth = this.mainCanvas.width / 2;
       this.halfCanvasHeight = this.mainCanvas.height / 2;
       // const min = Math.min(this.halfCanvasWidth, this.halfCanvasHeight);
-      this.scales = 45;
+      this.scales = 49;
     },
 
     getEnegry(hex) {
