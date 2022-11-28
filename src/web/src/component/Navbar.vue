@@ -94,7 +94,7 @@ export default {
 .nav {
   user-select: none;
   width: 100%;
-  min-height: 4rem;
+  height: 72px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -119,6 +119,7 @@ export default {
     }
     .logo {
       height: 50px;
+      width: 50px;
     }
     &:after {
       content: "";
@@ -126,7 +127,7 @@ export default {
       right: -30px;
       background-color: #fff;
       width: 3px;
-      height: 100%;
+      height: 50px;
       display: block;
     }
   }

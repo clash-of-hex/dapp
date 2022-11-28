@@ -292,7 +292,8 @@ export default {
             y - 5,
             `${hex.details.energy}`,
             10,
-            "#FFC700"
+            "#FFC700",
+            true
           );
           // this.setText(
           //   this.mainCtx,
@@ -314,10 +315,10 @@ export default {
             this.mainCtx.drawImage(yellowStar, x + 7, y + 5, 15, 15);
           }
         } else {
-          this.setText(this.mainCtx, x, y - 5, 0, 10, "#FFC700");
-          this.mainCtx.drawImage(star, x - 23, y + 5, 15, 15);
-          this.mainCtx.drawImage(star, x - 8, y + 5, 15, 15);
-          this.mainCtx.drawImage(star, x + 7, y + 5, 15, 15);
+          // this.setText(this.mainCtx, x, y - 5, 0, 10, "#FFC700");
+          // this.mainCtx.drawImage(star, x - 23, y + 5, 15, 15);
+          // this.mainCtx.drawImage(star, x - 8, y + 5, 15, 15);
+          // this.mainCtx.drawImage(star, x + 7, y + 5, 15, 15);
         }
       }
 
@@ -361,12 +362,18 @@ export default {
     //   this.setText(this.mainCtx, x, y - this.hexSize / 2, 5000);
     // },
 
-    setText(ctx, x, y, txt, fontSize = 10, style = "white", align = "center") {
+    setText(ctx, x, y, txt, fontSize = 10, style = "white", shadow = false) {
       let _font = `${fontSize * (this.camera.zoom + 1)}px JetBrains Mono`;
       ctx.font = _font;
       ctx.fillStyle = style;
-      ctx.textAlign = align;
+      ctx.textAlign = "center";
+      if (shadow){
+        ctx.shadowColor="black";
+        ctx.shadowBlur=5;
+        ctx.lineWidth=5;
+      }
       ctx.fillText(txt, x, y, this.hexSize);
+      ctx.shadowBlur=0;
     },
 
     calculateHexDimensions() {

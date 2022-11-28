@@ -49,8 +49,8 @@
                     minlength="2"
                   />
                 </td>
-                <td class="flex">
-                  <img src="/users.svg" alt="users" style="max-width: 24px; height: 17px; margin-right: 10px;" />
+                <td class="flex items-center">
+                  <img src="/users.svg" alt="users" style="max-width: 20px; height: 10px;" />
                   <div class="users-number">
                     <svg
                       @click="setUsersNumber('up')"
@@ -242,6 +242,7 @@ export default {
 .ps {
   height: 350px;
   background: rgba(0, 4, 11, 0.9);
+  padding-right: 10px;
 }
 .ps__thumb-y {
   background-color: #00e4ff;
@@ -305,6 +306,7 @@ export default {
     height: 350px;
   }
   .bottom-buttons {
+    margin-top: 10px;
     button {
       height: 50px;
       width: 33.33%;

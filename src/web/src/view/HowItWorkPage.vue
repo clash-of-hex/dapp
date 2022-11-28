@@ -98,6 +98,7 @@
     <div class="interface-wrap">
       <div>
         <img src="/img/info_game_rooms.png" />
+        <h3>Game rooms</h3>
         <p>
           The panel displays all the current locations created by the players.
           To the right of each location is the number of players who have joined
@@ -115,6 +116,7 @@
       </div>
       <div>
         <img src="/img/info_this_game.png" />
+        <h3>This game</h3>
         <p>
           After you have selected a room with the "Join" or "Info" buttons,
           information about it will be displayed in the "This game" tab.
@@ -130,6 +132,7 @@
       </div>
       <div>
         <img src="/img/info_30days_top.png" />
+        <h3>30 days TOP</h3>
         <p>The best players are placed in the "30 days TOP".</p>
         <p>
           The list shows the address of the player and the number of captured
@@ -146,31 +149,38 @@
   padding: 120px 10%;
   font-family: "JetBrains Mono";
   font-size: 20px;
+  .energy {
+    color: #fbff3a;
+  }
+  h1 {
+    font-size: 50px;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  h2 {
+    font-size: 30px;
+    font-weight: 800;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 20px;
+  }
+  h3 {
+    font-size: 26px;
+    font-weight: 800;
+    text-align: center;
+  }
+  p {
+    padding: 10px 0;
+  }
+  .p40 {
+    padding: 40px 0;
+  }
+  img {
+    padding: 40px 0;
+  }
 }
-.energy {
-  color: #fbff3a;
-}
-h1 {
-  font-size: 50px;
-  text-align: center;
-  margin-bottom: 40px;
-}
-h2 {
-  text-align: center;
-  font-size: 30px;
-  font-weight: 800;
-  margin-top: 50px;
-  margin-bottom: 20px;
-}
-p {
-  padding: 10px 0;
-}
-.p40 {
-  padding: 40px 0;
-}
-img {
-  padding: 40px 0;
-}
+
 .interface-wrap {
   display: flex;
   div {
@@ -180,6 +190,7 @@ img {
   img {
     max-width: 400px;
     padding: 0;
+    margin-bottom: 20px;
   }
 }
 </style>
