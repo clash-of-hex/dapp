@@ -44,7 +44,7 @@
       Stats can be increased by leveling up. 
     </p>
     <p>
-      After the last player joins and captures the first cell the round begins. The round lasts for 15 minutes.
+      After the last player joins and captures the first cell the round begins. The round lasts for 20 minutes.
     </p>
     <p>
       Upgrade the level of your cell. To do this, mark the desired cell by clicking it once with the left mouse button, and then double-click the same cell with the left mouse button. You will lose 3k energy - this is the cost of the lvlup. Now the energy production rate of this cell has increased.
