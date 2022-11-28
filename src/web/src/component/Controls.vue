@@ -28,7 +28,12 @@
           <table class="table-games" id="tblRouters">
             <tbody>
               <tr class="routers-heading">
-                <td>Room name</td>
+                <td>
+                  <div>Room name
+                  <button type="button" data-behavior="getRoutersAction" style="display: inline;">
+                    ↻
+                  </button></div>
+                </td>  
                 <td>Players</td>
                 <td></td>
               </tr>
@@ -142,17 +147,6 @@
                 <td style="width: 70%">User address</td>
                 <td colspan="2">Cells</td>
                 <td></td>
-              </tr>
-            </tbody>
-          </table>
-          <table class="mt-8">
-            <tbody>
-              <tr>
-                <td colspan="1">
-                  <button type="button" data-behavior="getRoutersAction">
-                    Get Routers
-                  </button>
-                </td>
               </tr>
             </tbody>
           </table>

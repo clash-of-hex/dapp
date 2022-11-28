@@ -159,13 +159,18 @@ async function getRoutersAction() {
   console.log("routers addreses", addreses);
   let accs = await getAccArr(addreses);
   for (let i = 0; i < accs.length; i++) {
-    let details = await getDetailsRouter(accs[i].id, accs[i].boc);
-    let liders = await getUsersRouter(accs[i].id, accs[i].boc);
+    accs[i].details = await getDetailsRouter(accs[i].id, accs[i].boc);
+    accs[i].liders = await getUsersRouter(accs[i].id, accs[i].boc);
+  }
+  accs = accs.sort((a, b) => (a.details.endTime == 0 || b.details.endTime == 0) ? 1*a.details.endTime - 1*b.details.endTime : 1*b.details.endTime - 1*a.details.endTime);
+  for (let i = 0; i < accs.length; i++) {
+    let details = accs[i].details;
+    let liders = accs[i].liders;
     if (details && liders) {
       let row, cell;
       // var endDate = new Date(1000 * details.endTime);
       // console.log("date", endDate);
-      console.log("details", details);
+      //console.log("details", details);
       row = addTblRow("tblRouters");
       if (row) {
         cell = row.insertCell(0);
