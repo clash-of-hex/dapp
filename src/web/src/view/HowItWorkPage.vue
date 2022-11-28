@@ -60,6 +60,13 @@
       production rate of this cell has increased.
     </p>
     <img src="/img/info_free_cell_capture.png" />
+    <p>Wait until you accumulate 4k energy and capture the next cell.</p>
+    <p>
+      To do this, click on the cell near which you want to capture the cell and
+      click on the cell you want to capture. You will lose 4k - this is the cost
+      of the capture.
+    </p>
+    <p>Now you control two cells.</p>
     <img src="/img/info_energy_transfer.png" />
     <p>
       Wait until the energy of the cells fills up. Then transfer energy from the
@@ -82,9 +89,6 @@
       You can also create your own room. To do this, you need to specify "Room name", select the maximum number of players and click "Add". After confirming the transaction, your new location will be displayed in the list.
     </p>
 
-    <p>
-      Wait until you accumulate 4k energy and capture the next cell. To do this, click on the cell near which you want to capture the cell and click on the cell you want to capture. You will lose 4k - this is the cost of the capture. Now you control two cells.
-    </p>
     <p>
       The game is over when the round time of the current location ends. After that, all captures and cell markings are prohibited. The winner is the player who captures the most cells on the map.<br>
       <br>
@@ -159,16 +163,17 @@
     margin-bottom: 40px;
   }
   h2 {
-    font-size: 30px;
+    font-size: 36px;
     font-weight: 800;
     text-align: center;
     margin-top: 50px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
   }
   h3 {
     font-size: 26px;
     font-weight: 800;
     text-align: center;
+    margin-bottom: 10px;
   }
   p {
     padding: 10px 0;
@@ -179,18 +184,32 @@
   img {
     padding: 40px 0;
   }
-}
-
-.interface-wrap {
-  display: flex;
-  div {
-    flex: 1 1 0px;
-    margin-right: 30px;
+  .interface-wrap {
+    display: flex;
+    flex-direction: row;
+    div {
+      flex: 1 1 0px;
+      margin-right: 30px;
+    }
+    img {
+      padding: 0;
+      margin-bottom: 20px;
+    }
   }
-  img {
-    max-width: 400px;
-    padding: 0;
-    margin-bottom: 20px;
+  @media screen and (max-width: "800px") {
+    font-size: 16px;
+    h1 {
+      font-size: 42px;
+    }
+    h2 {
+      font-size: 30px;
+    }
+    h3 {
+      font-size: 22px;
+    }
+    .interface-wrap {
+      flex-direction: column;
+    }
   }
 }
 </style>

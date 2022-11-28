@@ -25,86 +25,131 @@
     <div v-show="showControls" class="controls">
       <perfect-scrollbar>
         <div v-show="activeTab === 'games'" class="games-tab">
-          <table class="table-games" id="tblRouters">
-            <tbody>
-              <tr class="routers-heading">
-                <td>
-                  <div>Room name
-                  <button type="button" data-behavior="getRoutersAction" style="display: inline;">
-                    ↻
-                  </button></div>
-                </td>  
-                <td>Players</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>
-                  <input
-                    type="text"
-                    id="router_name"
-                    name="name"
-                    placeholder="Room name"
-                    class="router-name"
-                    v-model="roomName"
-                    minlength="2"
-                  />
-                </td>
-                <td class="flex items-center">
-                  <img src="/users.svg" alt="users" style="max-width: 20px; height: 10px;" />
-                  <div class="users-number">
-                    <svg
-                      @click="setUsersNumber('up')"
-                      width="7"
-                      height="5"
-                      viewBox="0 0 26 26"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="arrow-number up"
-                    >
-                      <path
-                        d="M25.1525 21.7346C25.5895 22.5576 25.6143 23.3914 25.2271 24.2358C24.8412 25.0786 24.2448 25.5 23.438 25.5L2.56252 25.5C1.75574 25.5 1.15872 25.0786 0.771462 24.2358C0.385551 23.3914 0.411099 22.5576 0.848107 21.7346L11.2859 1.61112C11.6893 0.870375 12.2607 0.500002 13.0003 0.500002C13.7398 0.500002 14.3113 0.870375 14.7147 1.61112L25.1525 21.7346Z"
-                        fill="#FFC700"
-                      />
-                    </svg>
+          <form @submit="checkForm" id="add-room">
+            <div v-for="(error, i) in errors" class="errors" :key="'error' + i">
+              {{ error }}
+            </div>
+            <table class="table-games" id="tblRouters">
+              <tbody>
+                <tr class="routers-heading">
+                  <td>
+                    <div>
+                      Room name
+                      <button
+                        type="button"
+                        data-behavior="getRoutersAction"
+                        style="display: inline"
+                      >
+                        ↻
+                      </button>
+                    </div>
+                  </td>
+                  <td>Players</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>
                     <input
-                      type="number"
-                      id="router_users"
-                      name="users"
-                      min="2"
-                      max="10"
-                      step="1"
-                      :value="usersNumber"
+                      type="text"
+                      id="router_name"
+                      name="name"
+                      placeholder="Room name"
+                      class="router-name"
+                      v-model="roomName"
+                      required
+                      minlength="2"
+                      maxlength="20"
                     />
-                    <svg
-                      @click="setUsersNumber('down')"
-                      width="7"
-                      height="5"
-                      viewBox="0 0 26 26"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="arrow-number down"
-                    >
-                      <path
-                        d="M25.1525 21.7346C25.5895 22.5576 25.6143 23.3914 25.2271 24.2358C24.8412 25.0786 24.2448 25.5 23.438 25.5L2.56252 25.5C1.75574 25.5 1.15872 25.0786 0.771462 24.2358C0.385551 23.3914 0.411099 22.5576 0.848107 21.7346L11.2859 1.61112C11.6893 0.870375 12.2607 0.500002 13.0003 0.500002C13.7398 0.500002 14.3113 0.870375 14.7147 1.61112L25.1525 21.7346Z"
-                        fill="#FFC700"
+                  </td>
+                  <td class="flex items-center">
+                    <img
+                      src="/users.svg"
+                      alt="users"
+                      style="max-width: 20px; height: 10px"
+                    />
+                    <div class="users-number">
+                      <svg
+                        @click="setUsersNumber('up')"
+                        width="7"
+                        height="5"
+                        viewBox="0 0 26 26"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="arrow-number up"
+                      >
+                        <path
+                          d="M25.1525 21.7346C25.5895 22.5576 25.6143 23.3914 25.2271 24.2358C24.8412 25.0786 24.2448 25.5 23.438 25.5L2.56252 25.5C1.75574 25.5 1.15872 25.0786 0.771462 24.2358C0.385551 23.3914 0.411099 22.5576 0.848107 21.7346L11.2859 1.61112C11.6893 0.870375 12.2607 0.500002 13.0003 0.500002C13.7398 0.500002 14.3113 0.870375 14.7147 1.61112L25.1525 21.7346Z"
+                          fill="#FFC700"
+                        />
+                      </svg>
+                      <input
+                        type="number"
+                        id="router_users"
+                        name="users"
+                        min="2"
+                        max="4"
+                        step="1"
+                        :value="usersNumber"
+                        @input="checkNumber"
                       />
-                    </svg>
-                  </div>
-                </td>
-                <td>
-                  <button
-                    class="button-add"
-                    type="button"
-                    data-behavior="addRouterAction"
-                  >
-                    +Add
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                      <svg
+                        @click="setUsersNumber('down')"
+                        width="7"
+                        height="5"
+                        viewBox="0 0 26 26"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="arrow-number down"
+                      >
+                        <path
+                          d="M25.1525 21.7346C25.5895 22.5576 25.6143 23.3914 25.2271 24.2358C24.8412 25.0786 24.2448 25.5 23.438 25.5L2.56252 25.5C1.75574 25.5 1.15872 25.0786 0.771462 24.2358C0.385551 23.3914 0.411099 22.5576 0.848107 21.7346L11.2859 1.61112C11.6893 0.870375 12.2607 0.500002 13.0003 0.500002C13.7398 0.500002 14.3113 0.870375 14.7147 1.61112L25.1525 21.7346Z"
+                          fill="#FFC700"
+                        />
+                      </svg>
+                    </div>
+                  </td>
+                  <td>
+                    <button
+                      v-show="
+                        !checkedErrors ||
+                        errors.nameError.length !== 0 ||
+                        errors.numberError.length !== 0
+                      "
+                      class="button-add"
+                      :style="[
+                        checkedErrors &&
+                        errors.nameError.length === 0 &&
+                        errors.numberError.length === 0
+                          ? 'display: none'
+                          : '',
+                      ]"
+                      type="submit"
+                      form="add-room"
+                    >
+                      +Add
+                    </button>
+                    <button
+                      v-show="
+                        checkedErrors &&
+                        errors.nameError.length === 0 &&
+                        errors.numberError.length === 0
+                      "
+                      class="button-add"
+                      type="submit"
+                      form="add-room"
+                      ref="buttonAdd"
+                      data-behavior="addRouterAction"
+                    >
+                      +Add
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </form>
         </div>
         <div v-show="activeTab === 'thisgame'" class="thisgame-tab">
+          <div class="show-name" data-behavior="rommName"></div>
           <table id="tblUsers">
             <tbody>
               <tr class="routers-heading">
@@ -187,23 +232,63 @@ export default {
       usersNumber: 3,
       roomName: "",
       activeTab: "games",
+      errors: {
+        nameError: "",
+        numberError: "",
+      },
+      checkedErrors: false,
     };
+  },
+  watch: {
+    roomName(value) {
+      if (value.length <= 2) {
+        this.errors.nameError = "Room name should be longer";
+      } else {
+        this.errors.nameError = "";
+      }
+      this.roomName = value;
+      this.checkedErrors = true;
+    },
   },
   methods: {
     setUsersNumber(direction) {
-      if (
-        direction === "down" &&
-        this.usersNumber > 2 &&
-        this.usersNumber <= 4
-      ) {
-        this.usersNumber--;
-      } else if (
-        direction === "up" &&
-        this.usersNumber >= 2 &&
-        this.usersNumber < 4
-      ) {
-        this.usersNumber++;
+      if (direction === "down") {
+        if (this.usersNumber > 2 && this.usersNumber <= 4) {
+          this.usersNumber--;
+        } else {
+          this.usersNumber = 2;
+        }
+      } 
+      if (direction === "up") {
+        if (this.usersNumber >= 2 && this.usersNumber < 4) {
+          this.usersNumber++;
+        } else {
+          this.usersNumber = 4;
+        }
+      } 
+      this.errors.numberError = "";
+    },
+    checkNumber(event) {
+      let val = event.target.value;
+      if (val < 2 || val > 4) {
+        this.errors.numberError = "Number of users must be between 2 and 4";
+      } else {
+        this.errors.numberError = "";
       }
+      this.usersNumber = val;
+      this.checkedErrors = true;
+    },
+    checkForm: function (e) {
+      if (this.roomName.length <= 2) {
+        this.errors.nameError = "Room name should be longer";
+      } else if (this.roomName.length > 20) {
+        this.errors.nameError = "Room name should be shorter";
+      } else if (this.usersNumber < 2 || this.usersNumber > 4) {
+        this.errors.numberError = "Number of users must be between 2 and 4";
+      }
+      this.checkedErrors = true;
+
+      e.preventDefault();
     },
   },
 };
@@ -227,6 +312,7 @@ export default {
   color: #00e4ff;
   padding-bottom: 10px;
   background: rgba(0, 4, 11, 0.9);
+  outline: none;
   user-select: none;
 }
 .arrow-image {
@@ -240,6 +326,7 @@ export default {
 }
 //custom scroll
 .ps {
+  width: 480px;
   height: 350px;
   background: rgba(0, 4, 11, 0.9);
   padding-right: 10px;
@@ -255,7 +342,6 @@ export default {
   font-family: "JetBrains Mono";
   width: 480px;
   background: rgba(0, 4, 11, 0.9);
-  // overflow-y: scroll;
   table {
     width: 100%;
     max-width: 480px;
@@ -352,11 +438,23 @@ export default {
     }
   }
   .button-join {
+    color: #00e4ff;
     border: 2px solid #00e4ff;
+  }
+  .button-info {
+    color: #ffc700;
+    border: 2px solid #ffc700;
   }
   .button-add {
     color: #08de04;
     border: 2px solid #08de04;
+  }
+  .show-name {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .errors {
+    color: #ff0404;
   }
 }
 input[type="number"] {

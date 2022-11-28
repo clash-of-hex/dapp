@@ -187,13 +187,15 @@ async function getRoutersAction() {
         // cell.innerHTML = endDate.customFormat("#DD#-#MM#-#YYYY# #hh#:#mm#:#ss#");
         // cell = row.insertCell(5);
         var btn = document.createElement("button");
-        btn.textContent =
-          details.userCount * 1 > 0 &&
-          Object.keys(liders.users).length >= details.userCount * 1
-            ? "Info"
-            : "Join";
+        let gameStarted = details.userCount * 1 > 0 &&
+        Object.keys(liders.users).length >= details.userCount * 1;
+        btn.textContent = gameStarted ? "Info" : "Join";
         btn.setAttribute("type", "button");
-        btn.setAttribute("class", "button-join");
+        if (gameStarted){
+          btn.setAttribute("class", "button-info");
+        } else {
+          btn.setAttribute("class", "button-join");
+        }
         btn.setAttribute("addr", accs[i].id);
         btn.onclick = setRouter;
         cell.appendChild(btn);
@@ -257,9 +259,7 @@ const formatSeconds = (secs) => {
 }
 
 async function setRouter(el) {
-  console.log("setRouter", el);
   let address = el.target.attributes.addr.value;
-  console.log("address", address);
   const providerState = await ever.getProviderState();
   const network = providerState.selectedConnection;
   Config[network].router = address;
@@ -303,6 +303,9 @@ async function setRouter(el) {
       elem.innerText = "Round not started";
     });
   }
+  behavior("rommName", (elem) => {
+    elem.innerText = details.name;
+  });
   console.log("details", details);
   onRoumingChange(details.radius);
   loadMap();
@@ -316,7 +319,6 @@ async function addRouterAction() {
   let users = document.getElementById("router_users").value;
   // let speed = document.getElementById("router_speed").value;
   // let time = document.getElementById("router_time").value;
-  console.log("addRouterAction", name);
   if (name.length < 3) return;
   const providerState = await newRouter(name, users);
   await getRoutersAction();
