@@ -4,6 +4,7 @@
     <p>
       Before starting the game, make sure you have installed the <a href="https://chrome.google.com/webstore/detail/ever-wallet/cgeeodpfagjceefieflmdfphplkenlfk/">"Ever Wallet"</a> browser extension. All actions in the game are performed in a smart contract placed in the blockchain, which means that each action must be confirmed in the "Ever Wallet" from the account you have chosen to authorize in the game. The game is in test mode, so the test network "testnet" is used. Do not forget to switch to it in the wallet. Coins from the testnet you can always get in <a href="https://t.me/everdev_giver_bot">telegram bot</a>.
     </p> -->
+    <h1>Game play</h1>
     <p>
       The goal of the game is to own as many cells as possible by the end of the
       round.
@@ -142,12 +143,17 @@
 .howto-wrapper {
   background-color: #00040b;
   color: #fff;
-  padding: 10%;
+  padding: 120px 10%;
   font-family: "JetBrains Mono";
   font-size: 20px;
 }
 .energy {
   color: #fbff3a;
+}
+h1 {
+  font-size: 50px;
+  text-align: center;
+  margin-bottom: 40px;
 }
 h2 {
   text-align: center;
