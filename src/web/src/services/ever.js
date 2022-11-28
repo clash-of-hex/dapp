@@ -230,6 +230,7 @@ async function getLiderBoard() {
   console.log("users", details.users);
   console.log("colors", details.colors);
   clearTblRows("tblUsers", 1);
+  details.users = details.users.sort((a, b) => 1*b[1] - 1*a[1]);
   for (let i = 0; i < details.users.length; i++) {
     let usrAddr = details.users[i][0].toString();
     let usrColor = details.colors[i][1];
