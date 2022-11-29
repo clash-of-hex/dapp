@@ -487,7 +487,7 @@ export default {
     </div>
     <div data-behavior="extension" style="display: none" class="login-status">
       Please install
-      <a href="https://everwallet.net/">EVER Wallet</a>
+      <a href="https://l1.broxus.com/">EVER Wallet</a>
     </div>
     <div data-behavior="login" style="display: none" class="login-status">
       Please authorize your account on the Test Network
