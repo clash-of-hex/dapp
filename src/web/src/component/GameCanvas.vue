@@ -76,9 +76,6 @@ export default {
     this.animCanvas.addEventListener(
       "dblclick",
       async ({ offsetX, offsetY }) => {
-        this.isdblclick = true;
-        await this.sleep(500);
-        this.isdblclick = false;
         offsetX += this.camera.x - this.mainCanvas.width / 2;
         offsetY += this.camera.y - this.mainCanvas.height / 2;
         const hexCoordinates = grid.pointToHex({ x: offsetX, y: offsetY });
