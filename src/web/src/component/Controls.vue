@@ -153,7 +153,7 @@
           <table id="tblUsers">
             <tbody>
               <tr class="routers-heading">
-                <td style="width: 70%">User address</td>
+                <td>User address</td>
                 <td colspan="2">Cells</td>
                 <td></td>
               </tr>
@@ -189,7 +189,7 @@
           <table id="tblLiders">
             <tbody>
               <tr class="routers-heading">
-                <td style="width: 70%">User address</td>
+                <td>User address</td>
                 <td colspan="2">Cells</td>
                 <td></td>
               </tr>
@@ -243,6 +243,8 @@ export default {
     roomName(value) {
       if (value.length <= 2) {
         this.errors.nameError = "Room name should be longer";
+      } else if (value.length >= 17) {
+        this.errors.nameError = "Room name should be shorter";
       } else {
         this.errors.nameError = "";
       }
@@ -281,7 +283,7 @@ export default {
     checkForm: function (e) {
       if (this.roomName.length <= 2) {
         this.errors.nameError = "Room name should be longer";
-      } else if (this.roomName.length > 20) {
+      } else if (this.roomName.length >= 17) {
         this.errors.nameError = "Room name should be shorter";
       } else if (this.usersNumber < 2 || this.usersNumber > 4) {
         this.errors.numberError = "Number of users must be between 2 and 4";
@@ -298,7 +300,7 @@ export default {
   position: fixed;
   top: 72px;
   left: 0;
-  width: 480px;
+  width: 440px;
   z-index: 2;
 }
 
@@ -326,7 +328,7 @@ export default {
 }
 //custom scroll
 .ps {
-  width: 480px;
+  width: 440px;
   height: 350px;
   background: rgba(0, 4, 11, 0.9);
   padding-right: 10px;
@@ -340,11 +342,10 @@ export default {
   flex-direction: column;
   color: #69e0ee;
   font-family: "JetBrains Mono";
-  width: 480px;
+  width: 440px;
   background: rgba(0, 4, 11, 0.9);
   table {
     width: 100%;
-    max-width: 480px;
     background: rgba(0, 4, 11, 0.9);
   }
 
@@ -352,7 +353,7 @@ export default {
     border-top: 2px solid #c27400;
     border-bottom: 1px solid #c27400;
     td:first-child {
-      width: 70%;
+      width: 60%;
       border-right: 1px solid #c27400;
     }
   }
